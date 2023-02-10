@@ -1,0 +1,28 @@
+CREATE TABLE `gestion_usuarios`.`usuarios` ( 
+    `id_usuario` INT(5) NOT NULL , 
+    `usuario` VARCHAR(20) NOT NULL , 
+    `hash_password` VARCHAR(32) NOT NULL , 
+    `nombre` VARCHAR(20) NOT NULL , 
+    `apellido` VARCHAR(20) NOT NULL , 
+    `fecha_ingreso_plataforma` DATETIME NOT NULL , 
+    `perfil_usuario` INT(3) NOT NULL , 
+    `telefono` VARCHAR(20) NOT NULL , 
+    `mail` VARCHAR(50) NOT NULL , 
+    `llamados_vistos` INT(15) NOT NULL , 
+    `llamados_catalogados` INT(15) NOT NULL , 
+    `llamados_guardados` INT(15) NOT NULL , 
+    `llamados_desestimados` INT(15) NOT NULL , 
+    `llamados_presupuestados` INT(15) NOT NULL , 
+    `llamados_ofertados` INT(15) NOT NULL , 
+    `tiempo_plataforma` INT(30) NOT NULL , 
+    PRIMARY KEY (`id_usuario`)
+) ENGINE = InnoDB;
+
+
+INSERT INTO usuarios (id_usuario, usuario, hash_password, nombre, apellido, fecha_ingreso_plataforma, perfil_usuario, telefono, mail, llamados_vistos, llamados_catalogados, llamados_guardados, llamados_desestimados, llamados_presupuestados, llamados_ofertados, tiempo_plataforma) VALUES (502, 'ipagano', '74fd2e77418eaf783277d5746cb93fe0', 'Ismael', 'Pagano', '2022-07-11 10:31:00', 0, '099709206', 'ismaelpagano@cooperativa31deenero.com.uy', 0, 0, 0, 0, 0, 0, 0)
+
+INSERT INTO usuarios (id_usuario, usuario, hash_password, nombre, apellido, fecha_ingreso_plataforma, perfil_usuario, telefono, mail, llamados_vistos, llamados_catalogados, llamados_guardados, llamados_desestimados, llamados_presupuestados, llamados_ofertados, tiempo_plataforma) VALUES (710, 'wlopez', '5ea3bdccd56eab41647fc307cd982798', 'Wilson', 'López', '2022-07-21 11:35:00', 0, '094416944', 'cwlopez@netgate.com.uy', 0, 0, 0, 0, 0, 0, 0)
+
+INSERT INTO usuarios (id_usuario, usuario, hash_password, nombre, apellido, fecha_ingreso_plataforma, perfil_usuario, telefono, mail, llamados_vistos, llamados_catalogados, llamados_guardados, llamados_desestimados, llamados_presupuestados, llamados_ofertados, tiempo_plataforma) VALUES (712, 'mdaverede', 'f6cd8d9fba8b7e7895cebd3f0ad8a453', 'Marcel', 'Daverede', '2022-08-04 09:45:00', 0, '095979413', 'info@cooperativa31deenero.com.uy', 0, 0, 0, 0, 0, 0, 0)
+
+f6cd8d9fba8b7e7895cebd3f0ad8a453

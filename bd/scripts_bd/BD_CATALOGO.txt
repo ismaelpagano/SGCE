@@ -1,0 +1,235 @@
+CREATE TABLE `catalogo_arce`.`art_serv_obra` 
+( 
+	`cod` INT(6) NULL DEFAULT NULL , 
+	`descripcion` VARCHAR(200) NULL DEFAULT NULL , 
+	`fami_cod` INT(2) NULL DEFAULT NULL , 
+	`subf_cod` INT(2) NULL DEFAULT NULL , 
+	`clas_cod` INT(2) NULL DEFAULT NULL , 
+	`subc_cod` INT(3) NULL DEFAULT NULL , 
+	`var_cod` INT(4) NULL DEFAULT NULL , 
+	`var_unme_cod` INT(3) NULL DEFAULT NULL , 
+	`unme_cod` INT(3) NULL DEFAULT NULL , 
+	`imp_cod` INT(2) NULL DEFAULT NULL , 
+	`ind_art_serv` VARCHAR(1) NULL DEFAULT NULL , 
+	`ind_fraccion` VARCHAR(1) NULL DEFAULT NULL , 
+	`ind_gestionable` VARCHAR(1) NULL DEFAULT NULL , 
+	`ind_agrupable` VARCHAR(1) NULL DEFAULT NULL , 
+	`stockeable` VARCHAR(1) NULL DEFAULT NULL , 
+	`stock_contable` VARCHAR(1) NULL DEFAULT NULL , 
+	`ind_tipo_detalle` VARCHAR(1) NULL DEFAULT NULL , 
+	`odg` INT(6) NULL DEFAULT NULL , 
+	`esp_tecnicas` VARCHAR(2000) NULL DEFAULT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	`comprable` VARCHAR(1) NULL DEFAULT NULL ,
+	PRIMARY KEY (`cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`art_atributos` 
+( 
+	`arse_cod` INT(6) NULL DEFAULT NULL , 
+	`prop_cod` INT(4) NULL DEFAULT NULL , 
+	`prop_unme_cod` INT(3) NULL DEFAULT NULL , 
+	`patron` VARCHAR(100) NULL DEFAULT NULL,
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`arse_cod`, `prop_cod`, `prop_unme_cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`familias` 
+( 
+	`cod` INT(2) NOT NULL , 
+	`descripcion` VARCHAR(60) NULL DEFAULT NULL , 
+	`comprable` VARCHAR(1) NULL DEFAULT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`subflias` 
+( 
+	`fami_cod` INT(2) NOT NULL , 
+	`cod` INT(2) NOT NULL , 
+	`descripcion` VARCHAR(60) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL,
+	PRIMARY KEY (`fami_cod`, `cod`) 
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`clases` 
+( 
+	`fami_cod` INT(2) NOT NULL , 
+	`subf_cod` INT(2) NOT NULL , 
+	`cod` INT(2) NOT NULL , 
+	`descripcion` VARCHAR(60) NOT NULL , 
+	`fecha_baja` DATE NOT NULL , 
+	`motivo_baja` VARCHAR(200) NOT NULL , 
+	PRIMARY KEY (`fami_cod`, `subf_cod`, `cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`subclases` 
+( 
+	`fami_cod` INT(2) NOT NULL , 
+	`subf_cod` INT(2) NOT NULL , 
+	`clas_cod` INT(2) NOT NULL , 
+	`cod` INT(3) NOT NULL , 
+	`descripcion` VARCHAR(255) NULL , 
+	`fecha_baja` DATE NULL , 
+	`motivo_baja` VARCHAR(200) NULL , 
+	PRIMARY KEY (`fami_cod`, `subf_cod`, `clas_cod`, `cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`odgs` 
+( 
+	`odg` INT(6) NOT NULL , 
+	`descripcion` VARCHAR(65) NULL DEFAULT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	PRIMARY KEY (`odg`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`sinonimos` 
+( 
+	`arse_cod` INT(6) NOT NULL , 
+	`descripcion` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`arse_cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`unidades_med` 
+( 
+	`cod` INT(3.) NOT NULL , 
+	`descripcion` VARCHAR(25) NULL DEFAULT NULL , 
+	`tipo` INT(2) NULL , 
+	`fecha_baja` DATE NULL , 
+	`motivo_baja` VARCHAR(200) NULL , 
+	PRIMARY KEY (`cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`art_unidades_med` 
+( 
+	`arse_cod` INT(6) NOT NULL , 
+	`unme_cod` INT(3) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`arse_cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`impuestos` 
+( 
+	`cod` INT(2) NOT NULL , 
+	`descripcion` VARCHAR(30) NULL DEFAULT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`art_impuestos` 
+( 
+	`arse_cod` INT(6) NOT NULL , 
+	`imp_cod` INT(2) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`arse_cod`, `imp_cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`propiedades` 
+( 
+	`cod` INT(4) NOT NULL , 
+	`descripcion` VARCHAR(60) NOT NULL , 
+	`unme_cod` INT(3) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`prop_unidades_med` 
+( 
+	`prop_cod` INT(4) NOT NULL , 
+	`unme_cod` INT(3) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`prop_cod`, `unme_cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`medidas` 
+( 
+	`cod` INT(6) NOT NULL , 
+	`descripcion` VARCHAR(60) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`presentaciones` 
+( 
+	`cod` INT(3) NOT NULL , 
+	`descripcion` VARCHAR(60) NOT NULL , 
+	`unme_cod` INT(3) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`med_variantes` 
+( 
+	`arse_cod` INT(6) NOT NULL , 
+	`med_cod_variante` INT(6) NOT NULL , 
+	`pres_cod` INT(3) NOT NULL , 
+	`med_cod_pres` INT(6) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`arse_cod`, `med_cod_variante`, `pres_cod`, `med_cod_pres`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`colores` 
+( 
+	`cod` INT(3) NOT NULL , 
+	`descripcion` VARCHAR(60) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`art_colores` 
+( 
+	`arse_cod` INT(6) NOT NULL , 
+	`colo_cod` INT(3) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`arse_cod`, `colo_cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`marcas` 
+( 
+	`cod` INT(4) NOT NULL , 
+	`descripcion` VARCHAR(100) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`det_variantes` 
+( 
+	`cod` INT(8) NOT NULL , 
+	`descripcion` VARCHAR(300) NOT NULL , 
+	`marc_cod` INT(4) NOT NULL , 
+	`arse_cod` INT(6) NOT NULL , 
+	`med_cod_variante` INT(6) NOT NULL , 
+	`pres_cod` INT(3) NOT NULL , 
+	`med_cod_pres` INT(6) NOT NULL , 
+	`id_dnma` INT(18) NULL DEFAULT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`cod`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `catalogo_arce`.`porcs_impuestos` 
+( 
+	`imp_cod` INT(2) NOT NULL , 
+	`fecha_vigencia` DATE NOT NULL , 
+	`porcentaje` FLOAT(4) NOT NULL , 
+	PRIMARY KEY (`imp_cod`, `fecha_vigencia`)
+) ENGINE = InnoDB;
+
+
+
+

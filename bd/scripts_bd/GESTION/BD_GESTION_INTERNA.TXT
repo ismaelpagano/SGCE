@@ -1,0 +1,208 @@
+CREATE TABLE `gestion_bd_sandbox`.`fecha_ult_actualizacion_compras` ( 
+    `contador` INT NOT NULL AUTO_INCREMENT ,
+    `fecha_ult_act` DATETIME NOT NULL , 
+    PRIMARY KEY (`contador`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`fecha_ult_actualizacion_adjs` ( 
+    `contador` INT NOT NULL AUTO_INCREMENT , 
+    `fecha_ult_act` DATETIME NOT NULL , 
+    PRIMARY KEY (`contador`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestor_compras_estatales_sandbox`.`contactos` ( 
+	`id_contacto` INT(16) NULL DEFAULT NULL, 
+	`id_ue` INT(3) NULL DEFAULT NULL ,
+	`id_inciso` INT(3) NULL DEFAULT NULL,
+	`id_ucc` INT(3) NULL DEFAULT NULL  ,
+	`nombre_contacto` VARCHAR(200) NULL DEFAULT NULL , 
+	PRIMARY KEY (`id_contacto`) 
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestor_compras_estatales_sandbox`.`contactos_compra` ( 
+	`id_compra` VARCHAR(9) NULL DEFAULT NULL , 
+	`id_contacto` INT(16) NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestor_compras_estatales_sandbox`.`telefonos_contacto` (
+	`id_contacto` INT(16) NULL DEFAULT NULL , 
+	`numero` VARCHAR(100) NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestor_compras_estatales_sandbox`.`mails_contacto` (
+	`id_contacto` INT(16) NOT NULL , 
+	`mail` VARCHAR(100) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`gestion_compras` ( 
+	`id_compra` VARCHAR(9) NOT NULL ,
+	`anio` INT(4) NOT NULL ,
+	`fecha_publicacion` DATETIME NOT NULL,
+	`fecha_ult_mod_arce` DATETIME NOT NULL,
+	`fecha_ult_mod_sgce` DATETIME NULL DEFAULT NULL ,
+	`estado_arce` INT(2) NOT NULL ,
+	`estado_interno` INT(2) NOT NULL , 
+	`nombre_interno` VARCHAR(50) NULL DEFAULT NULL ,
+	`funcionario_encargado` INT(3) NULL DEFAULT NULL ,
+	`sector_asignado` INT(2) NULL DEFAULT NULL ,
+	`valoracion_interna` INT(2) NOT NULL ,
+	`comentario_desestimado` VARCHAR(500) NULL DEFAULT NULL ,
+	PRIMARY KEY (`id_compra`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd`.`gestion_compras` ( 
+	`id_compra` VARCHAR(9) NULL DEFAULT NULL ,
+	`fecha_publicacion_llamado` DATETIME NULL DEFAULT NULL , 
+	`fecha_ult_mod_arce` DATETIME NULL DEFAULT NULL , 
+	`fecha_ult_mod_sgce` DATETIME NULL DEFAULT NULL , 
+	`usuario_encargado` INT(3) NULL DEFAULT NULL , 
+	`sector_asignado` INT(2) NULL DEFAULT NULL ,
+	`estado_compra` INT(3) NULL DEFAULT NULL,
+	`estado_interno` INT(15) NULL DEFAULT NULL , 
+	`nombre_interno` VARCHAR(200) NULL DEFAULT NULL , 
+	`valoracion_interna` INT(15) NULL DEFAULT NULL , 
+	PRIMARY KEY (`id_compra`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd`.`clasificar_llamado` ( 
+	`id_compra` VARCHAR(9) NULL DEFAULT NULL , 
+	`funcionario` INT(3) NULL DEFAULT NULL , 
+	`estado_interno` INT(3) NULL DEFAULT NULL ,
+	`fecha` DATETIME NULL DEFAULT NULL , 
+	`motivo` VARCHAR(500) NULL DEFAULT NULL , 
+	PRIMARY KEY (`id_compra` , `fecha`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`compras_adjudicadas` ( 
+	`id_compra` VARCHAR(9) NOT NULL , 
+	`id_tipo_resol` INT(3) NULL DEFAULT NULL , 
+	`fecha_pub_adj` DATETIME NULL DEFAULT NULL , 
+	PRIMARY KEY (`id_compra`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`ofertas` ( 
+	`id_oferta` VARCHAR(20) NOT NULL ,
+	`id_compra` VARCHAR(9) NOT NULL ,
+	`nombre_oferta` VARCHAR(50) NULL DEFAULT NULL ,
+	`funcionario_alta` INT(5) NULL DEFAULT NULL ,
+ 	`fecha_alta` DATETIME NOT NULL ,
+	`sector_asignado` INT(3) NULL DEFAULT NULL ,
+	`fecha_ult_mod` DATETIME NOT NULL,
+	`estado_oferta` INT(2) NULL DEFAULT NULL ,
+	`monto_oferta` INT(20) NULL DEFAULT NULL ,
+	`id_moneda` INT(2) NULL DEFAULT NULL ,
+ 	`descripcion` VARCHAR(65535) NULL DEFAULT NULL ,
+	`resolucion` VARCHAR(65535) NULL DEFAULT NULL ,
+	PRIMARY KEY (`id_oferta`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`subcontratistas_oferta` ( 
+	`id_oferta` VARCHAR(20) NOT NULL , 
+	`id_subcontratista` INT(5) NOT NULL ,
+	`funcionario_alta` INT (5) NOT NULL ,
+	`fecha_alta` DATETIME NOT NULL ,
+	PRIMARY KEY ( `id_oferta` , `id_subcontratista` )
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`subcontratistas` ( 
+	`id_subcontratista` INT(5) NOT NULL AUTO_INCREMENT, 
+	`funcionario_alta` INT(5) NOT NULL ,
+	`fecha_alta` DATETIME NOT NULL , 
+	`nombre` VARCHAR(100) NULL DEFAULT NULL ,
+	`tipo_doc` INT(2) NULL DEFAULT NULL ,
+	`nro_doc` VARCHAR(30) NULL DEFAULT NULL ,
+	`fecha_baja` DATETIME NULL DEFAULT NULL ,
+	`motivo_baja` VARCHAR(500) NULL DEFAULT NULL ,
+	PRIMARY KEY ( `id_subcontratista` )
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`fecha_respaldo` ( 
+    `contador` INT NOT NULL AUTO_INCREMENT , 
+    `fecha_ult_act` DATETIME NOT NULL , 
+    PRIMARY KEY (`contador`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`respaldos` ( 
+	`contador` INT(10) NOT NULL AUTO_INCREMENT , 
+	`fecha_respaldada` DATE NOT NULL , 
+	`fecha_hora_ejecucion` DATETIME NOT NULL , 
+	PRIMARY KEY (`contador`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`rubros_oferta` ( 
+	`id_oferta` VARCHAR(20) NOT NULL , 
+	`nro_item` INT(4) NOT NULL , 
+	`nom_rubro` VARCHAR(50) NULL DEFAULT NULL , 
+	`descripcion` VARCHAR(2000) NULL DEFAULT NULL , 
+	`cantidad` INT(20) NULL DEFAULT NULL , 
+	`magnitud` INT(10) NULL DEFAULT NULL , 
+	`costo_s_iva` INT(30) NULL DEFAULT NULL , 
+	`id_moneda` INT(2) NULL DEFAULT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`requerimientos_compra` ( 
+	`id_compra` VARCHAR(9) NOT NULL ,
+	`nro_requerimiento` INT(3) NOT NULL ,
+	`fecha_alta` DATETIME NOT NULL ,
+	`funcionario_alta` INT(5) NOT NULL ,
+	`obligatorio` BOOLEAN NULL DEFAULT NULL ,
+	`tipo` INT(3) NOT NULL ,
+	`estado` INT(3) NULL DEFAULT NULL ,
+	`funcionario_cumplido` INT(5) NULL DEFAULT NULL ,
+	`fecha_cumplido` DATETIME NULL DEFAULT NULL ,
+	`descripcion` VARCHAR(500) NULL DEFAULT NULL ,
+	`archivo_adjunto` VARCHAR(200) NULL DEFAULT NULL ,
+	PRIMARY KEY ( `id_compra` , `nro_requerimiento` )
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`tipos_requerimiento` ( 
+	`id_requerimiento` INT(3) NOT NULL ,
+	`descripcion` VARCHAR(50) NOT NULL ,
+	`fecha_alta` DATETIME NOT NULL ,
+	`funcionario_alta` INT(5) NOT NULL ,
+	`fecha_baja` DATETIME NULL DEFAULT NULL ,
+	`funcionario_baja` INT(5) NULL DEFAULT NULL ,
+	`motivo_baja` VARCHAR(200) ,
+	PRIMARY KEY ( `id_requerimiento` )
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`visitas_obligatorias_compra` ( 
+	`id_compra` VARCHAR(10) NOT NULL ,
+	`nro_requerimiento` INT(3) NOT NULL ,
+	`fecha_inicio` DATETIME NOT NULL ,
+	`fecha_fin` DATETIME NOT NULL ,
+	`lugar_visita` VARCHAR(200) NULL DEFAULT NULL ,
+	PRIMARY KEY ( `id_compra` , `nro_requerimiento` )
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`sectores` ( 
+	`id_sector` INT(2) NOT NULL , 
+	`nombre` VARCHAR(50) NULL DEFAULT NULL , 
+	`fecha_alta` DATETIME NOT NULL , 
+	`funcionario_alta` INT(5) NOT NULL ,
+	PRIMARY KEY ( `id_sector` )
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`comentarios` ( 
+	`id_comentario` INT(5) NOT NULL , 
+	`funcionario` INT(3) NULL DEFAULT NULL , 
+	`fecha_publicacion` DATETIME NOT NULL , 
+	`contexto` INT(2) NOT NULL ,
+	`id_contexto` VARCHAR(20) NOT NULL ,
+	`fecha_ult_mod` DATETIME NOT NULL ,
+	`importante` BOOLEAN NOT NULL DEFAULT FALSE,
+	`contenido` VARCHAR(1000) NOT NULL ,
+	PRIMARY KEY ( `id_contexto` , `contexto` , `id_comentario` )
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd_sandbox`.`modificaciones_comentario` ( 
+	`id_comentario` INT(5) NOT NULL ,
+	`contexto` INT(2) NOT NULL ,
+	`id_contexto` VARCHAR(20) NOT NULL ,
+	`fecha_mod` DATETIME NOT NULL ,
+	`contenido_modificado` VARCHAR(1000) NOT NULL ,
+	PRIMARY KEY ( `id_contexto` , `contexto` , `id_comentario` )
+) ENGINE = InnoDB;
+
+
+

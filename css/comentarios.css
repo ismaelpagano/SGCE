@@ -1,0 +1,45 @@
+#contenedor_comentarios {
+    position: relative;
+    width: 95%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 100px;
+    background-color: darkgray;
+    padding: 10px 6px;
+    box-sizing: border-box;
+}
+
+#cont_comentario {
+    position: relative;
+    margin: auto;
+    min-height: 100px;
+    background-color: darkgray;
+    padding: 10px 6px;
+    box-sizing: border-box;
+}
+
+#tabla_comentario {
+    width: 100%;
+}
+
+#funcionario_comentario {
+    width: 20%;
+}
+
+#espacio_encabezado {
+    width: 50%;
+}
+
+#fecha_comentario {
+    width: 20%;
+}
+
+#boton_importante {
+    width: 10%;
+}
+
+#textarea_comentario {
+    width: 60%;
+    height: 100px;
+}

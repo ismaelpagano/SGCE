@@ -1,0 +1,326 @@
+
+/* GENERALES */
+
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'OpenSans_Regular';
+    src: url('./fonts/OpenSans-Regular.ttf');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: 'OpenSans_Light';
+    src: url('./fonts/OpenSans-Light.ttf');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: 'OpenSans_Bold';
+    src: url('./fonts/OpenSans-Bold.ttf');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap
+}
+
+* {
+	padding: 0px;
+	margin: 0px;
+	text-decoration: none;
+	font-family: 'OpenSans_Regular', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	letter-spacing: 0.5px;
+	user-select: none;
+}
+
+body {
+	background-color: 	rgb(245, 245, 240);
+}
+
+body::-webkit-scrollbar {
+	display: none;
+}
+
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
+
+/* REFERIDOS AL VISUALIZADOR PRINCIPAL */
+
+#pag {
+	position: absolute;
+	width: 100%;
+	height: calc(100vh - 90px);
+	padding: 60px 0px 30px 0px;
+	overflow: hidden;
+}
+
+#escena {
+	position: relative;
+	width: 80%;
+	height: calc(100vh - 90px);
+	overflow-y: scroll;
+	left: 20%;
+	padding: 0px 0px;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+#escena::-webkit-scrollbar {
+	display: none;
+}
+
+#barra-lateral {
+	position: absolute;
+	width: 20%;
+	background-color: bisque;
+	height: calc(100vh - 90px);
+	display: inline-block;
+	padding: 5px 10px;
+	z-index: 20;
+	overflow-y: scroll;
+	box-sizing: border-box;
+}
+
+#barra-lateral::-webkit-scrollbar {
+	display: none;
+}
+
+#contenedor{
+	position: relative;
+	width: 100%;
+}
+
+#contenedor_detalle{
+	position: relative;
+	width: 90%;
+	margin: auto;
+}
+
+#lista{
+	list-style-type: none;
+	width: 100%;
+}
+
+#lista > li > div {
+	position: relative;
+	float: left;
+	height: 40px;
+	width: 25%;
+
+}
+
+#lista > li > div {
+	text-align: center;
+	bottom: 0px;
+}
+
+#lista > li :hover{
+	cursor: pointer;
+}
+
+@font-face {
+	font-family: SpaceMono;
+	src: url('fonts/SpaceMono-Regular.ttf');
+}
+
+#monitor {
+	font-family: SpaceMono;
+}
+
+/* FOOTER */
+
+#footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0px;
+	height: 30px;
+	background-color: green;
+	z-index: 100;
+}
+
+#cont_footer {
+	position: relative;
+	width: 1200px;
+	height: 100%;
+	margin: auto;
+}
+
+/* CUADRO LOGIN */
+
+#cont_login{
+	position: relative;
+	width: 50%;
+	margin: auto;
+	background-color: orange; 
+}
+
+#table_login {
+	position: relative;
+	width:80%;
+	margin: auto;
+	padding: 10px 0px;
+}
+
+#table_login .c1, #table_login .c2{
+	width: 50%;
+}
+
+#table_login .c2 input {
+	width: 100%;
+}
+
+#table_login .cc .cont_subbut {
+	position: relative;
+	width: 40%;
+	margin: auto;
+}
+
+.login_subbut {
+	width: 100%;
+	background-color: bisque;
+	border: none;
+}
+
+/* BARRA LATERAL */
+
+
+#barra-lateral-cont {
+	position: relative;
+	width: 100%;
+}
+
+#navbar-llamados {
+	position: relative;
+	width: 100%;
+	height: 200px;
+}
+
+#navbar-llamados ul {
+	height: 100%;
+}
+
+.nb-llamados-bot {
+	position: relative;
+	width: 100%;
+	min-height: 25%;
+	text-align: left;
+	font-weight: 500;
+	list-style: none;
+}
+
+.nb-llamados-bot:hover {
+	background-color: rgb(230, 203, 171);
+}
+
+#numero_llamado {
+	position: relative;
+	display: inline;
+	width:30%;
+	height: 30px;
+}
+
+#anio_llamado {
+	position: relative;
+	display: inline;
+	width: 20%;
+	height: 30px;
+}
+
+#btn_num {
+	width: 10px;
+	height: 30px;
+}
+
+.filtros_select {
+	width: 80%;	
+	margin: auto;
+}
+
+.current_page {
+	background-color: gray;
+	border: 1px solid darkblue;
+	color: white;
+}
+
+#div_mascara {
+	position: absolute;
+	top: 0px;
+	left: -10px;
+	background-color: grey;
+	opacity: 80%;
+	width: calc(100% + 20px);
+	min-height: calc(100vh - 90px);
+	height: 100%;
+	z-index: 10;
+}
+
+.cont_adj {
+	border: 1px solid black;
+	background-color: lightgray;
+}
+
+.lista_oferentes {
+	position:relative;
+	width: 100%;
+}
+
+.tabla_oferentes{
+	width: 100%;
+}
+
+.nom_rut_ofe {
+	width: 80%;
+	border-top: 1px solid black;
+}
+
+.nro_item {
+	width: 2%;
+}
+
+.td_nro_item {
+	font-size: 8pt;
+}
+
+.desc_art {
+	width: 30%;
+}
+
+.item > td {
+	border-top: 1px solid black;
+}
+
+.adj_art {
+	width: 30%;
+}
+
+.cant_item_adj {
+	width: 5%;
+}
+
+.monto_item_un {
+	width: 10%;
+}
+
+.monto_item_tot {
+	width: 15%;
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+
+	.cont_adj, .cont_adj *
+	{
+		max-width: 1100px !important;
+		background-color: red !important;
+	}
+
+}

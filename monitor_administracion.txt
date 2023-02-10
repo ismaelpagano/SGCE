@@ -1,0 +1,15 @@
+Total de llamados en base de datos
+Llamados vigentes
+Llamados nuevos
+Llamados vistos
+    Llamados guardados
+        Llamados en seguimiento
+        Llamados ofertados
+            Llamados ganados
+            Llamados perdidos
+        Llamados descartados en proceso de elaboracion
+        Ofertas vigentes
+    Llamados desestimados
+Adjudicaciones
+    Llamados 
+

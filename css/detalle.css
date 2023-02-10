@@ -1,0 +1,332 @@
+#header_detalle {
+    
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    z-index: 2000;
+    color: white;
+    background-color: #003da5;
+}
+
+#pag {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    padding: 100px 0px 0px 0px;
+    box-sizing: border-box;
+    overflow: scroll;
+}
+
+#pag::-webkit-scrollbar {
+	display: none;
+}
+
+#header_title {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5%;
+    font-family: 'OpenSans_Bold';
+    letter-spacing: 1px;
+}
+
+#barra_lateral_detalle {
+    position: relative;
+    width: 20%;
+    background-color: rgb(210, 210, 210);
+    height: 1500px;
+    display: inline;
+    float: left;
+    padding: 10px 3px;
+    box-sizing: border-box;
+    font-size: small;
+}
+
+#contenedor_detalle {
+    position: relative;
+    float: right;
+    box-sizing: border-box;
+    width: 80%;
+    height: 100%;
+    padding: 30px 10px;
+}
+
+#contenedor_detalle::-webkit-scrollbar {
+	display: none;
+}
+
+#descarga {
+    position: relative;
+    display: inline-block;
+    background-image: url('../img/download_button.png');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+
+}
+
+#llamado_anulado {
+    position: relative;
+    display: flex;
+    width: 80%;
+    height: 40px;
+    margin: auto;
+    background-color: red;
+    color: white;
+}
+
+#llamado_anulado > p {
+    font-family: 'OpenSans_Bold';
+    margin:auto;
+}
+
+#apertura_electronica {
+    position: relative;
+    display: flex;
+    width: 90%;
+    height: 40px;
+    margin: auto;
+    background-color: #003da5;
+    color: white;
+}
+
+#apertura_electronica > p {
+    font-family: 'OpenSans_Bold';
+    margin:auto;
+}
+
+#boton_arce {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: azure;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+#boton_arce > p {
+    margin: auto;
+    text-align: center;
+}
+
+#tabla_lateral {
+    position: relative;
+    width: 90%;
+    margin: 10px auto;
+}
+
+#tabla_lateral > tbody > tr > td {
+    height: 30px;
+    padding: 5px 0px;
+}
+
+#tabla_lateral > tbody > tr > td > a > div {
+    box-sizing: border-box;
+}
+
+.div_item {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: lightskyblue;
+    margin: 10px auto;
+    padding: 30px 5px;
+}
+
+.tabla_item {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#estado_interno {
+    position: absolute;
+    top: calc(50% - 25px);
+    right: 0px;
+    width: 200px;
+    height: 50px;
+    display: flex;
+}
+
+.no_visto {
+	background-color: lightskyblue;
+}
+
+.visto {
+	background-color: navajowhite;
+}
+
+.rechazado {
+	background-color: lightpink;
+}
+
+.guardado {
+    background-color: palegreen;
+    color: black;
+}
+
+.elaborando_oferta {
+	background-color: lawngreen;
+    color: black;
+}
+
+.cerrado {
+	background-color: black;
+	color: white;
+}
+
+#fullscreen_mask {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+}
+
+#fullscreen_mask_bg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 74%;
+    z-index: 1000;
+}
+
+#header_mask {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.mascara {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+#cartel_verificacion {
+    position: relative;
+    box-sizing: content-box;
+    width: 500px;
+    height: 200px;
+    margin: auto auto;
+    padding: 10px 20px;
+    background-color: gainsboro;
+    opacity: 100%;
+    z-index: 1001;
+}
+
+#txt_verificacion {
+    position: relative;
+    width: calc(100% - 40px);
+    height: calc(100% - 20px - 30px);
+    margin: auto;
+}
+
+#div_btns_verificacion {
+    position: relative;
+    width: calc(100% - 26px);
+    margin: auto;
+}
+
+.div_btn_verificacion {
+    position: relative;
+    width: calc(100% / 2);
+    padding: 0px 3px;
+    margin: auto;
+}
+
+.btn_verificacion {
+    position: relative;
+    border: 0px solid black;
+    width: 100%;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
+.btn_verificacion:hover {
+    border: 1px solid blue;
+}
+
+#menu_desplegable_opciones {
+    position: absolute;
+    background-color: aqua;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    min-height: 50px;
+    z-index: 3000;
+}
+
+#menu_desplegable_opciones > ul > li {
+    position: relative;
+    list-style: none;
+    width: 100%;
+    height: 50px;
+    background-color: blue;
+    display: flex;
+    margin: auto auto;
+    z-index: 3000;
+}
+
+#menu_desplegable_opciones > ul :hover {
+    background-color: aquamarine;
+    color:black;
+}
+
+#menu_desplegable_opciones > ul > li > p {
+    margin: auto;
+    z-index: 3001;
+}
+
+#fullscreen_mask_bg {
+    background-color: unset;
+}
+
+#botones_header {
+    display: flex;
+}
+
+#botones_header > * {
+    z-index: 2000;
+}
+
+#contenido_pag {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#botones_header_text {
+    position: relative;
+    margin: auto;
+}
+
+/****************** OFERTAS COMPRA ******************/
+
+#tabla_ofertas_compra {
+    position:relative;
+    margin: auto;
+    width: 80%;
+}
+
+#tr_head_ofertas th {
+    border: 1px solid black;
+    width: 33%;
+}
+
+.llamado_anulado {
+    background-color: rgb(186, 12, 47);
+    display: flex;
+
+}

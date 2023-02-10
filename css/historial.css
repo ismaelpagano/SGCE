@@ -1,0 +1,143 @@
+
+/* GENERALES */
+
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'OpenSans_Regular';
+    src: url('./fonts/OpenSans-Regular.ttf');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: 'OpenSans_Light';
+    src: url('./fonts/OpenSans-Light.ttf');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: 'OpenSans_Bold';
+    src: url('./fonts/OpenSans-Bold.ttf');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+	font-family: SpaceMono;
+	src: url('fonts/SpaceMono-Regular.ttf');
+}
+
+* {
+	padding: 0px;
+	margin: 0px;
+	text-decoration: none;
+	font-family: 'OpenSans_Regular', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	letter-spacing: 0.5px;
+	user-select: none;
+}
+
+body {
+	background-color: 	rgb(245, 245, 240);
+}
+
+body::-webkit-scrollbar {
+	display: none;
+}
+
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
+
+/* REFERIDOS AL VISUALIZADOR PRINCIPAL */
+
+#pag {
+	position: relative;
+	width: 100%;
+	padding: 60px 0px 30px 0px;
+}
+
+#escena {
+	position: relative;
+	width: 80%;
+    height: 100%;
+    margin: auto;
+	padding: 0px 10px;
+	box-sizing: border-box;
+}
+
+.cont_adj {
+	border: 1px solid black;
+	background-color: lightgray;
+}
+
+.lista_oferentes {
+	position:relative;
+	width: 100%;
+}
+
+.tabla_oferentes{
+	width: 100%;
+}
+
+.nom_rut_ofe {
+	width: 80%;
+	border-top: 1px solid black;
+}
+
+.nro_item {
+	width: 2%;
+}
+
+.td_nro_item {
+	font-size: 8pt;
+}
+
+.desc_art {
+	width: 30%;
+}
+
+.item > td {
+	border-top: 1px solid black;
+    text-align: center;
+}
+
+.adj_art {
+	width: 30%;
+}
+
+.cant_item_adj {
+	width: 5%;
+}
+
+.monto_item_un {
+	width: 10%;
+}
+
+.monto_item_tot {
+	width: 15%;
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+
+    body {
+        background-color: white;
+    }
+
+	.cont_adj, .cont_adj *
+	{
+		max-width: 1100px !important;
+		background-color: lightgray !important;
+	}
+
+}

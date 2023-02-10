@@ -1,0 +1,49 @@
+#barra-lateral-cont {
+    font-size: 13pt;
+}
+
+#navbar-llamados {
+    width: 90%;
+    margin: auto;
+}
+
+#nb-filtros-label {
+	position: relative;
+	width: 100%;
+	height: inherit;
+}
+
+#tipo_pub_div {
+    position: relative;
+    width: 90%;
+    margin: auto;
+    font-size: 13pt;
+}
+
+#div_filtros {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#buscador_filtros {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#buscador_filtros > div {
+    padding: 3px 0px;
+}
+
+#tipo_doc_prov {
+    width: 80%;
+}
+
+#nro_doc_prov {
+    width: 80%;
+}
+
+.label_prov {
+    display: block;
+}

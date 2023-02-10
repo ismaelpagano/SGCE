@@ -1,0 +1,137 @@
+CREATE TABLE `codigueras_arce`.`topes_legales_categorias` ( 
+	`id_categoria` INT(3) NOT NULL , 
+	`descripcion` VARCHAR(50) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`estados_compra` 
+	( `id_estado` INT(3) NOT NULL , 
+	`descripcion_estado` VARCHAR(50) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`estados_proveedor` ( 
+	`estado` VARCHAR(7) NOT NULL , 
+	`descripcion` VARCHAR(100) NOT NULL , 
+	`val_adjs` VARCHAR(1) NOT NULL , 
+	`val_amps` VARCHAR(1) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`incisos` ( 
+	`id_inciso` INT(3) NOT NULL , 
+	`nom_inciso` VARCHAR(200) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`monedas` ( 
+	`id_moneda` INT(3) NOT NULL , 
+	`nom_moneda` VARCHAR(200) NOT NULL , 
+	`sigla_moneda` VARCHAR(200) NOT NULL , 
+	`id_moneda_arbitraje` INT(3) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`objetos_gasto` ( 
+	`odg` INT(10) NOT NULL , 
+	`nom_gasto` VARCHAR(200) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`porcentajes_subprograma_pcpd` ( 
+	`codigo_subprograma` INT(2) NOT NULL , 
+	`fecha_vigencia` DATETIME NOT NULL , 
+	`porcentaje` INT(3) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`subprogramas_pcpd` ( 
+	`codigo` INT(2) NOT NULL , 
+	`descripcion` VARCHAR(50) NOT NULL , 
+	`fecha_desde` DATE NULL DEFAULT NULL , 
+	`fecha_hasta` DATE NULL DEFAULT NULL  
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`subtipos_compra` ( 
+	`id_subtipo` CHAR(7) NOT NULL , 
+	`id_tipocompra` CHAR(2) NOT NULL , 
+	`resumen` VARCHAR(100) NOT NULL  , 
+	`pub_llamado` CHAR(1) NOT NULL , 
+	`cond_precios_ofertas` VARCHAR(5) NOT NULL , 
+	`fecha_baja` DATETIME NOT NULL , 
+	`prov_rupe` CHAR(1) NOT NULL , 
+	`pub_adj` CHAR(1) NOT NULL , 
+	`cant_adj` CHAR(1) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`tipos_ajustes_adjudicacion` ( 
+	`id_tipo_ajuste` INT(1) NOT NULL , 
+	`descripcion` VARCHAR(100) NOT NULL , 
+	`reiteracion` VARCHAR(1) NOT NULL , 
+	`resolucion` VARCHAR(1) NOT NULL , 
+	`pub_llamado` VARCHAR(1) NOT NULL , 
+	`nuevo_item_oferta` VARCHAR(1) NOT NULL , 
+	`modif_item_adj` VARCHAR(1) NOT NULL , 
+	`nuevo_item_adj` VARCHAR(1) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`tipos_compra` ( 
+	`id_tipo_compra` CHAR(2) NOT NULL , 
+	`descripcion` VARCHAR(100) NOT NULL , 
+	`oferta_economica` CHAR(1) NOT NULL , 
+	`acto_apertura` CHAR(1) NOT NULL , 
+	`plazo_min_oferta` INT(2) NOT NULL , 
+	`resolucion_obligatoria` CHAR(1) NOT NULL , 
+	`solics_llamado` CHAR(1) NOT NULL , 
+	`ampliaciones` CHAR(1) NOT NULL , 
+	`tope_legal` CHAR(1) NOT NULL , 
+	`pcpd` VARCHAR(1) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`tipos_doc` ( 
+	`tipo` CHAR(1) NOT NULL , 
+	`descripcion` VARCHAR(100) NOT NULL , 
+	`prov_rupe` CHAR(1) NOT NULL , 
+	`pcpd` VARCHAR(1) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`tipos_res` ( 
+	`id_res` INT(1) NOT NULL , 
+	`descripcion` VARCHAR(100) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`tipos_res_tipos_ajus_adj` ( 
+	`id_tipoajusteadj` INT(1) NOT NULL , 
+	`id_tipores` INT(1) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`tipos_res_tipos_compra` ( 
+	`id_tipores` INT(1) NOT NULL , 
+	`id_tipocompra` CHAR(2) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`topes_legales` ( 
+	`id_tipo_compra` CHAR(2) NOT NULL , 
+	`fecha_desde` DATETIME NOT NULL , 
+	`id_categoria` INT(2) NOT NULL , 
+	`tope` INT(9) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`unidades_compra_centralizadas` ( 
+	`id_ucc` INT(2) NOT NULL , 
+	`nom_ucc` VARCHAR(100) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`unidades_ejecutoras` ( 
+	`id_inciso` INT(2) NOT NULL , 
+	`id_ue` INT(3) NOT NULL , 
+	`nom_ue` VARCHAR(100) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`unidades_medida` ( 
+	`cod` INT(3) NOT NULL , 
+	`descripcion` VARCHAR(150) NOT NULL , 
+	`fecha_baja` DATE NULL DEFAULT NULL , 
+	`motivo_baja` VARCHAR(200) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `codigueras_arce`.`ues_topes_ampliados` ( 
+	`id_inciso` INT(2) NOT NULL , 
+	`id_ue` INT(3) NOT NULL , 
+	`fecha_desde` DATETIME NOT NULL , 
+	`fecha_hasta` DATETIME NOT NULL , 
+	`id_categoria` INT(2) NOT NULL 
+) ENGINE = InnoDB;
