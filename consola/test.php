@@ -1,6 +1,7 @@
 <?php
 
         include 'funcs.php';
+        include 'clases.php';
         
         // actualizador('2022-07-01', '2022-07-19');
 
@@ -16,7 +17,13 @@
         //         echo "Error";
         // }
 
-        get_registros_fecha();
+        // get_registros_fecha();
+
+        $actualizador = new Actualizador;
+
+        // print_r($actualizador->databases_anios);
+
+
 
 ?>
 

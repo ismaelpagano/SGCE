@@ -227,7 +227,7 @@ function actualizarEstado(id, estado) {
 }
 
 function actualizar_estado_compra_detalle(id_compra, estado){
-	
+
 	var http = new XMLHttpRequest();
 	http.open("POST", "funcs/actualizar_estado_compra_detalle.php", true);
 	var params = new FormData();
@@ -529,7 +529,7 @@ function nada(event){
 	event.stopPropagation();
 }
 
-function boton_estado_header(estado){
+function boton_estado_header(estado , id_compra){
 
 	estado_compra_actual = estado;
 	
@@ -737,7 +737,6 @@ function cargar_comentarios(id_contexto){
 	http.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200){
 			document.getElementById('contenedor_comentarios').innerHTML = this.responseText;
-			alert(this.responseText);
 		}
 	}
 	http.send(params);
@@ -847,6 +846,22 @@ function visita(){
 
 	}
 
+
+}
+
+function buscarObjeto(clave){
+	
+	var http = new XMLHttpRequest();
+	http.open('POST', 'objetos.php', true);
+	var params = new FormData();
+	params.append('clave', clave);
+	http.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200){
+			document.getElementsByTagName('body')[0].innerHTML = this.responseText;
+		}
+	}
+	http.send(params);
+	
 
 }
 

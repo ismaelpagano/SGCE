@@ -56,27 +56,46 @@
 
         // $compra->enviar_objeto_socket();
 
-        $sql = sql_con(DATABASE_GESTION);
+        // $sql = sql_con(DATABASE_GESTION);
 
-        $q = "SELECT * FROM tipos_requerimiento WHERE fecha_baja IS NULL";
+        // $q = "SELECT * FROM tipos_requerimiento WHERE fecha_baja IS NULL";
 
-        $q = $sql->query($q);
+        // $q = $sql->query($q);
 
-        if($q){
+        // if($q){
 
-            while($r = $q->fetch_object()){
+        //     while($r = $q->fetch_object()){
 
-                $result = Array();
-                $result['id'] = $r->id_requerimiento;
-                $result['descripcion'] = $r->descripcion;
-                print_r($result);
-                echo '<br>';
+        //         $result = Array();
+        //         $result['id'] = $r->id_requerimiento;
+        //         $result['descripcion'] = $r->descripcion;
+        //         print_r($result);
+        //         echo '<br>';
 
-            }
-        }
+        //     }
+        // }
 
-        mysqli_close($sql);
+        // mysqli_close($sql);
 
+        // session_start();
+
+        // $_SESSION['sistema'] = new Sistema();
+
+        // print_r($_SESSION); 
+
+        // $compra_actual = new Atributo('compra');
+
+        // $_SESSION['sistema']->objetos[$compra_actual->hash]->id_compra = '10000000';
+
+        // foreach(database_exists('gestor_compras') as $a => $b){
+
+        //     echo $a.' = '.$b.'<br>';
+
+        // }
+
+        create_database_compras_anio('2020');
+        create_database_compras_anio('2021');
+        create_database_compras_anio('2022');
 
 ?>
 
@@ -93,5 +112,6 @@
 
                     // echo $i;
             ?>
+            <!-- <button onclick="buscarObjeto('<?php echo $_SESSION['sistema']->objetos[$compra_actual->hash]->hash; ?>')">BOTON</button> -->
     </body>
 </html>

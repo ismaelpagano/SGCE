@@ -34,9 +34,9 @@ CREATE TABLE `gestor_compras_estatales_sandbox`.`mails_contacto` (
 	`mail` VARCHAR(100) NOT NULL 
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`gestion_compras` ( 
+CREATE TABLE `gestion_bd`.`gestion_compras` ( 
 	`id_compra` VARCHAR(9) NOT NULL ,
-	`anio` INT(4) NOT NULL ,
+	`anio_compra` INT(4) NOT NULL ,
 	`fecha_publicacion` DATETIME NOT NULL,
 	`fecha_ult_mod_arce` DATETIME NOT NULL,
 	`fecha_ult_mod_sgce` DATETIME NULL DEFAULT NULL ,
@@ -155,17 +155,6 @@ CREATE TABLE `gestion_bd_sandbox`.`requerimientos_compra` (
 	PRIMARY KEY ( `id_compra` , `nro_requerimiento` )
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`tipos_requerimiento` ( 
-	`id_requerimiento` INT(3) NOT NULL ,
-	`descripcion` VARCHAR(50) NOT NULL ,
-	`fecha_alta` DATETIME NOT NULL ,
-	`funcionario_alta` INT(5) NOT NULL ,
-	`fecha_baja` DATETIME NULL DEFAULT NULL ,
-	`funcionario_baja` INT(5) NULL DEFAULT NULL ,
-	`motivo_baja` VARCHAR(200) ,
-	PRIMARY KEY ( `id_requerimiento` )
-) ENGINE = InnoDB;
-
 CREATE TABLE `gestion_bd_sandbox`.`visitas_obligatorias_compra` ( 
 	`id_compra` VARCHAR(10) NOT NULL ,
 	`nro_requerimiento` INT(3) NOT NULL ,
@@ -202,6 +191,18 @@ CREATE TABLE `gestion_bd_sandbox`.`modificaciones_comentario` (
 	`fecha_mod` DATETIME NOT NULL ,
 	`contenido_modificado` VARCHAR(1000) NOT NULL ,
 	PRIMARY KEY ( `id_contexto` , `contexto` , `id_comentario` )
+) ENGINE = InnoDB;
+
+
+CREATE TABLE `gestion_bd_sandbox`.`tipos_requerimiento` ( 
+	`id_requerimiento` INT(3) NOT NULL ,
+	`descripcion` VARCHAR(50) NOT NULL ,
+	`fecha_alta` DATETIME NOT NULL ,
+	`funcionario_alta` INT(5) NOT NULL ,
+	`fecha_baja` DATETIME NULL DEFAULT NULL ,
+	`funcionario_baja` INT(5) NULL DEFAULT NULL ,
+	`motivo_baja` VARCHAR(200) ,
+	PRIMARY KEY ( `id_requerimiento` )
 ) ENGINE = InnoDB;
 
 

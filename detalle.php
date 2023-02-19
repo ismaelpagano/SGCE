@@ -85,6 +85,13 @@
                     <?php $compra->barra_lateral(); ?>
                 </div>
                 <div id="contenedor_detalle">
+                    <!-- <div id="nav_pestañas">
+                        <ul id="ul_nav_pestañas">
+                            <li id="li_nav_obj" class="li_nav_pestaña">Objeto</li>
+                            <li id="li_nav_his" class="li_nav_pestaña">Historial</li>
+                            <li id="li_nav_ges" class="li_nav_pestaña">Gestión</li>
+                        </ul>
+                    </div> -->
                     <p id="objeto" onclick="copiar_portapapeles()"><?php echo $compra->detalle_llamado(); ?></p>
                     <?php 
                         echo $compra->mostrar_items();
@@ -116,6 +123,9 @@
                     </div>
                     <div id="contenedor_comentarios"><?php include 'comentarios.php'; ?></div>
                 </div>
+                <div id="objeto_llamado"></div>
+                <div id="historial_llamado"></div>
+                <div id="gestion_llamado"></div>
             </div>
         </div>
 	</body>

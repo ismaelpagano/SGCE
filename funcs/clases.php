@@ -99,6 +99,7 @@
         public $ofertas = Array();
         public $ofertas_usuario = Array();
         public $requerimientos = Array();
+        public $comentarios = Array();
 
         //Manejo en el sistema
 
@@ -199,7 +200,27 @@
                 $this->es_reiteracion = $atributos->es_reiteracion;
                 $this->arch_reiteracion = $atributos->arch_reiteracion;
                 $this->get_ofertas_compra();
+                $this->get_comentarios_compra();
             }
+        }
+
+        public function get_comentarios_compra(){
+
+            $sql = sql_con(DATABASE_GESTION);
+
+            $q = "SELECT * FROM comentarios WHERE contexto = 0 AND id_contexto = '".$this->id_compra."'";
+        
+            $q = $sql->query($q);
+        
+            if($q){
+        
+                while($r = $q->fetch_object()){
+                    $this->comentarios[] = $r;
+                }
+        
+            }
+
+            mysqli_close($sql);
         }
 
         public function mostrar_items(){
@@ -881,7 +902,22 @@
             $estado_interno = $this->estado_interno;
             $estado_interno_txt = estado_interno($this->estado_interno);
             $fecha_lim_rof = strtotime($this->fecha_hora_tope_entrega);
-    
+            $cant_comentarios = count($this->comentarios);
+            $div_comentarios = "";
+
+            if($cant_comentarios == 1){
+
+                $div_comentarios = "<div>1 comentario.</div>";
+
+            } else if ($cant_comentarios > 1){
+
+                $div_comentarios = "<div>".$cant_comentarios." comentarios.</div>";
+
+            } else {
+
+                $div_comentarios = "<div>No tiene comentarios.</div>";
+                
+            }
            
             $div_botones = '';
             $div_rof = '';
@@ -916,6 +952,7 @@
                         </div>
                 </div>
                 '.$div_botones.'
+                '.$div_comentarios.'
             </div>';
         
             echo $return;
@@ -1283,6 +1320,8 @@
         private int $_llamados_oferta_vigente;
         private int $_llamados_desestimados;
 
+        public Array $objetos;
+
         //OFERTAS
 
         private int $_llamados_ofertados_total;
@@ -1321,6 +1360,14 @@
             $this->get_usuarios();
             $this->get_requerimientos();
             //$this->ip_origen = $_SERVER['REMOTE_ADDR'];
+        }
+
+
+
+        public function set_objeto($objeto){
+
+            $this->objetos[$objeto->hash];
+
         }
 
         public function get_codigueras(){
@@ -1370,8 +1417,6 @@
                     $this->tipos_compra[$r->id_tipo_compra]['nom'] = $r->descripcion;
                 }
             }
-
-            print_r($this->tipos_compra);
 
             mysqli_close($sql);
 
@@ -1694,15 +1739,20 @@
             
             $actual = time();
 
-            if(($this->ult_actividad + 7200) < $actual ){
-                $this->cerrar_sesion(false);
-            } else if (($this->ult_actividad + 30) > $actual ) {
-                $this->tiempo_plataforma_sesion += 30;
-                $this->ult_actividad = time();
-            } else {
-                $this->tiempo_plataforma_sesion += ($actual - $this->ult_actividad);
-                $this->ult_actividad = time();
+            if($this->id_usuario != 1){
+
+                if(($this->ult_actividad + 7200) < $actual ){
+                    $this->cerrar_sesion(false);
+                } else if (($this->ult_actividad + 30) > $actual ) {
+                    $this->tiempo_plataforma_sesion += 30;
+                    $this->ult_actividad = time();
+                } else {
+                    $this->tiempo_plataforma_sesion += ($actual - $this->ult_actividad);
+                    $this->ult_actividad = time();
+                }
+
             }
+
         }
 
         public function cerrar_sesion($bool){
@@ -2411,4 +2461,33 @@
 
     }
 
+    class Sistem {
+
+        public $objetos = Array();
+
+        public function __construct(){
+            
+        }
+
+        public function set_objeto($objeto){
+
+            $this->objetos[$objeto->hash] = $objeto;
+
+        }
+
+    }
+
+    class Atributo {
+
+        public function __construct($tipo){
+
+            $this->hash = md5(strval(time()));
+            $this->hash = substr($this->hash, 0, -16);
+            $this->tipo = $tipo;
+
+            $_SESSION['sistema']->set_objeto($this);
+
+        }
+
+    }
 ?>
