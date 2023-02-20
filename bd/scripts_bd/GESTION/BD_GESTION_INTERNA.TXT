@@ -193,7 +193,6 @@ CREATE TABLE `gestion_bd_sandbox`.`modificaciones_comentario` (
 	PRIMARY KEY ( `id_contexto` , `contexto` , `id_comentario` )
 ) ENGINE = InnoDB;
 
-
 CREATE TABLE `gestion_bd_sandbox`.`tipos_requerimiento` ( 
 	`id_requerimiento` INT(3) NOT NULL ,
 	`descripcion` VARCHAR(50) NOT NULL ,
@@ -204,6 +203,3 @@ CREATE TABLE `gestion_bd_sandbox`.`tipos_requerimiento` (
 	`motivo_baja` VARCHAR(200) ,
 	PRIMARY KEY ( `id_requerimiento` )
 ) ENGINE = InnoDB;
-
-
-
