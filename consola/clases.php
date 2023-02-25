@@ -287,22 +287,13 @@
                             $fecha_ult_mod_arce = $fecha_publicacion;
                         }
 
-                        if(isset($compra['atributos']['fecha_ult_mod_llamado'])){
-
-                            $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
-                            $fecha_ult_mod_llamado = "'".formatear_fecha_hora($compra['atributos']['fecha_ult_mod_llamado'])."' ,";
-                            $fecha_ult_mod_arce = $fecha_ult_mod_llamado;
-                        }
-
                         $q = "INSERT INTO gestion_compras ( id_compra , anio_compra ,".$fecha_publicacion_query.$fecha_ult_mod_llamado_query." fecha_ult_mod_sgce , estado_arce , estado_interno ) VALUES ( '".$id_compra."' , '".$compra['atributos']['anio_compra']."' ,".$fecha_publicacion.$fecha_ult_mod_arce." '".date('Y-m-d H:i:s')."' , '".$compra['atributos']['estado_compra']."' , 0 )";
-
-                        echo $q;
-                        
+                       
                         $q = $sql->query($q);
 
                         mysqli_close($sql);
 
-                    }
+                    }                       
 
                 }
 
@@ -404,6 +395,32 @@
                             $this->insert_update_registro_bd_anio($atributos, 'oferentes', $claves, $anio);
                         }
                     }
+
+                    if(!isset($gestion_compras[$id_compra])){
+                        
+                        $sql = $this->sql_con('gestion_bd');
+
+                        $fecha_publicacion_query = '';
+                        $fecha_publicacion = '';
+
+                        $fecha_ult_mod_llamado_query = '';
+                        $fecha_ult_mod_llamado = '';
+
+                        if(isset($compra['atributos']['fecha_publicacion'])){
+
+                            $fecha_publicacion_adj_query = ' fecha_publicacion ,';
+                            $fecha_publicacion_adj = "'".formatear_fecha_hora($compra['atributos']['fecha_publicacion'])."' ,";
+                        }
+
+                        $q = "INSERT INTO gestion_compras ( id_compra , anio_compra ,".$fecha_publicacion_adj_query." fecha_ult_mod_sgce , estado_arce , estado_interno ) VALUES ( '".$id_compra."' , '".$compra['atributos']['anio_compra']."' ,".$fecha_publicacion_adj." '".date('Y-m-d H:i:s')."' , '".$compra['atributos']['estado_compra']."' , 0 ) ON DUPLICATE KEY UPDATE id_compra = '".$id_compra."'";
+                       
+                        $q = $sql->query($q);
+
+                        mysqli_close($sql);
+
+                    }
+
+
                 }
             }
 
@@ -515,7 +532,7 @@
                         }
                     }
                 }
-                
+
             }
 
             $query = substr($query, 0, -2);

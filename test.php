@@ -93,9 +93,9 @@
 
         // }
 
-        create_database_compras_anio('2020');
-        create_database_compras_anio('2021');
-        create_database_compras_anio('2022');
+        $sql = sql_con();
+
+        $q = "SELECT compra.id_compra , gestion.estado_interno , compra.fecha_publicacion , compra.fecha_pub_adj , compra.fecha_ult_mod_llamado , compra.estado FROM gestor_compras_estatales_sandbox.compras as compra INNER JOIN gestion_bdd_sandbox.gestion_compras as gestion ON compra.id_compra = gestion = id_compra";
 
 ?>
 
