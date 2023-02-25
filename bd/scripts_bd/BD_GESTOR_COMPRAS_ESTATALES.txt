@@ -82,7 +82,7 @@ CREATE TABLE `gestor_compras_estatales_sandbox`.`atributos_items_compra` (
 	`valor_numerico` FLOAT(17) NULL DEFAULT NULL , 
 	`valor_texto` VARCHAR(4000) NULL DEFAULT NULL , 
 	`valor_fecha` DATE NULL DEFAULT NULL , 
-	`valor_booleano` VARCHAR(1) NOT NULL DEFAULT 'N' 
+	`valor_booleano` VARCHAR(1) NOT NULL DEFAULT 'N',
 ) ENGINE = InnoDB;
 
 CREATE TABLE `gestor_compras_estatales_sandbox`.`valores_atributos_items_compra` ( 

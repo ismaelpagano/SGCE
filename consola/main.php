@@ -1,13 +1,16 @@
 <?php
 
     include 'funcs.php';
+    include 'clases.php';
 
-    while(true){
+    // while(true){
 
-        actualizador();
+    //     actualizador();
 
-        sleep(600);
+    $actualizador = new Actualizador();
 
-    }
+    //     sleep(600);
+
+    // }
 
 ?>

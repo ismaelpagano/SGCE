@@ -244,7 +244,6 @@
 
             get_registros_fecha();
 
-        
         }
 
     }
@@ -409,21 +408,13 @@
     ////////////////////////////////////////////////////////////////////////////////////////
     // Actualizador de compras 
     
-    function insert_bd($query, $db, $string){
+    function insert_bd($query, $db){
 
         $sql = sql_con($db);
 
         //echo $query."\n";
 
         $q = $sql->query($query);
-
-        $return = '';
-
-        if($q){
-            $return = 'Se ha ingresado exitosamente: '.$string."\n";
-        } else {
-            $return = "Ha ocurrido un problema.\n";
-        }
 
         mysqli_close($sql);
 
@@ -618,6 +609,8 @@
     function update_compra_bd($compra, $id_compra){
 
         $attributes = $compra->attributes();
+
+        
 
         $query = "UPDATE compras SET id_compra = '".$id_compra."'";
 
@@ -1388,90 +1381,6 @@
 
         mysqli_close($sql);
 
-    }
-
-    function database_exists($schema){
-
-        $sql = sql_con();
-        
-        $q = $sql->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME LIKE '%".$schema."%'");
-
-        $result = Array();
-
-        if($q){
-
-            while($r = $q->fetch_object()){
-
-                $result[] = $r->SCHEMA_NAME;
-
-            }
-        }
-
-        $return = Array();
-
-        if(count($result) > 0){
-
-            foreach($result as $r){
-
-                $return[] = $r;
-
-            }
-
-            return $return;
-
-        } else {
-
-            return false;
-
-        }
-
-    }
-
-    function create_database_compras_anio($anio){
-
-        $sql = sql_con();
-
-        $script = "CREATE DATABASE gestor_compras_estatales_".$anio;
-
-        $q = $sql->query($script);
-
-        mysqli_close($sql);
-
-        $sql = sql_con("gestor_compras_estatales_".$anio);
-
-        $scripts = Array();
-
-        $scripts[] = "CREATE TABLE `compras` ( `id_compra` VARCHAR(9) NULL DEFAULT NULL , `id_inciso` INT(2) NULL DEFAULT NULL , `id_ue` INT(3) NULL DEFAULT NULL , `id_ucc` INT(2) NULL DEFAULT NULL , `num_compra` VARCHAR(50) NULL DEFAULT NULL , `anio_compra` INT(4) NULL DEFAULT NULL , `nro_ampliacion` INT NULL DEFAULT NULL , `estado_compra` INT NULL DEFAULT NULL , `nombre_pliego` VARCHAR(200) NULL DEFAULT NULL , `fecha_publicacion` DATETIME NULL DEFAULT NULL , `fecha_ult_mod_llamado` DATETIME NULL DEFAULT NULL , `id_tipocompra` CHAR(2) NULL DEFAULT NULL , `subtipo_compra` CHAR(3) NULL DEFAULT NULL , `objeto` VARCHAR(2000) NULL DEFAULT NULL , `fecha_hora_apertura` DATETIME NULL DEFAULT NULL , `lugar_apertura` VARCHAR(200) NULL DEFAULT NULL , `fecha_sol_prorr` DATE NULL DEFAULT NULL , `fecha_sol_aclar` DATE NULL DEFAULT NULL , `fecha_hora_tope_entrega` DATETIME NULL DEFAULT NULL , `fecha_hora_puja` DATETIME NULL DEFAULT NULL , `lugar_entrega` VARCHAR(200) NULL DEFAULT NULL , `precio_pliego` FLOAT(15) NULL DEFAULT NULL , `id_moneda_pliego` INT(2) NULL DEFAULT NULL , `lugar_compra_pliego` VARCHAR(200) NULL DEFAULT NULL , `nombre_contacto` VARCHAR(200) NULL DEFAULT NULL , `fax_contacto` VARCHAR(50) NULL DEFAULT NULL , `email_contacto` VARCHAR(50) NULL DEFAULT NULL , `fecha_pub_adj` DATETIME NULL DEFAULT NULL , `fecha_compra` DATE NULL DEFAULT NULL , `fecha_vigencia_adj` DATE NULL DEFAULT NULL , `fondos_rotatorios` CHAR(1) NOT NULL DEFAULT 'N' , `apel` CHAR(1) NOT NULL DEFAULT 'N' , `arch_adj` VARCHAR(200) NULL DEFAULT NULL , `monto_adj` FLOAT(15) NULL DEFAULT NULL , `id_moneda_monto_adj` INT(2) NULL DEFAULT NULL , `id_tipo_resol` INT(3) NULL DEFAULT NULL , `num_resol` INT(9) NULL DEFAULT NULL , `es_reiteracion` CHAR(1) NOT NULL DEFAULT 'N' , `arch_reiteracion` VARCHAR(200) NULL DEFAULT NULL, PRIMARY KEY (`id_compra`(9))) ENGINE = InnoDB;";
-
-        $scripts[] = "CREATE TABLE `items_compra` ( `id_compra` VARCHAR(9) NULL DEFAULT NULL , `nro_item` INT NULL DEFAULT NULL , `cant_pedida` FLOAT(15) NULL DEFAULT NULL , `id_moneda_cotiz` INT(2) NULL DEFAULT NULL , `fecha_hora_puja` DATETIME NULL DEFAULT NULL , `duracion_puja` INT(2) NULL DEFAULT NULL , `tipo_margen_puja` VARCHAR(1) NULL DEFAULT NULL , `margen_puja` INT(13) NULL DEFAULT NULL , `id_articulo` INT(6) NULL DEFAULT NULL , `desc_articulo` VARCHAR(255) NULL DEFAULT NULL , `id_color` INT(3) NULL DEFAULT NULL , `desc_color` VARCHAR(20) NULL DEFAULT NULL , `id_unidad` INT(3) NULL DEFAULT NULL , `unidad` VARCHAR(30) NULL DEFAULT NULL , `id_variante` VARCHAR(30) NULL DEFAULT NULL , `variante` VARCHAR(60) NULL DEFAULT NULL , `unidad_medida_variante` VARCHAR(30) NULL DEFAULT NULL , `medida_variante` VARCHAR(60) NULL DEFAULT NULL , `presentacion` VARCHAR(60) NULL DEFAULT NULL , `medida_presentacion` VARCHAR(60) NULL DEFAULT NULL , `unidad_medida_presentacion` VARCHAR(30) NULL DEFAULT NULL , `id_detalle_variante` INT(8) NULL DEFAULT NULL , `desc_detalle_variante` VARCHAR(70) NULL DEFAULT NULL , `id_marca` INT(4) NULL DEFAULT NULL , `desc_marca` VARCHAR(40) NULL DEFAULT NULL ) ENGINE = InnoDB;";
-
-        $scripts[] = "CREATE TABLE `atributos_items_compra` ( `id_compra` VARCHAR(9) NULL DEFAULT NULL , `nro_item` INT NULL DEFAULT NULL , `nro_atributo_item` INT NULL DEFAULT NULL , `id_prop_atributo` INT(4) NULL DEFAULT NULL , `desc_prop_atributo` VARCHAR(300) NULL DEFAULT NULL , `id_unidad_med_prop_atributo` INT(3) NULL DEFAULT NULL , `desc_unidad_med_prop_atributo` VARCHAR(25) NULL DEFAULT NULL , `requerido` VARCHAR(1) NOT NULL DEFAULT 'N' , `cod_condicion` VARCHAR(2) NULL DEFAULT NULL , `valor_numerico` FLOAT(17) NULL DEFAULT NULL , `valor_texto` VARCHAR(4000) NULL DEFAULT NULL , `valor_fecha` DATE NULL DEFAULT NULL , `valor_booleano` VARCHAR(1) NOT NULL DEFAULT 'N' ) ENGINE = InnoDB;";
-        
-        $scripts[] = "CREATE TABLE `valores_atributos_items_compra` ( `id_compra` VARCHAR(9) NULL DEFAULT NULL , `nro_item` INT NULL DEFAULT NULL , `nro_atributo_item` INT NULL DEFAULT NULL , `nro_valor_atributo_item` INT NULL DEFAULT NULL ,`id_prop_atributo` INT(4) NULL DEFAULT NULL , `valor_numerico` FLOAT(17) NULL DEFAULT NULL , `valor_texto` VARCHAR(4000) NULL DEFAULT NULL , `valor_fecha` DATE NULL DEFAULT NULL ) ENGINE = InnoDB;";
-        
-        $scripts[] = "CREATE TABLE `oferentes` ( `id_compra` VARCHAR(9) NULL DEFAULT NULL , `tipo_doc_prov` CHAR(1) NULL DEFAULT NULL , `nro_doc_prov` VARCHAR(12) NULL DEFAULT NULL , `nombre_comercial` VARCHAR(255) NULL DEFAULT NULL ) ENGINE = InnoDB";
-        
-        $scripts[] = "CREATE TABLE `items_adjudicacion` ( `id_compra` VARCHAR(9) NULL DEFAULT NULL , `nro_item` INT NULL DEFAULT NULL , `tipo_doc_prov` CHAR(1) NULL DEFAULT NULL , `nro_doc_prov` VARCHAR(12) NULL DEFAULT NULL , `nombre_comercial` VARCHAR(255) NULL DEFAULT NULL , `cant_adj` FLOAT(15) NULL DEFAULT NULL , `precio_unit` FLOAT(15) NULL DEFAULT NULL , `precio_tot_imp` FLOAT(15) NULL DEFAULT NULL , `id_moneda` INT(2) NULL DEFAULT NULL , `id_articulo` INT(6) NULL DEFAULT NULL , `desc_articulo` VARCHAR(255) NULL DEFAULT NULL , `id_color` INT(3) NULL DEFAULT NULL , `desc_color` VARCHAR(20) NULL DEFAULT NULL , `id_unidad` INT(3) NULL DEFAULT NULL , `unidad` VARCHAR(30) NULL DEFAULT NULL , `id_variante` VARCHAR(30) NULL DEFAULT NULL , `variante` VARCHAR(60) NULL DEFAULT NULL , `unidad_medida_variante` VARCHAR(30) NULL DEFAULT NULL , `medida_variante` VARCHAR(60) NULL DEFAULT NULL , `presentacion` VARCHAR(60) NULL DEFAULT NULL , `medida_presentacion` VARCHAR(60) NULL DEFAULT NULL , `unidad_medida_presentacion` VARCHAR(30) NULL DEFAULT NULL , `id_detalle_variante` INT(8) NULL DEFAULT NULL , `desc_detalle_variante` VARCHAR(70) NULL DEFAULT NULL , `id_marca` INT(4) NULL DEFAULT NULL , `desc_marca` VARCHAR(40) NULL DEFAULT NULL , `variacion` VARCHAR(600) NULL DEFAULT NULL ) ENGINE = InnoDB";
-        
-        $scripts[] = "CREATE TABLE `atributos_items_adjudicacion` ( `id_compra` VARCHAR(9) NULL DEFAULT NULL , `nro_item` INT NULL DEFAULT NULL , `nro_atributo_item` INT NULL DEFAULT NULL , `id_prop_atributo` INT(4) NULL DEFAULT NULL , `desc_prop_atributo` VARCHAR(300) NULL DEFAULT NULL , `id_unidad_med_prop_atributo` INT(3) NULL DEFAULT NULL , `desc_unidad_med_prop_atributo` VARCHAR(25) NULL DEFAULT NULL , `valor_numerico` FLOAT(17) NULL DEFAULT NULL , `valor_texto` VARCHAR(4000) NULL DEFAULT NULL , `valor_fecha` DATE NULL DEFAULT NULL , `valor_booleano` VARCHAR(1) NOT NULL DEFAULT 'N' ) ENGINE = InnoDB";
-        
-        $scripts[] = "CREATE TABLE `historial_modificaciones_llamado` ( `id_compra` VARCHAR(9) NULL DEFAULT NULL , `fecha` DATETIME NULL DEFAULT NULL , `campo` VARCHAR(30) NULL DEFAULT NULL , `valor_anterior` VARCHAR(200) NULL DEFAULT NULL , `valor_nuevo` VARCHAR(200) NULL DEFAULT NULL ) ENGINE = InnoDB";
-        
-        $scripts[] = "CREATE TABLE `aclaraciones_llamado` ( `id_compra` VARCHAR(9) NULL DEFAULT NULL , `texto` TEXT NULL DEFAULT NULL , `fecha` DATETIME NULL DEFAULT NULL , `nom_archivo` VARCHAR(200) NULL DEFAULT NULL ) ENGINE = InnoDB";
-        
-        $scripts[] = "CREATE TABLE `aclaraciones_adjudicacion` ( `id_compra` VARCHAR(9) NULL DEFAULT NULL , `texto` TEXT NULL DEFAULT NULL , `fecha` DATETIME NULL DEFAULT NULL , `nom_archivo` VARCHAR(200) NULL DEFAULT NULL ) ENGINE = InnoDB";
-        
-        $scripts[] = "CREATE TABLE `requerimientos_compra` ( `id_compra` VARCHAR(9) NOT NULL ,`nro_requerimiento` INT(3) NOT NULL ,`fecha_alta` DATETIME NOT NULL ,`funcionario_alta` INT(5) NOT NULL ,`obligatorio` BOOLEAN NULL DEFAULT NULL ,`tipo` INT(3) NOT NULL ,`estado` INT(3) NULL DEFAULT NULL ,`funcionario_cumplido` INT(5) NULL DEFAULT NULL ,`fecha_cumplido` DATETIME NULL DEFAULT NULL ,`descripcion` VARCHAR(500) NULL DEFAULT NULL ,`archivo_adjunto` VARCHAR(200) NULL DEFAULT NULL , PRIMARY KEY ( `id_compra` , `nro_requerimiento` ) ) ENGINE = InnoDB;";
-        
-        $scripts[] = "CREATE TABLE `visitas_obligatorias_compra` ( `id_compra` VARCHAR(10) NOT NULL ,`nro_requerimiento` INT(3) NOT NULL ,`fecha_inicio` DATETIME NOT NULL ,`fecha_fin` DATETIME NOT NULL ,`lugar_visita` VARCHAR(200) NULL DEFAULT NULL , PRIMARY KEY ( `id_compra` , `nro_requerimiento` ) ) ENGINE = InnoDB;";
-        
-        foreach($scripts as $script){
-
-            $q = $sql->query($script);
-
-        }
-
-        mysqli_close($sql);
     }
 
 

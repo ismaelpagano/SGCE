@@ -1,7 +1,9 @@
-CREATE TABLE `gestion_bd_sandbox`.`fecha_ult_actualizacion_compras` ( 
-    `contador` INT NOT NULL AUTO_INCREMENT ,
-    `fecha_ult_act` DATETIME NOT NULL , 
-    PRIMARY KEY (`contador`)
+CREATE TABLE `gestion_bd`.`actualizaciones_bd` ( 
+    `instancia` INT NOT NULL AUTO_INCREMENT ,
+	`fecha_ejecucion` DATETIME NOT NULL ,
+    `fecha_desde` DATETIME NOT NULL ,
+	`fecha_hasta` DATETIME NOT NULL , 
+    PRIMARY KEY (`instancia`)
 ) ENGINE = InnoDB;
 
 CREATE TABLE `gestion_bd_sandbox`.`fecha_ult_actualizacion_adjs` ( 
@@ -37,9 +39,10 @@ CREATE TABLE `gestor_compras_estatales_sandbox`.`mails_contacto` (
 CREATE TABLE `gestion_bd`.`gestion_compras` ( 
 	`id_compra` VARCHAR(9) NOT NULL ,
 	`anio_compra` INT(4) NOT NULL ,
-	`fecha_publicacion` DATETIME NOT NULL,
-	`fecha_ult_mod_arce` DATETIME NOT NULL,
-	`fecha_ult_mod_sgce` DATETIME NULL DEFAULT NULL ,
+	`fecha_publicacion` DATETIME NULL DEFAULT NULL,
+	`fecha_publicacion_adj` DATETIME NULL DEFAULT NULL, 
+	`fecha_ult_mod_arce` DATETIME NULL DEFAULT NULL,
+	`fecha_ult_mod_sgce` DATETIME NOT NULL ,
 	`estado_arce` INT(2) NOT NULL ,
 	`estado_interno` INT(2) NOT NULL , 
 	`nombre_interno` VARCHAR(50) NULL DEFAULT NULL ,
