@@ -174,12 +174,14 @@
                 }
 
                 foreach($this->database_anios[$anio_compras] as $compra){
+              
+                    $query = '';
 
                     $id_compra = (string)$compra['atributos']['id_compra'];
                 
                     $claves = Array('id_compra' => $id_compra);
                     $anio = (string)$compra['atributos']['anio_compra'];
-                    $this->insert_update_registro_bd_anio($compra['atributos'], 'compras', $claves, $anio);
+                    $query .= $this->insert_update_registro_bd_anio($compra['atributos'], 'gestor_compras_estatales_'.$anio.'.compras', $claves, $anio);
 
                     if($compra['items_compra'] != NULL){
 
@@ -187,7 +189,7 @@
 
                             $atributos = $item->attributes();
                             $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item']);
-                            $this->insert_update_registro_bd_anio($atributos, 'items_compra', $claves, $anio);
+                            $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.items_compra', $claves, $anio);
 
                             $atributos_item = $item->children();
 
@@ -199,7 +201,7 @@
 
                                     $atributos = $atributo_item->attributes();
                                     $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'nro_atributo_item' => $nro_atributo_item );
-                                    $this->insert_update_registro_bd_anio($atributos, 'atributos_items_compra', $claves, $anio);
+                                    $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.atributos_items_compra', $claves, $anio);
 
                                     $valores_atributos_item = $atributo_item->children();
 
@@ -211,7 +213,7 @@
         
                                             $atributos = $atributo_item->attributes();
                                             $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'nro_atributo_item' => $nro_atributo_item , 'nro_valor_atributo_item' => $nro_valor_atributo_item);
-                                            $this->insert_update_registro_bd_anio($atributos, 'valores_atributos_items_compra', $claves, $anio);
+                                            $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.valores_atributos_items_compra', $claves, $anio);
             
                                             $nro_valor_atributo_item++;
                                         }
@@ -224,48 +226,41 @@
                             }
 
                         }
-
                     }
 
                     if($compra['modificaciones_compra'] != NULL){
 
-                        $sql = $this->sql_con('gestor_compras_estatales_'.$anio);
-
-                        $q = "DELETE FROM historial_modificaciones_llamado WHERE id_compra = '".$id_compra."'";
-
-                        $q = $sql->query($q);
-
-                        mysqli_close($sql);
+                        $query .= "DELETE FROM gestor_compras_estatales_".$anio.".historial_modificaciones_llamado WHERE id_compra = '".$id_compra."' ; ";
 
                         foreach($compra['modificaciones_compra'] as $modificaciones){
 
                             $atributos = $modificaciones->attributes(); 
 
                             $claves = Array( 'id_compra' => $id_compra);
-                            $query = $this->insert_update_registro_bd_anio($atributos, 'historial_modificaciones_llamado', $claves, $anio);
+                            $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.historial_modificaciones_llamado', $claves, $anio);
                         }
 
                     }
 
                     if($compra['aclaraciones_llamado'] != NULL){
 
-                        $sql = $this->sql_con('gestor_compras_estatales_'.$anio);
-
-                        $q = "DELETE FROM aclaraciones_llamado WHERE id_compra = '".$id_compra."'";
-
-                        $q = $sql->query($q);
-
-                        mysqli_close($sql);
+                        $q = "DELETE FROM 'gestor_compras_estatales_".$anio.".aclaraciones_llamado WHERE id_compra = '".$id_compra."' ; ";
 
                         foreach($compra['aclaraciones_llamado'] as $aclaraciones){
 
                             $atributos = $aclaraciones->attributes(); 
 
                             $claves = Array( 'id_compra' => $id_compra );
-                            $query = $this->insert_update_registro_bd_anio($atributos, 'aclaraciones_llamado', $claves, $anio);
+                            $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.aclaraciones_llamado', $claves, $anio);
                         }
 
                     }
+
+                    $sql = $this->sql_con();
+
+                    $q = $sql->multi_query($query);
+
+                    mysqli_close($sql);
 
                     // Acá se ingresa o actualiza el registro de gestión de la compra
 
@@ -323,11 +318,13 @@
                 
                 foreach($this->database_anios[$anio_compras] as $compra){
 
-                    $id_compra = $compra['atributos']['id_compra'];
+                    $query = '';
+
+                    $id_compra = (string)$compra['atributos']['id_compra'];
                 
                     $claves = Array('id_compra' => $id_compra);
                     $anio = (string)$compra['atributos']['anio_compra'];
-                    $this->insert_update_registro_bd_anio($compra['atributos'], 'compras', $claves, $anio);
+                    $query .= $this->insert_update_registro_bd_anio($compra['atributos'], 'gestor_compras_estatales_'.$anio.'.compras', $claves, $anio);
 
                     if($compra['items_adjudicacion'] != NULL){
 
@@ -335,7 +332,7 @@
 
                             $atributos = $item->attributes();
                             $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item']);
-                            $this->insert_update_registro_bd_anio($atributos, 'items_adjudicacion', $claves, $anio);
+                            $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.items_adjudicacion', $claves, $anio);
 
                             $atributos_item = $item->children();
 
@@ -347,7 +344,7 @@
 
                                     $atributos = $atributo_item->attributes();
                                     $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'nro_atributo_item' => $nro_atributo_item );
-                                    $this->insert_update_registro_bd_anio($atributos, 'atributos_items_compra', $claves, $anio);
+                                    $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.atributos_items_compra', $claves, $anio);
                                     $nro_atributo_item++;
                                 }
 
@@ -359,61 +356,54 @@
 
                     if($compra['aclaraciones_adjudicacion'] != NULL){
 
-                        $sql = $this->sql_con('gestor_compras_estatales_'.$anio);
-
-                        $q = "DELETE FROM aclaraciones_adjudicacion WHERE id_compra = '".$id_compra."'";
-
-                        $q = $sql->query($q);
-
-                        mysqli_close($sql);
+                        $query = "DELETE FROM 'gestor_compras_estatales_".$anio.".aclaraciones_adjudicacion WHERE id_compra = '".$id_compra."' ; ";
 
                         foreach($compra['aclaraciones_adjudicacion'] as $modificaciones){
 
                             $atributos = $modificaciones->attributes(); 
 
                             $claves = Array( 'id_compra' => $id_compra);
-                            $this->insert_update_registro_bd_anio($atributos, 'aclaraciones_adjudicacion', $claves, $anio);
+                            $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.aclaraciones_adjudicacion', $claves, $anio);
                         }
 
                     }
 
                     if($compra['oferentes'] != NULL){
 
-                        $sql = $this->sql_con('gestor_compras_estatales_'.$anio);
-
-                        $q = "DELETE FROM oferentes WHERE id_compra = '".$id_compra."'";
-
-                        $q = $sql->query($q);
-
-                        mysqli_close($sql);
+                        $q = "DELETE FROM 'gestor_compras_estatales_".$anio.".oferentes WHERE id_compra = '".$id_compra."' ; ";
 
                         foreach($compra['oferentes'] as $aclaraciones){
 
                             $atributos = $aclaraciones->attributes(); 
 
                             $claves = Array( 'id_compra' => $id_compra );
-                            $this->insert_update_registro_bd_anio($atributos, 'oferentes', $claves, $anio);
+                            $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.oferentes', $claves, $anio);
                         }
                     }
+
+                    $sql = $this->sql_con();
+
+                    $q = $sql->multi_query($query);
+
+                    mysqli_close($sql);
 
                     if(!isset($gestion_compras[$id_compra])){
                         
                         $sql = $this->sql_con('gestion_bd');
 
-                        $fecha_publicacion_query = '';
-                        $fecha_publicacion = '';
+                        $fecha_publicacion_adj_query = '';
+                        $fecha_publicacion_adj = '';
 
-                        $fecha_ult_mod_llamado_query = '';
-                        $fecha_ult_mod_llamado = '';
+                        if(isset($compra['atributos']['fecha_pub_adj'])){
 
-                        if(isset($compra['atributos']['fecha_publicacion'])){
-
-                            $fecha_publicacion_adj_query = ' fecha_publicacion ,';
-                            $fecha_publicacion_adj = "'".formatear_fecha_hora($compra['atributos']['fecha_publicacion'])."' ,";
+                            $fecha_publicacion_adj_query = 'fecha_publicacion_adj ,';
+                            $fecha_publicacion_adj = "'".formatear_fecha_hora($compra['atributos']['fecha_pub_adj'])."' ,";
                         }
 
                         $q = "INSERT INTO gestion_compras ( id_compra , anio_compra ,".$fecha_publicacion_adj_query." fecha_ult_mod_sgce , estado_arce , estado_interno ) VALUES ( '".$id_compra."' , '".$compra['atributos']['anio_compra']."' ,".$fecha_publicacion_adj." '".date('Y-m-d H:i:s')."' , '".$compra['atributos']['estado_compra']."' , 0 ) ON DUPLICATE KEY UPDATE id_compra = '".$id_compra."'";
                        
+                        echo $q.'<br>';
+                        
                         $q = $sql->query($q);
 
                         mysqli_close($sql);
@@ -539,15 +529,17 @@
             $values = substr($values, 0, -2);
     
             $values .= " )";
-            $query .= $values.$duplicate.";";
+            $query .= $values.$duplicate." ; ";
 
-            $sql = $this->sql_con('gestor_compras_estatales_'.$anio);
+            // $sql = $this->sql_con('gestor_compras_estatales_'.$anio);
 
             //echo $query.'<br>';
 
-            $q = $sql->query($query);
+            //$q = $sql->query($query);
 
-            mysqli_close($sql);
+            // mysqli_close($sql);
+
+            return $query;
         }
 
         public function get_databases_compras_anio(){

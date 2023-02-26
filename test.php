@@ -95,10 +95,56 @@
 
         $sql = sql_con();
 
-        $q = "SELECT compra.id_compra , gestion.estado_interno , compra.fecha_publicacion , compra.fecha_pub_adj , compra.fecha_ult_mod_llamado , compra.estado FROM gestor_compras_estatales_sandbox.compras as compra INNER JOIN gestion_bdd_sandbox.gestion_compras as gestion ON compra.id_compra = gestion = id_compra";
+        $q = "SELECT compra.id_compra as id_compra , gestion.estado_interno as estado_interno , compra.fecha_publicacion as fecha_publicacion , compra.fecha_pub_adj as fecha_pub_adj , compra.fecha_ult_mod_llamado as fecha_ult_mod_llamado , compra.estado_compra as estado_compra , compra.anio_compra as anio_compra FROM gestor_compras_estatales_sandbox.compras as compra INNER JOIN gestion_bd_sandbox.gestion_compras as gestion ON compra.id_compra = gestion.id_compra";
+
+        $q = $sql->query($q);
+
+        $compras = Array();
+
+        if($q){
+
+            while($r = $q->fetch_object()){
+
+                $compras[$r->id_compra] = $r;
+
+            }
+
+        }
+
+        foreach($compras as $compra){
+
+            $fecha_publicacion = '';
+            $fecha_publicacion_query = '';
+            $fecha_ult_mod_llamado = '';
+            $fecha_ult_mod_llamado_query = '';
+            $fecha_pub_adj = '';
+            $fecha_pub_adj_query = '';
+
+            if(isset($compra->fecha_publicacion)){
+
+                $fecha_publicacion = "'".$compra->fecha_publicacion."' , ";
+                $fecha_publicacion_query = "fecha_publicacion , ";
+
+                if(isset($compra->fecha_ult_mod_llamado)){
+                    $fecha_ult_mod_llamado = "'".$compra->fecha_ult_mod_llamado."' , ";
+                    $fecha_ult_mod_llamado_query = "fecha_ult_mod_arce , ";
+                }
+
+            } else if (isset($compra->fecha_pub_adj)){
+
+                $fecha_pub_adj = "'".$compra->fecha_pub_adj."' , ";
+                $fecha_pub_adj_query = "fecha_publicacion_adj , ";
+            }
+
+            $q = "INSERT INTO gestion_bd.gestion_compras ( id_compra , estado_interno , ".$fecha_publicacion_query.$fecha_pub_adj_query.$fecha_ult_mod_llamado_query."estado_arce , anio_compra , fecha_ult_mod_sgce ) VALUES ( '".$compra->id_compra."' , '".$compra->estado_interno."' , ".$fecha_publicacion.$fecha_pub_adj.$fecha_ult_mod_llamado." '".$compra->estado_compra."' , '".$compra->anio_compra."' , '".date('Y-m-d H:i:s')."' )";
+
+            $sql->query($q);
+
+        }
+
 
 ?>
-
+ 
 <!DOCTYPE html>
 <html>
     <head>
