@@ -536,9 +536,22 @@
                     
                     $q = $sql->multi_query($query);
 
-                    if(!$q){
+                    $linea = 0;
 
-                        print_r("Ha fallado la solicitud para: ".$query)."\n";
+                    if($q){
+
+                        foreach($sql->more_result() as $result){
+
+                            print_r($linea."\n");
+
+
+                            if(!$result){
+                                print_r("Ha fallado la solicitud en la linea: ".$linea)."\n";
+                            }
+    
+                            $linea++;
+    
+                        }
 
                     }
 
@@ -556,7 +569,7 @@
             $sql = $this->sql_con('gestion_bd');
 
             $q = "INSERT INTO actualizaciones_bd ( fecha_ejecucion , fecha_desde, fecha_hasta ) VALUES ( '".$fecha_actual."' , '".$this->fecha_ult_act_bd."' , '".$fecha_fin."')";
-
+            
             $q = $sql->query($q);
 
             mysqli_close($sql);    

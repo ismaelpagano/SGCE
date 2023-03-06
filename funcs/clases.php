@@ -996,8 +996,8 @@
             $this->id_compra = $oferta->id_compra;
             $this->id_oferta = $oferta->id_oferta;
             $this->estado = $oferta->estado_oferta;
-            $this->responsable = $oferta->responsable;
-            $this->fecha_alta = $oferta->fecha_alta_oferta;
+            $this->responsable = $oferta->funcionario_alta;
+            $this->fecha_alta = $oferta->fecha_alta;
             $this->fecha_ult_mod = $oferta->fecha_ult_mod_oferta;
         }
 
