@@ -228,8 +228,10 @@
                 $fecha_intermedia = date('Y-m-d H:i:s', strtotime($fecha_inicial.' + 608400 SECONDS' ));
     
                 actualizador_compras($fecha_inicial, $fecha_intermedia);
+
+                system('cls');
     
-                actualizador_adj($fecha_inicial, $fecha_intermedia);
+                // actualizador_adj($fecha_inicial, $fecha_intermedia);
     
                 actualizador();
     
@@ -237,7 +239,7 @@
     
                 actualizador_compras($fecha_inicial, $fecha_final);
     
-                actualizador_adj($fecha_inicial, $fecha_final);
+                // actualizador_adj($fecha_inicial, $fecha_final);
             }
 
         } else if ($fecha_ult_respaldo != date('Y-m-d', strtotime($fecha_actual.' - 1 DAYS'))) {
@@ -412,7 +414,7 @@
 
         $sql = sql_con($db);
 
-        //echo $query."\n";
+        echo $query."\n";
 
         $q = $sql->query($query);
 
@@ -424,9 +426,12 @@
 
         print_r("Se actualizará la lista de compras. ".date('Y-m-d H:i:s', time()).".\n");
 
-        $fecha_actualizacion = date('Y-m-d H:i:s');
+        $fecha_actualizacion = $fecha_fin;
 
         // 1) obtener todos los identificadores de compra de la base de datos
+
+        $id_compras_bd = Array();
+        $id_compras_adj = Array();
 
         $sql = sql_con(DATABASE_GESTION);
 
@@ -439,9 +444,6 @@
         $q = $sql->query($query); 
  
         mysqli_close($sql);  
-
-        $id_compras_bd = Array();
-        $id_compras_adj = Array();
 
         if($g){
             while($r = $g->fetch_object()){
@@ -471,7 +473,7 @@
 
             $id_compra = $attributes['id_compra'];
 
-            if((!array_key_exists((string)$id_compra, $id_compras_bd)) && (!array_key_exists((string)$id_compra, $id_compras_adj)) ){
+            // if((!array_key_exists((string)$id_compra, $id_compras_bd)) && (!array_key_exists((string)$id_compra, $id_compras_adj)) ){
                 // 4.1) Si no existe la id en la base de datos se ingresa la compra y sus items
                 
                 $items_compra = $compra->items->children();
@@ -482,34 +484,34 @@
 
                 insert_compra_bd($compra, $id_compra);
 
-                insert_gestion_compra_bd($id_compra, $attributes['estado_compra'], $attributes['fecha_ult_mod_llamado']);
+                // insert_gestion_compra_bd($id_compra, $attributes['estado_compra'], $attributes['fecha_ult_mod_llamado']);
 
                 // 4.1.2) Aquí se debe ingresar la información referida al contacto del llamado.
 
                 // insert_contacto_compra_bd($id_compra, $compra);
 
-            } else if(!array_key_exists((string)$id_compra, $id_compras_bd)) {
+            // } else if(!array_key_exists((string)$id_compra, $id_compras_bd)) {
                 
-                $items_compra = $compra->items->children();
+            //     $items_compra = $compra->items->children();
 
-                if($items_compra != NULL){
+            //     if($items_compra != NULL){
                     
-                    insert_items_compra_bd($items_compra, $id_compra);
-                }
+            //         insert_items_compra_bd($items_compra, $id_compra);
+            //     }
 
-                update_compra_bd($compra, $id_compra);
+            //     update_compra_bd($compra, $id_compra);
             
-            } else {
+            // } else {
                 
-                // 4.2) Falta deliberar qué ocurre cuando la compra ya está en la base de datos
+            //     // 4.2) Falta deliberar qué ocurre cuando la compra ya está en la base de datos
 
-                // Ocurre que de una compra solo se actualizan algunos datos por ejemplo el estado de la compra, se actualizan las fechas etc, los items nunca se actualizan, 
+            //     // Ocurre que de una compra solo se actualizan algunos datos por ejemplo el estado de la compra, se actualizan las fechas etc, los items nunca se actualizan, 
 
-                // deberia ocurrir un update
+            //     // deberia ocurrir un update
 
-                update_compra_bd($compra, $id_compra);
+            //     update_compra_bd($compra, $id_compra);
             
-            }
+            // }
 
             // Lo siguiente siempre ocurre 
 
@@ -558,7 +560,7 @@
             }
         }
 
-        $values = $values." )";
+        $values = $values." ) ON DUPLICATE KEY UPDATE id_compra = '".$id_compra."'";
         $query = $query.$values;
         
         insert_bd($query, DATABASE_COMPRAS, "'compra'");
@@ -710,7 +712,7 @@
                 }
             }
 
-            $query = $query.$values." )";
+            $query = $query.$values." ) ON DUPLICATE KEY UPDATE id_compra = '".$id_compra."'";
 
             insert_bd($query, DATABASE_COMPRAS, "'ítem'");
 
@@ -939,11 +941,11 @@
 
             $id_compra = $attributes['id_compra']; //optimizar esto
 
-            if((!array_key_exists((string)$id_compra, $id_compras_adj)) && (!array_key_exists((string)$id_compra, $id_compras_bd))){
+            // if((!array_key_exists((string)$id_compra, $id_compras_adj)) && (!array_key_exists((string)$id_compra, $id_compras_bd))){
 
                 insert_compra_bd($compra, $id_compra);
 
-                insert_compra_adj($id_compra, $attributes->estado_compra, $attributes->fecha_pub_adj);
+                //insert_compra_adj($id_compra, $attributes->estado_compra, $attributes->fecha_pub_adj);
 
                 if($oferentes != NULL){
                     insert_oferentes_adj($oferentes, $id_compra);
@@ -953,26 +955,26 @@
                     insert_item_adj($adjudicaciones, $id_compra);
                 }
 
-            } else if(!array_key_exists((string)$id_compra, $id_compras_adj)){
+            // } else if(!array_key_exists((string)$id_compra, $id_compras_adj)){
                 
-                update_compra_bd($compra, $id_compra);
+            //     update_compra_bd($compra, $id_compra);
 
-                update_compra_adj($id_compra, $attributes->estado_compra, $attributes->fecha_pub_adj);
+            //     update_compra_adj($id_compra, $attributes->estado_compra, $attributes->fecha_pub_adj);
 
-                if($oferentes != NULL){
-                    insert_oferentes_adj($oferentes, $id_compra);
-                }
+            //     if($oferentes != NULL){
+            //         insert_oferentes_adj($oferentes, $id_compra);
+            //     }
     
-                if($adjudicaciones != NULL){
-                    insert_item_adj($adjudicaciones, $id_compra);
-                }
+            //     if($adjudicaciones != NULL){
+            //         insert_item_adj($adjudicaciones, $id_compra);
+            //     }
             
-            } else {
+            // } else {
 
-                update_compra_adj($id_compra, $attributes->estado_compra, $attributes->fecha_pub_adj);
-                update_compra_bd($compra, $id_compra);
+            //     update_compra_adj($id_compra, $attributes->estado_compra, $attributes->fecha_pub_adj);
+            //     update_compra_bd($compra, $id_compra);
             
-            }
+            // }
 
             if($aclaraciones_adj != NULL){
                 insert_aclaraciones_adj($aclaraciones_adj, $id_compra);
@@ -990,7 +992,7 @@
         $query = "
             INSERT INTO gestion_compras 
             ( id_compra , estado_compra , fecha_ult_mod , estado_interno , valoracion_interna)
-            VALUES ( '".$id_compra."' , '".$estado_compra."' , '".$fecha_ult_mod."' , '0' , '0' ) ";
+            VALUES ( '".$id_compra."' , '".$estado_compra."' , '".$fecha_ult_mod."' , '0' , '0' ) ON DUPLICATE KEY UPDATE id_compra";
         
         insert_bd($query, DATABASE_GESTION, "'se agrego una adjudicacion de compra en gestion.'");
 
@@ -1012,7 +1014,7 @@
 
     }
 
-    function insert_item_adj($items_adj, $id_compra){
+    function insert_item_adj($items_adj, $id_compra ,){
 
         $adjudicacion = false;
 
@@ -1048,7 +1050,7 @@
             $atributos_item_adj = $item_adj->atributos_adjudicacion->children();
 
             if($atributos_item_adj != NULL){
-                insert_att_item_adj($atributos_item_adj, $id_compra, $nro_item);
+                insert_att_item_adj($atributos_item_adj, $id_compra, $nro_item );
             }
 
             if( $item_adj->tipo_doc_prov == 'R' && $item_attributes->nro_doc_prov == '215036060012' ){
@@ -1075,9 +1077,9 @@
 
             $attributes = $atributo->attributes();
 
-            $query = 'INSERT INTO atributos_items_adjudicacion ( id_compra , nro_item , nro_atributo_item';
+            $query = 'INSERT INTO atributos_items_adjudicacion ( id_compra , nro_item , nro_atributo_item , tipo_doc_prov , nro_doc_prov , variacion';
 
-            $values = ' ) VALUES ( "'.$id_compra.'" , '.$nro_item.' , '.$nro_atributo_item;
+            $values = ' ) VALUES ( "'.$id_compra.'" , '.$nro_item.' , '.$nro_atributo_item.' , '.$item_attributes->tipo_doc_prov.' , '.$item_attributes->nro_doc_prov.' , '.$item_attributes->variacion;
 
             foreach($attributes as $a => $b){
 
@@ -1365,13 +1367,15 @@
 
             };
 
-            $query .= $values." )\n";
+            $query .= $values." );\n";
 
             $texto .= $query;
 
         }
 
         $file = fopen('testfile.txt', 'w');
+
+        echo $texto;
 
         $fwrite = fwrite($file, $texto);
 

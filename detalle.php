@@ -38,7 +38,7 @@
 
     $nuevo_requerimiento = new Requerimiento();
 
-    $sql = sql_con(DATABASE_COMPRAS);
+    $sql = sql_con('gestor_compras_estatales_'.$compra->anio_compra);
 
     $_SESSION['compra_actual'] = $compra;
 
@@ -54,7 +54,7 @@
 
     $compra->llamado_visto();
 
-    // $compra->agregar_contacto_bd();
+    // $compra->agregar_contacto_bd()
 
 ?>
 <!DOCTYPE html>
@@ -102,24 +102,24 @@
                         <div id="cont_tabla_subc">
                             <?php // $_SESSION['user']->oferta_actual->mostrar_subc(); ?>
                         </div>
-                        <div id="asignar_sector">
+                        <!-- <div id="asignar_sector">
                             <form id="asignar_sector" method="POST">
                                 <label for="lista_sectores">Asignar sector</label>
                                 <select name="lista_sectores">
                                     <option value=''></option>";
                                     <?php
-                                        foreach($_SESSION['sistema']->sectores as $sector){
-                                            echo "<option value='".$sector['id']."'>".$sector['nombre']."</option>";
-                                        }				
+                                        // foreach($_SESSION['sistema']->sectores as $sector){
+                                        //     echo "<option value='".$sector['id']."'>".$sector['nombre']."</option>";
+                                        // }				
                                     ?>
                                 </select>
                                 <input type="submit" value="Asignar" onclick='anadir_sector()'>
                             </form>
-                        </div>
+                        </div> -->
                     </div>
                     <div id="cont_requerimientos">
-                        <?php echo $div_requerimientos; ?>
-                        <?php echo $nuevo_requerimiento->form_requerimiento(); ?>
+                        <?php  //echo $div_requerimientos; ?>
+                        <?php  //echo $nuevo_requerimiento->form_requerimiento(); ?>
                     </div>
                     <div id="contenedor_comentarios"><?php include 'comentarios.php'; ?></div>
                 </div>

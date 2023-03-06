@@ -2,29 +2,31 @@
 
     function actualizar_catalogo(){
 
+        echo "empieza el script";
+
         $archivos_bd = Array(
-            "bd/catalogo/ART_ATRIBUTO.sql",
-            "bd/catalogo/ART_COLOR.sql",
-            "bd/catalogo/ART_IMPUESTO.sql",
-            "bd/catalogo/ART_SERV_OBRA.sql",
-            "bd/catalogo/ART_UNIDAD_MED.sql",
-            "bd/catalogo/CLASE.sql",
-            "bd/catalogo/COLOR.sql",
-            "bd/catalogo/DET_VARIANTE.sql",
-            "bd/catalogo/FAMILIA.sql",
-            "bd/catalogo/IMPUESTO.sql",
-            "bd/catalogo/MARCA.sql",
-            "bd/catalogo/MED_VARIANTE.sql",
-            "bd/catalogo/MEDIDA.sql",
-            "bd/catalogo/ODG.sql",
-            "bd/catalogo/PORC_IMPUESTO.sql",
-            "bd/catalogo/PRESENTACION.sql",
-            "bd/catalogo/PROP_UNIDAD_MED.sql",
-            "bd/catalogo/PROPIEDAD.sql",
-            "bd/catalogo/SINONIMO.sql",
-            "bd/catalogo/SUBCLASE.sql",
-            "bd/catalogo/SUBFAMILIA.sql",
-            "bd/catalogo/UNIDAD_MED.sql"
+            "catalogo/ART_ATRIBUTO.sql",
+            "catalogo/ART_COLOR.sql",
+            "catalogo/ART_IMPUESTO.sql",
+            "catalogo/ART_SERV_OBRA.sql",
+            "catalogo/ART_UNIDAD_MED.sql",
+            "catalogo/CLASE.sql",
+            "catalogo/COLOR.sql",
+            "catalogo/DET_VARIANTE.sql",
+            "catalogo/FAMILIA.sql",
+            "catalogo/IMPUESTO.sql",
+            "catalogo/MARCA.sql",
+            "catalogo/MED_VARIANTE.sql",
+            "catalogo/MEDIDA.sql",
+            "catalogo/ODG.sql",
+            "catalogo/PORC_IMPUESTO.sql",
+            "catalogo/PRESENTACION.sql",
+            "catalogo/PROP_UNIDAD_MED.sql",
+            "catalogo/PROPIEDAD.sql",
+            "catalogo/SINONIMO.sql",
+            "catalogo/SUBCLASE.sql",
+            "catalogo/SUBFAMILIA.sql",
+            "catalogo/UNIDAD_MED.sql"
         );
     
     
@@ -43,5 +45,7 @@
         }
 
     }
+
+    actualizar_catalogo();
 
 ?>

@@ -59,6 +59,12 @@
                 $ret[1] = 'Oferta rechazada';
                 $ret[2] = '6';
             break;
+            case 7:
+            case 'no aplica': 
+                    $ret[0] = 'no aplica';
+                    $ret[1] = 'No aplica';
+                    $ret[2] = '7';
+                break;
             default:
                 $ret[0] = 'desconocido';
                 $ret[1] = 'Estado llamado desconocido';

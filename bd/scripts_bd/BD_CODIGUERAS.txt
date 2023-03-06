@@ -39,8 +39,8 @@ CREATE TABLE `codigueras_arce`.`porcentajes_subprograma_pcpd` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE `codigueras_arce`.`subprogramas_pcpd` ( 
-	`codigo` INT(2) NOT NULL , 
-	`descripcion` VARCHAR(50) NOT NULL , 
+	`id_subprograma` INT(2) NOT NULL , 
+	`nom_subprograma` VARCHAR(50) NOT NULL , 
 	`fecha_desde` DATE NULL DEFAULT NULL , 
 	`fecha_hasta` DATE NULL DEFAULT NULL  
 ) ENGINE = InnoDB;

@@ -43,8 +43,9 @@ CREATE TABLE `gestion_bd`.`gestion_compras` (
 	`fecha_publicacion_adj` DATETIME NULL DEFAULT NULL, 
 	`fecha_ult_mod_arce` DATETIME NULL DEFAULT NULL,
 	`fecha_ult_mod_sgce` DATETIME NOT NULL ,
+	`fecha_hora_tope_entrega` DATETIME NULL DEFAULT NULL ,
 	`estado_arce` INT(2) NOT NULL ,
-	`estado_interno` INT(2) NOT NULL , 
+	`estado_interno` INT(2) NOT NULL DEFAULT '0' , 
 	`nombre_interno` VARCHAR(50) NULL DEFAULT NULL ,
 	`funcionario_encargado` INT(3) NULL DEFAULT NULL ,
 	`sector_asignado` INT(2) NULL DEFAULT NULL ,
@@ -55,17 +56,14 @@ CREATE TABLE `gestion_bd`.`gestion_compras` (
 
 CREATE TABLE `gestion_bd`.`gestion_compras` ( 
 	`id_compra` VARCHAR(9) NULL DEFAULT NULL ,
-	`fecha_publicacion_llamado` DATETIME NULL DEFAULT NULL , 
-	`fecha_ult_mod_arce` DATETIME NULL DEFAULT NULL , 
-	`fecha_ult_mod_sgce` DATETIME NULL DEFAULT NULL , 
-	`usuario_encargado` INT(3) NULL DEFAULT NULL , 
-	`sector_asignado` INT(2) NULL DEFAULT NULL ,
 	`estado_compra` INT(3) NULL DEFAULT NULL,
-	`estado_interno` INT(15) NULL DEFAULT NULL , 
-	`nombre_interno` VARCHAR(200) NULL DEFAULT NULL , 
-	`valoracion_interna` INT(15) NULL DEFAULT NULL , 
+	`estado_interno` INT(2) NULL DEFAULT NULL , 
+	`fecha_ult_mod` DATETIME NULL DEFAULT NULL , 
+	`valoracion_interna` INT(2) NULL DEFAULT NULL , 
 	PRIMARY KEY (`id_compra`)
 ) ENGINE = InnoDB;
+
+id_compra , estado_compra , estado_interno , valoracion_interna , fecha_ult_mod ) VALUES ( "i384285" , "7" , "0" , "0" , "2023-02-01 10:08:00" )
 
 CREATE TABLE `gestion_bd`.`clasificar_llamado` ( 
 	`id_compra` VARCHAR(9) NULL DEFAULT NULL , 
@@ -83,7 +81,7 @@ CREATE TABLE `gestion_bd_sandbox`.`compras_adjudicadas` (
 	PRIMARY KEY (`id_compra`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`ofertas` ( 
+CREATE TABLE `gestion_bd`.`ofertas` ( 
 	`id_oferta` VARCHAR(20) NOT NULL ,
 	`id_compra` VARCHAR(9) NOT NULL ,
 	`nombre_oferta` VARCHAR(50) NULL DEFAULT NULL ,
@@ -94,12 +92,12 @@ CREATE TABLE `gestion_bd_sandbox`.`ofertas` (
 	`estado_oferta` INT(2) NULL DEFAULT NULL ,
 	`monto_oferta` INT(20) NULL DEFAULT NULL ,
 	`id_moneda` INT(2) NULL DEFAULT NULL ,
- 	`descripcion` VARCHAR(65535) NULL DEFAULT NULL ,
-	`resolucion` VARCHAR(65535) NULL DEFAULT NULL ,
+ 	`descripcion` VARCHAR(5000) NULL DEFAULT NULL ,
+	`resolucion` VARCHAR(5000) NULL DEFAULT NULL ,
 	PRIMARY KEY (`id_oferta`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`subcontratistas_oferta` ( 
+CREATE TABLE `gestion_bd`.`subcontratistas_oferta` ( 
 	`id_oferta` VARCHAR(20) NOT NULL , 
 	`id_subcontratista` INT(5) NOT NULL ,
 	`funcionario_alta` INT (5) NOT NULL ,
@@ -107,7 +105,7 @@ CREATE TABLE `gestion_bd_sandbox`.`subcontratistas_oferta` (
 	PRIMARY KEY ( `id_oferta` , `id_subcontratista` )
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`subcontratistas` ( 
+CREATE TABLE `gestion_bd`.`subcontratistas` ( 
 	`id_subcontratista` INT(5) NOT NULL AUTO_INCREMENT, 
 	`funcionario_alta` INT(5) NOT NULL ,
 	`fecha_alta` DATETIME NOT NULL , 
@@ -119,20 +117,20 @@ CREATE TABLE `gestion_bd_sandbox`.`subcontratistas` (
 	PRIMARY KEY ( `id_subcontratista` )
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`fecha_respaldo` ( 
+CREATE TABLE `gestion_bd`.`fecha_respaldo` ( 
     `contador` INT NOT NULL AUTO_INCREMENT , 
     `fecha_ult_act` DATETIME NOT NULL , 
     PRIMARY KEY (`contador`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`respaldos` ( 
+CREATE TABLE `gestion_bd`.`respaldos` ( 
 	`contador` INT(10) NOT NULL AUTO_INCREMENT , 
 	`fecha_respaldada` DATE NOT NULL , 
 	`fecha_hora_ejecucion` DATETIME NOT NULL , 
 	PRIMARY KEY (`contador`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`rubros_oferta` ( 
+CREATE TABLE `gestion_bd`.`rubros_oferta` ( 
 	`id_oferta` VARCHAR(20) NOT NULL , 
 	`nro_item` INT(4) NOT NULL , 
 	`nom_rubro` VARCHAR(50) NULL DEFAULT NULL , 
@@ -143,7 +141,7 @@ CREATE TABLE `gestion_bd_sandbox`.`rubros_oferta` (
 	`id_moneda` INT(2) NULL DEFAULT NULL 
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`requerimientos_compra` ( 
+CREATE TABLE `gestion_bd`.`requerimientos_compra` ( 
 	`id_compra` VARCHAR(9) NOT NULL ,
 	`nro_requerimiento` INT(3) NOT NULL ,
 	`fecha_alta` DATETIME NOT NULL ,
@@ -158,7 +156,7 @@ CREATE TABLE `gestion_bd_sandbox`.`requerimientos_compra` (
 	PRIMARY KEY ( `id_compra` , `nro_requerimiento` )
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`visitas_obligatorias_compra` ( 
+CREATE TABLE `gestion_bd`.`visitas_obligatorias_compra` ( 
 	`id_compra` VARCHAR(10) NOT NULL ,
 	`nro_requerimiento` INT(3) NOT NULL ,
 	`fecha_inicio` DATETIME NOT NULL ,
@@ -167,7 +165,7 @@ CREATE TABLE `gestion_bd_sandbox`.`visitas_obligatorias_compra` (
 	PRIMARY KEY ( `id_compra` , `nro_requerimiento` )
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`sectores` ( 
+CREATE TABLE `gestion_bd`.`sectores` ( 
 	`id_sector` INT(2) NOT NULL , 
 	`nombre` VARCHAR(50) NULL DEFAULT NULL , 
 	`fecha_alta` DATETIME NOT NULL , 
@@ -175,7 +173,7 @@ CREATE TABLE `gestion_bd_sandbox`.`sectores` (
 	PRIMARY KEY ( `id_sector` )
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`comentarios` ( 
+CREATE TABLE `gestion_bd`.`comentarios` ( 
 	`id_comentario` INT(5) NOT NULL , 
 	`funcionario` INT(3) NULL DEFAULT NULL , 
 	`fecha_publicacion` DATETIME NOT NULL , 
@@ -187,7 +185,7 @@ CREATE TABLE `gestion_bd_sandbox`.`comentarios` (
 	PRIMARY KEY ( `id_contexto` , `contexto` , `id_comentario` )
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`modificaciones_comentario` ( 
+CREATE TABLE `gestion_bd`.`modificaciones_comentario` ( 
 	`id_comentario` INT(5) NOT NULL ,
 	`contexto` INT(2) NOT NULL ,
 	`id_contexto` VARCHAR(20) NOT NULL ,
@@ -196,7 +194,7 @@ CREATE TABLE `gestion_bd_sandbox`.`modificaciones_comentario` (
 	PRIMARY KEY ( `id_contexto` , `contexto` , `id_comentario` )
 ) ENGINE = InnoDB;
 
-CREATE TABLE `gestion_bd_sandbox`.`tipos_requerimiento` ( 
+CREATE TABLE `gestion_bd`.`tipos_requerimiento` ( 
 	`id_requerimiento` INT(3) NOT NULL ,
 	`descripcion` VARCHAR(50) NOT NULL ,
 	`fecha_alta` DATETIME NOT NULL ,
@@ -205,4 +203,14 @@ CREATE TABLE `gestion_bd_sandbox`.`tipos_requerimiento` (
 	`funcionario_baja` INT(5) NULL DEFAULT NULL ,
 	`motivo_baja` VARCHAR(200) ,
 	PRIMARY KEY ( `id_requerimiento` )
+) ENGINE = InnoDB;
+
+CREATE TABLE `gestion_bd`.`actualizacion_estado_llamado` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`id_compra` VARCHAR(9) ,
+	`fecha_actualizacion` DATETIME NULL DEFAULT NULL ,
+	`estado_anterior` VARCHAR(10) NOT NULL DEFAULT 'INICIAL' ,
+	`estado_actual` VARCHAR(10) NOT NULL DEFAULT '0' ,
+	`usuario_actualizador` VARCHAR(15) NOT NULL DEFAULT 'ACTUALIZADOR',
+	PRIMARY KEY ( `id`) 
 ) ENGINE = InnoDB;

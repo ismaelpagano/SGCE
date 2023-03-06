@@ -8,7 +8,7 @@
     define('LOG_IN', 'ingreso.php');
 
     define('DATABASE_COMPRAS', 'gestor_compras_estatales_sandbox');
-    define('DATABASE_GESTION', 'gestion_bd_sandbox');
+    define('DATABASE_GESTION', 'gestion_bd');
     define('DATABASE_CODIGUERAS', 'codigueras_arce');
     define('DATABASE_ACTUALIZADOR', 'gestion_bd_sandbox');
     define('GESTION_USUARIOS', 'gestion_usuarios');

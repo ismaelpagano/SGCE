@@ -34,8 +34,9 @@
 
     for ($i=($pagina_actual * $cant_pagina); ($i < $pagina_actual * $cant_pagina + $cant_pagina) && ($i < $total); $i++){
     
-        $_SESSION['sistema']->seleccion_llamados[$_SESSION['sistema']->seleccion_claves[$i]]->visor_llamado();
+        // $_SESSION['sistema']->seleccion_llamados[$_SESSION['sistema']->seleccion_claves[$i]]->visor_llamado();
         
+        $_SESSION['sistema']->seleccion_llamados[$_SESSION['sistema']->seleccion_claves[$i]]->visor_llamado();
 
     }
 

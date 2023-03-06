@@ -124,7 +124,7 @@
 
             $codigo = $child['codigo-subprograma'];
 
-            $fecha_vig = formatearFechaHora($child['fecha-vigencia']);
+            $fecha_vig = formatear_fecha_hora($child['fecha-vigencia']);
 
             $porcentaje = $child['porcentaje'];
             
@@ -145,9 +145,9 @@
 
             $descripcion = $child['descripcion'];
 
-            $fecha_desde = formatearFechaHora($child['fecha-desde']);
+            $fecha_desde = formatear_fecha_hora($child['fecha-desde']);
 
-            $fecha_hasta =  formatearFechaHora($child['fecha-hasta']);
+            $fecha_hasta =  formatear_fecha_hora($child['fecha-hasta']);
             
             $q = $sql->query("INSERT INTO subprogramas_pcpd(id_subprograma, nom_subprograma, fecha_desde, fecha_hasta) VALUES ('$codigo', '$descripcion', '$fecha_desde', '$fecha_hasta')");
         }
@@ -172,7 +172,7 @@
 
             $cond_precios_ofertas = $child['cond-precios-ofertas'];
 
-            $fecha_baja = formatearFechaHora($child['fecha-baja']);
+            $fecha_baja = formatear_fecha_hora($child['fecha-baja']);
 
             $prov_rupe = $child['prov-rupe'];
 
@@ -330,7 +330,7 @@
 
             $id_tipo_compra = $child['id-tipo-compra'];
 
-            $fecha_desde = formatearFechaHora($child['fecha-desde']);
+            $fecha_desde = formatear_fecha_hora($child['fecha-desde']);
 
             $id_categoria = $child['id-categoria'];
 
@@ -353,9 +353,9 @@
 
             $id_ue = $child['id-ue'];
 
-            $fecha_desde = formatearFechaHora($child['fecha-desde']);
+            $fecha_desde = formatear_fecha_hora($child['fecha-desde']);
 
-            $fecha_hasta = formatearFechaHora($child['fecha-hasta']);
+            $fecha_hasta = formatear_fecha_hora($child['fecha-hasta']);
 
             $id_categoria = $child['id-categoria'];
             
@@ -439,26 +439,26 @@
 
         $sql = sql_con(DATABASE_CODIGUERAS);
         
-        // actualizarTopesLegalesCategorias('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTopesLegalesCategorias.do', $sql);
-        // actualizarEstadosCompra('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteEstadosCompra.do', $sql);
-         actualizarIncisos('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteIncisos.do', $sql);
-        // actualizarEstadosProveedor('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteEstadosProveedor.do', $sql);
-        // actualizarMonedas('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteMonedas.do', $sql);
-        // actualizarObjetosGasto('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteObjetosGasto.do', $sql);
-        // actualizarPorcentajesSubprogramasPCPD('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reportePorcentajesSubprogramasPCPD.do', $sql);
-        // actualizarSubprogramasPCPD('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteSubprogramasPCPD.do', $sql);
-        // actualizarSubtiposCompra('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteSubTiposCompra.do', $sql);
-        // actualizarTiposAjusteAdj('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposAjusteAdj.do', $sql);
-        // actualizarTiposCompra('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposCompra.do', $sql);
-        // actualizarTiposDoc('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposDocumento.do', $sql);
-        // actualizarTiposResolucion('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposResolucion.do', $sql);
-        // actualizarTiposResTiposAjusAdj('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposResolucionTipoAjusteAdj.do', $sql);
-        // actualizarTiposResCompra('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposResolucionCompra.do', $sql);
-        // actualizarTopesLegales('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTopesLegales.do', $sql);
-        // actualizarUETopesAmpliados('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteUETopesAmpliados.do', $sql);
-         actualizarUCCs('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteUCCs.do', $sql);
-         actualizarUEs('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteUnidadesEjecutoras.do', $sql);
-        // actualizarUnidadesMedida('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteUnidadesMedida.do', $sql);
+        actualizarTopesLegalesCategorias('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTopesLegalesCategorias.do', $sql);
+        actualizarEstadosCompra('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteEstadosCompra.do', $sql);
+        actualizarIncisos('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteIncisos.do', $sql);
+        actualizarEstadosProveedor('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteEstadosProveedor.do', $sql);
+        actualizarMonedas('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteMonedas.do', $sql);
+        actualizarObjetosGasto('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteObjetosGasto.do', $sql);
+        actualizarPorcentajesSubprogramasPCPD('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reportePorcentajesSubprogramasPCPD.do', $sql);
+        actualizarSubprogramasPCPD('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteSubprogramasPCPD.do', $sql);
+        actualizarSubtiposCompra('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteSubTiposCompra.do', $sql);
+        actualizarTiposAjusteAdj('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposAjusteAdj.do', $sql);
+        actualizarTiposCompra('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposCompra.do', $sql);
+        actualizarTiposDoc('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposDocumento.do', $sql);
+        actualizarTiposResolucion('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposResolucion.do', $sql);
+        actualizarTiposResTiposAjusAdj('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposResolucionTipoAjusteAdj.do', $sql);
+        actualizarTiposResCompra('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTiposResolucionCompra.do', $sql);
+        actualizarTopesLegales('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteTopesLegales.do', $sql);
+        actualizarUETopesAmpliados('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteUETopesAmpliados.do', $sql);
+        actualizarUCCs('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteUCCs.do', $sql);
+        actualizarUEs('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteUnidadesEjecutoras.do', $sql);
+        actualizarUnidadesMedida('https://www.comprasestatales.gub.uy/comprasenlinea/jboss/reporteUnidadesMedida.do', $sql);
 
         mysqli_close($sql);
 
