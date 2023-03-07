@@ -219,7 +219,7 @@
                 $this->get_fechas_actualizacion();
     
                 if($this->fecha_ult_act_bd == '' && $this->fecha_primer_act_bd == ''){
-                    $this->fecha_ult_act_bd = '2023-02-01 00:00:00';
+                    $this->fecha_ult_act_bd = '2023-03-01 00:00:00';
                     $this->fecha_primer_act_bd = date('Y-m-d H:i:s');
                 }
     
@@ -535,25 +535,6 @@
                     $sql = $this->sql_con();
                     
                     $q = $sql->multi_query($query);
-
-                    $linea = 0;
-
-                    if($q){
-
-                        foreach($sql->more_result() as $result){
-
-                            print_r($linea."\n");
-
-
-                            if(!$result){
-                                print_r("Ha fallado la solicitud en la linea: ".$linea)."\n";
-                            }
-    
-                            $linea++;
-    
-                        }
-
-                    }
 
                     mysqli_close($sql);
 

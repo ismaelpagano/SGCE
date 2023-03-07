@@ -866,3 +866,85 @@ function buscarObjeto(clave){
 
 }
 
+function cambiar_nombre_compra($id_compra){
+
+	if(!mascara_bool){
+
+		mascara_bool = true;
+
+		var mascara = document.createElement('div');
+		mascara.id = 'fullpage_mask';
+		document.getElementsByTagName('body')[0].append(mascara);
+	
+		var mascara_relleno = document.createElement('div');
+		mascara_relleno.id = 'fullpage_mask_fill';
+		document.getElementById('fullpage_mask').append(mascara_relleno);
+		mascara_relleno.addEventListener('click', function() {mask_off()});
+	
+		var cartel = document.createElement('div');
+		cartel.id = 'ventana_cambio_nombre';
+		document.getElementById('fullpage_mask').append(cartel);
+		
+	}
+
+	var http = new XMLHttpRequest();
+	http.open('POST', 'form_cambio_nombre_compra.php', true);
+	var params = new FormData();
+	params.append('id_compra', $id_compra);
+	http.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200){
+			document.getElementById('ventana_cambio_nombre').innerHTML = this.responseText;
+		}
+	}
+	http.send(params);
+
+}
+
+function mask_off(){
+
+	var mascara = document.getElementById('fullpage_mask');
+	var body = document.getElementsByTagName('body')[0];
+
+	body.removeChild(mascara);
+
+	mascara_bool = false;
+
+}
+
+function cambiar_nombre(hash){
+
+	if(hash != ''){
+		var nombre = document.getElementById('campo_nombre').value;
+		var http = new XMLHttpRequest();
+		http.open('POST', 'cambiar_nombre_compra.php', true);
+		var params = new FormData();
+		params.append('nombre', nombre);
+		params.append('objeto', hash);
+		http.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200){
+				document.getElementById('header_title').innerHTML = this.responseText;
+				mask_off();
+			}
+		}
+		http.send(params);
+	}
+}
+
+function nombre_predeterminado(hash){
+
+	var http = new XMLHttpRequest();
+	http.open('POST', 'cambiar_nombre_compra.php', true);
+	var params = new FormData();
+	params.append('nombre', 'PREDETERMINADO');
+	params.append('objeto', hash);
+	http.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200){
+			document.getElementById('header_title').innerHTML = this.responseText;
+			mask_off();
+		}
+	}
+	http.send(params);
+
+}
+
+

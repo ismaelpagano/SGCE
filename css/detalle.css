@@ -21,11 +21,19 @@
 	display: none;
 }
 
+#header_title_div {
+    position: absolute;
+    width: 700px;
+    height: 80%;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 5%;
+}
+
 #header_title {
     position: absolute;
-    top: 50%;
     transform: translateY(-50%);
-    left: 5%;
+    top: 50%;
     font-family: 'OpenSans_Bold';
     letter-spacing: 1px;
 }
@@ -366,3 +374,41 @@
 #li_nav_ges {
     background-color: rgba(255, 200, 200, 0.6);
 }
+
+#cambiar_nombre_compra {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 20px;
+    height: 20px;
+}
+
+#fullpage_mask{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 100000000;
+}
+
+#fullpage_mask_fill{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.3;
+}
+
+#ventana_cambio_nombre {
+    position: relative;
+    height: 300px;
+    width: 500px;
+    margin: auto;
+    transform: translateY(-50%);
+    top: 50%;
+    background-color: grey;
+}
+

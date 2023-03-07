@@ -2,6 +2,8 @@
 
     Class Compras {
 
+        //Atributos ARCE de un llamado (o compra)
+
         //Identificacion de la compra
 
         public $id_compra;
@@ -32,8 +34,6 @@
         //Específico de la compra
 
         public $objeto;
-        public $fecha_hora_apertura;
-        public $lugar_apertura;
 
         //Fechas 
 
@@ -45,6 +45,12 @@
 
         public $lugar_entrega;
         public $fecha_hora_tope_entrega;
+
+        //Apertura
+
+        public $fecha_hora_apertura;
+        public $lugar_apertura;
+        public $apel;
 
         //Pliego
 
@@ -58,21 +64,20 @@
 
         public $contacto;
 
+        //Resolucion
+
+        public $id_tipo_resol;
+        public $num_resol;
+
         //Adjudicacion
 
         public $fecha_pub_adj;
         public $fecha_compra;
         public $fecha_vigencia_adj;
         public $fondos_rotatorios;
-        public $apel;
         public $arch_adj;
         public $monto_adj;
         public $id_moneda_monto_adj;
-
-        //Resolucion
-
-        public $id_tipo_resol;
-        public $num_resol;
 
         //Sobre reiteracion
 
@@ -96,6 +101,13 @@
         //Gestión interna
 
         public $estado_interno;
+        public $fecha_ult_mod_sgce;
+        public $nombre_interno;
+        public $funcionario_encargado;
+        public $sector_asignado;
+        public $valoracion_interna;
+        public $comentario_desestimado ;
+
         public $ofertas = Array();
         public $ofertas_usuario = Array();
         public $requerimientos = Array();
@@ -106,9 +118,8 @@
         public int $posicion_array;
 
         public function __construct($compra){
-            $this->compra = $compra;
-            $this->id_compra = $compra->id_compra;
-            $this->anio_compra = $compra->anio_compra;
+            $this->id_compra = $compra[0];
+            $this->anio_compra = $compra[1];
         } 
 
         public function agregar_contacto_bd(){
@@ -147,9 +158,13 @@
             $sql = sql_con();
 
             $query = "
-                SELECT * 
-                FROM gestor_compras_estatales_".$this->anio_compra.".compras
-                WHERE id_compra = '".$this->id_compra."'";
+                SELECT
+                compra.num_compra , compra.anio_compra , compra.id_inciso , compra.id_ue , compra.id_ucc , compra.estado_compra , compra.fecha_publicacion , compra.fecha_ult_mod_llamado , compra.id_tipocompra , compra.subtipo_compra , compra.objeto , compra.fecha_hora_tope_entrega , compra.nro_ampliacion , compra.nombre_pliego , compra.fecha_hora_apertura , compra.lugar_apertura , compra.fecha_sol_prorr , compra.fecha_sol_aclar , compra.fecha_hora_puja , compra.lugar_entrega , compra.precio_pliego , compra.id_moneda_pliego , compra.lugar_compra_pliego , compra.nombre_contacto , compra.fax_contacto , compra.email_contacto , compra.fecha_pub_adj , compra.fecha_compra , compra.fecha_vigencia_adj , compra.fondos_rotatorios , compra.apel , compra.arch_adj , compra.monto_adj , compra.id_moneda_monto_adj , compra.id_tipo_resol , compra.num_resol , compra.es_reiteracion , compra.arch_reiteracion ,
+                gestion.estado_interno , gestion.fecha_ult_mod_sgce , gestion.nombre_interno , gestion.funcionario_encargado , gestion.sector_asignado , gestion.valoracion_interna , gestion.comentario_desestimado 
+                FROM gestor_compras_estatales_".$this->anio_compra.".compras as compra
+                INNER JOIN gestion_bd.gestion_compras as gestion
+                ON compra.id_compra = gestion.id_compra
+                WHERE compra.id_compra = '".$this->id_compra."'";
 
             $q = $sql->query($query);
 
@@ -160,19 +175,20 @@
                 $r = $q->fetch_object();
                 $atributos = $r;
 
-                $this->num_compra =$atributos->num_compra;
-                $this->anio_compra =$atributos->anio_compra;
-                $this->id_inciso =$atributos->id_inciso;
-                $this->id_ue =$atributos->id_ue;
-                $this->id_ucc =$atributos->id_ucc;
-                $this->estado_compra =$atributos->estado_compra;
-                $this->fecha_publicacion =$atributos->fecha_publicacion;
-                $this->fecha_ult_mod_llamado =$atributos->fecha_ult_mod_llamado;
-                $this->id_tipocompra =$atributos->id_tipocompra;
-                $this->subtipo_compra =$atributos->subtipo_compra;
-                $this->objeto =$atributos->objeto;
-                $this->fecha_hora_tope_entrega =$this->compra->fecha_hora_tope_entrega;
-                $this->estado_interno =$this->compra->estado_interno;
+                // Atributos de compra
+
+                $this->num_compra = $atributos->num_compra;
+                $this->anio_compra = $atributos->anio_compra;
+                $this->id_inciso = $atributos->id_inciso;
+                $this->id_ue = $atributos->id_ue;
+                $this->id_ucc = $atributos->id_ucc;
+                $this->estado_compra = $atributos->estado_compra;
+                $this->fecha_publicacion = $atributos->fecha_publicacion;
+                $this->fecha_ult_mod_llamado = $atributos->fecha_ult_mod_llamado;
+                $this->id_tipocompra = $atributos->id_tipocompra;
+                $this->subtipo_compra = $atributos->subtipo_compra;
+                $this->objeto = $atributos->objeto;
+                $this->fecha_hora_tope_entrega = $atributos->fecha_hora_tope_entrega;
                 $this->nro_ampliacion = $atributos->nro_ampliacion;
                 $this->nombre_pliego = $atributos->nombre_pliego;
                 $this->fecha_hora_apertura = $atributos->fecha_hora_apertura;
@@ -199,8 +215,19 @@
                 $this->num_resol = $atributos->num_resol;
                 $this->es_reiteracion = $atributos->es_reiteracion;
                 $this->arch_reiteracion = $atributos->arch_reiteracion;
+
+                // Atributos de gestion
+    
+                $this->estado_interno = $atributos->estado_interno;
+                $this->fecha_ult_mod_sgce = $atributos->fecha_ult_mod_sgce;
+                $this->nombre_interno = $atributos->nombre_interno;
+                $this->funcionario_encargado = $atributos->funcionario_encargado;
+                $this->sector_asignado = $atributos->sector_asignado;
+                $this->valoracion_interna = $atributos->valoracion_interna;
+                $this->comentario_desestimado  = $atributos->comentario_desestimado ;
+
                 //$this->get_ofertas_compra();
-                //$this->get_comentarios_compra();
+                $this->get_comentarios_compra();
             }
         }
 
@@ -883,14 +910,17 @@
         public function botones_estado(){
 
             $estructura = '';
+
+            $estado_compra = intval($this->estado_compra);
+            $estado_interno = intval($this->estado_interno);
             
-            if($this->estado_compra==4){
-    
-                if( $this->estado_interno != 4){
+            if($estado_compra == 4){
+
+                if( $estado_interno != 4){
                     $estructura = $estructura.'<button type="button" onclick=\'actualizarEstado("'.$this->id_compra.'", 4)\'>Desestimar</button></br>';
                 }
                 
-                if($this->estado_interno != 2){
+                if($estado_interno != 2){
                     $estructura = $estructura.'<button type="button" onclick=\'actualizarEstado("'.$this->id_compra.'", 2)\'>Guardar</button></br>';
                 }
     	
@@ -905,10 +935,22 @@
             $this->completar_datos();
     
             $botones = $this->botones_estado();
+
+            $nombre = '';
+
+            if($this->nombre_interno != NULL){
+
+                $nombre = '<h2>'.$this->nombre_interno.'</h2><h3>'.$this->titulo().'</h3>';
+
+            } else {
+
+                $nombre = '<h2>'.$this->titulo().'</h2>';
+
+            }
     
-            $estado_compra = $this->estado_compra;
-            $estado_interno = $this->estado_interno;
-            $estado_interno_txt = estado_interno($this->estado_interno);
+            $estado_compra = intval($this->estado_compra);
+            $estado_interno = intval($this->estado_interno);
+            $estado_interno_txt = estado_interno(intval($this->estado_interno));
             $fecha_lim_rof = strtotime($this->fecha_hora_tope_entrega);
             $cant_comentarios = count($this->comentarios);
             $div_comentarios = "";
@@ -948,10 +990,10 @@
             }
     
             $return = 
-            '<div class="contCompra '.$estado_interno_txt[0].' '.estado_compra($this->estado_compra).'" id="'.$this->id_compra.'">
+            '<div class="contCompra '.$estado_interno_txt[0].' '.estado_compra($estado_compra).'" id="'.$this->id_compra.'">
                 <div class="visor">
-                    <a href="detalle.php?id_compra='.$this->id_compra.'">
-                        <h2>'.$this->titulo().'</h2>
+                    <a id="nombre_asignado" href="detalle.php?id_compra='.$this->id_compra.'">
+                        '.$nombre.'
                     </a>
                         <div>'.$this->mostrar_ue().'</div>
                         '.$div_rof.'
@@ -967,6 +1009,24 @@
 
         }
 
+        public function titulo_detalle(){
+
+            $return = '';
+
+            if($this->nombre_interno != NULL){
+
+                $return = "<h2>".$this->nombre_interno."</h2><h3>".$this->titulo()." - ".$this->mostrar_ue()."</h3>";
+
+            } else {
+
+                $return = "<h2>".$this->titulo()."</h2><h3>".$this->mostrar_ue()."</h3>";
+
+            }
+
+            return $return;
+
+        }
+
         public function recepcion_ofertas(){
 
             $fecha = date('d/m/Y H:i', strtotime($this->fecha_hora_tope_entrega));
@@ -974,6 +1034,41 @@
             return $fecha;
 
 
+        }
+
+        public function cambiar_nombre($nuevo_nombre){
+
+            $sql = sql_con();
+
+            $bool = ($nuevo_nombre == 'PREDETERMINADO');
+
+            if(!$bool){
+
+                $query = "UPDATE gestion_bd.gestion_compras SET nombre_interno = '".$nuevo_nombre."' WHERE id_compra = '".(string)$this->id_compra."'";
+            
+            } else {
+
+                $query = "UPDATE gestion_bd.gestion_compras SET nombre_interno = NULL WHERE id_compra = '".(string)$this->id_compra."'";
+            
+            }
+
+            $q = $sql->query($query);
+
+            if($q){
+
+                if(!$bool){
+                    $this->nombre_interno = $nuevo_nombre;
+                } else {
+                    $this->nombre_interno = NULL;
+                }
+
+                return $this->titulo_detalle();
+
+            } else {
+
+                return 'ERROR';
+
+            }
         }
 
     }
@@ -1343,7 +1438,7 @@
 
         //CACHE DE LLAMADOS
 
-        public Array $seleccion_llamados = [];
+        public $seleccion_llamados = Array();
         public Array $seleccion_claves;
         public int $cantidad_pagina = 25;
         public int $pagina_actual = 0;
@@ -1363,6 +1458,11 @@
 
         public Array $subcontratistas;
 
+        //VARIABLES DEL SISTEMA
+
+        public $databases_anios = Array();
+        public $variables = Array();
+
         public function __construct(){
             $this->inicio_sesion = date('Y-m-d H:i:s');
             $this->get_codigueras();
@@ -1370,8 +1470,15 @@
             $this->get_sectores();
             $this->get_usuarios();
             $this->get_requerimientos();
-            $this->databases = $this->get_databases('gestor_compras_estatales_');
+            $this->get_databases_anios();
             //$this->ip_origen = $_SERVER['REMOTE_ADDR'];
+        }
+
+        
+        public function set_variable($objeto){
+
+            $this->variables[$objeto->hash] = $objeto;
+
         }
 
         private function get_databases($schema){
@@ -1386,10 +1493,7 @@
 
                 while($r = $q->fetch_object()){
 
-                    
-                    $anio = substr($r->SCHEMA_NAME, -4);
-
-                    $databases[$anio] = $r->SCHEMA_NAME;
+                    $databases[] = $r->SCHEMA_NAME;
                 }                
 
             }
@@ -1398,9 +1502,23 @@
 
         }
 
+        public function get_databases_anios(){
+
+            $databases = $this->get_databases('gestor_compras_estatales_');
+
+            foreach($databases as $database){
+
+                $anio = substr($database, -4);
+
+                $this->databases_anios[$anio] = $database;
+
+            }
+
+        }
+
         public function set_objeto($objeto){
 
-            $this->objetos[$objeto->hash];
+            $this->variables[$objeto->hash] = $objeto;
 
         }
 
@@ -2302,13 +2420,13 @@
         public $anio_fin_query = '';
 
         public function __construct($key){
+
+            $_SESSION['sistema']->vaciar_seleccion();
             
             if($key == 'filtros'){
-                $_SESSION['sistema']->vaciar_seleccion();
                 $this->get_busqueda();
                 $this->armar_query();
             } else if ($key == 'no_cat' || $key == 'guardados' || $key == 'cotizaciones' ){
-                $_SESSION['sistema']->vaciar_seleccion();
                 // $_SESSION['sistema']->seleccion_llamados['operativa'] = Array();
                 // $_SESSION['sistema']->seleccion_llamados['herreria'] = Array();
                 // $_SESSION['sistema']->seleccion_llamados['alb_pint'] = Array();
@@ -2320,25 +2438,23 @@
                 $this->tipo_estado_interno = $key;
                 $this->armar_query();
             } else if ($key == 'descartados' ){
-                $_SESSION['sistema']->vaciar_seleccion();
                 $this->tipo_busqueda = 'lv';
                 $this->tipo_rango_fechas = 'rof';
                 $this->fecha_aux = date('Y-m-d H:i:s');
                 $this->tipo_estado_interno = $key;
                 $this->armar_query();
             } else if ($key == 'adjudicados'){
-                $_SESSION['sistema']->vaciar_seleccion();
                 $this->tipo_busqueda = 'a';
                 $this->tipo_rango_fechas = '';
                 $this->tipo_estado_interno = $key;
                 $this->armar_query();
             } else if ($key == 'obj'){
-                $_SESSION['sistema']->vaciar_seleccion();
                 $this->tipo_busqueda = 'l';
                 $this->tipo_rango_fechas = '';
                 $this->objeto = $_SESSION['sistema']->objeto;
                 $this->armar_query();
             }
+            
         }
 
         public function get_busqueda(){
@@ -2476,9 +2592,11 @@
 
             $_SESSION['sistema']->seleccion_claves = Array();
 
+            $_SESSION['sistema']->get_databases_anios();
+
             $querys_anios = Array();
             
-            foreach($_SESSION['sistema']->databases as $anio => $objeto){
+            foreach($_SESSION['sistema']->databases_anios as $anio => $objeto){
 
                 if($this->anio_inicio_query != ''){
                     if($anio >= $this->anio_inicio_query){
@@ -2495,9 +2613,11 @@
                 }
             }
 
+            $multi_query = '';
+
             foreach($querys_anios as $query_anio){
 
-                $select = "SELECT * "; 
+                $select = "SELECT compras.id_compra , compras.anio_compra "; 
 
                 $from = "FROM ( ".$query_anio.".compras as compras INNER JOIN gestion_bd.gestion_compras as gestion ON compras.id_compra = gestion.id_compra )";
                 $where = Array();
@@ -2506,7 +2626,7 @@
                 $fecha_hora_actual = date('Y-m-d H:i:s');
             
                 if($this->tipo_busqueda == 'lv'){
-                    $where[] = "gestion.estado_arce = '4' AND gestion.fecha_hora_tope_entrega > '".$fecha_hora_actual."'";
+                    $where[] = "gestion.estado_arce = '4' AND gestion.fecha_hora_tope_entrega >= '".$fecha_hora_actual."'";
                 } else if ($this->tipo_busqueda == 'a') {
                     $where[] = "( compras.estado_compra = '7' OR compras.estado_compra = '17' OR compras.estado_compra = '27' )";
                     $tipo_publicacion = 'fecha_pub_adj';
@@ -2524,22 +2644,25 @@
                 }
 
                 if($this->tipo_estado_interno != NULL){
+
+                    $query;
+
                     if($this->tipo_estado_interno == 2){
-                        $query = "estado_interno = '2' OR estado_interno = '3'";
+                        $query = "gestion.estado_interno = '2' OR gestion.estado_interno = '3'";
                     } else if ($this->tipo_estado_interno == 'no_cat'){
-                        $query = "estado_interno < '2'";
+                        $query = "gestion.estado_interno < '2'";
                     } else if ($this->tipo_estado_interno == 'guardados'){
-                        $query = "( estado_interno = '2' OR estado_interno = '3' OR estado_interno = '31' )";
+                        $query = "( gestion.estado_interno = '2' OR gestion.estado_interno = '3' OR gestion.estado_interno = '31' )";
                     }  else if ($this->tipo_estado_interno == 'cotizaciones'){
-                        $query = "( estado_interno = '3' OR estado_interno = '31' )";
-                    }  else if ($this->tipo_estado_interno == 'rechazado'){
-                        $query = "estado_interno = '4'";
+                        $query = "( gestion.estado_interno = '3' OR gestion.estado_interno = '31' )";
+                    }  else if ($this->tipo_estado_interno == 'descartados'){
+                        $query = "gestion.estado_interno = '4'";
                     }  else if ($this->tipo_estado_interno == 'adjudicados'){
-                        $query = "estado_interno = '5'";
+                        $query = "gestion.estado_interno = '5'";
                     }  else {
-                        $query = "estado_interno = '".$this->tipo_estado_interno."'";
+                        $query = "gestion.estado_interno = '".$this->tipo_estado_interno."'";
                     }
-                    $where[] = " ".$query." ";
+                    $where[] = $query;
                 }
 
                 if($this->inciso != NULL){
@@ -2634,7 +2757,7 @@
 
                     foreach($where as $i){
                         if($i != $where[0]){
-                            $query .= "AND ".$i." ";
+                            $query .= " AND ".$i;
                         }
                     }
                 }
@@ -2647,26 +2770,33 @@
 
                 $order = 'ORDER BY gestion.fecha_hora_tope_entrega ASC';
 
-                $query = $select.$from.$query.$group.$order;
+                $multi_query .= $select.$from.$query.$group.$order.";\n";
+            }
 
-                // echo $query;
+            $sql = sql_con();
 
-                $sql = sql_con();
+            echo $multi_query;
 
-                echo $query;
+            $q = $sql->multi_query($multi_query);
 
-                $q = $sql->query($query);
+            if($sql){
 
-                mysqli_close($sql);
+                do {
+                    if ($result = $sql->store_result()) {
 
-                if($q){
-                    while($r = $q->fetch_object()){
-                        $_SESSION['sistema']->seleccion_llamados[$r->id_compra] = new Compras($r);  
-                        $_SESSION['sistema']->seleccion_claves[] = $r->id_compra;
+                        $objeto = Array();
+
+                        while($row = $result->fetch_row()){
+                            $objeto[] = $row;
+                            $_SESSION['sistema']->seleccion_llamados[(string)$row[0]] = new Compras($row); 
+                            $_SESSION['sistema']->seleccion_claves[] = $row[0];
+                        };
+                        $result->free_result();
                     }
-                }
+                  } while ($sql -> next_result());
 
             }
+            mysqli_close($sql);
         }   
     }
 
@@ -2908,23 +3038,9 @@
 
     }
 
-    class Sistem {
-
-        public $objetos = Array();
-
-        public function __construct(){
-            
-        }
-
-        public function set_objeto($objeto){
-
-            $this->objetos[$objeto->hash] = $objeto;
-
-        }
-
-    }
-
     class Atributo {
+
+        public $atributos = Array();
 
         public function __construct($tipo){
 

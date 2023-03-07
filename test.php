@@ -234,366 +234,368 @@
 
         // }
 
-        $database_anios = Array();
+        // $database_anios = Array();
 
-        function ordenar_compras_anio($fecha_inicio, $fecha_fin){
+        // function ordenar_compras_anio($fecha_inicio, $fecha_fin){
 
-            $compras = xml_request('l', $fecha_inicio, $fecha_fin);
+        //     $compras = xml_request('l', $fecha_inicio, $fecha_fin);
 
-            foreach($compras as $compra){
+        //     foreach($compras as $compra){
                 
-                $objetos_compra = Array();
+        //         $objetos_compra = Array();
                        
-                $objetos_compra['atributos'] = $compra->attributes();
+        //         $objetos_compra['atributos'] = $compra->attributes();
 
-                $id_compra = strval($objetos_compra['atributos']['id_compra']);
+        //         $id_compra = strval($objetos_compra['atributos']['id_compra']);
 
-                echo $id_compra.'<br>';
+        //         echo $id_compra.'<br>';
                 
-                $objetos_compra['items_compra'] = $compra->items->children();
-                $objetos_compra['aclaraciones_llamado'] = $compra->aclaraciones_lla->children();
-                $objetos_compra['modificaciones_compra'] = $compra->hist_mod_llamado->children();
+        //         $objetos_compra['items_compra'] = $compra->items->children();
+        //         $objetos_compra['aclaraciones_llamado'] = $compra->aclaraciones_lla->children();
+        //         $objetos_compra['modificaciones_compra'] = $compra->hist_mod_llamado->children();
 
-                $anio = (string)($objetos_compra['atributos']['anio_compra']);
+        //         $anio = (string)($objetos_compra['atributos']['anio_compra']);
 
-                if(!isset($database_anios[$anio] )){
-                    $database_anios[$anio] = Array();
-                    echo '<br>año ingresado: '.$anio."<br>";
-                }
+        //         if(!isset($database_anios[$anio] )){
+        //             $database_anios[$anio] = Array();
+        //             echo '<br>año ingresado: '.$anio."<br>";
+        //         }
 
-                $database_anios[$anio][$id_compra]['compra'] = $id_compra;
-                print_r($database_anios[$anio][$id_compra]['compra']);
-            }
+        //         $database_anios[$anio][$id_compra]['compra'] = $id_compra;
+        //         print_r($database_anios[$anio][$id_compra]['compra']);
+        //     }
 
-            print_r($database_anios);
-        }
+        //     print_r($database_anios);
+        // }
 
-        ordenar_compras_anio('2023-02-27 00:00:00', '2023-03-04 23:59:59');
+        // ordenar_compras_anio('2023-02-27 00:00:00', '2023-03-04 23:59:59');
 
-        print_r($database_anios);
+        // print_r($database_anios);
 
-        function actualizador_compras_bd($fecha_inicial, $fecha_fin){
+        // function actualizador_compras_bd($fecha_inicial, $fecha_fin){
 
-            $fecha_actual = date('Y-m-d H:i:s');
+        //     $fecha_actual = date('Y-m-d H:i:s');
 
-            $fecha_inicial = date('Y-m-d H:i', strtotime($fecha_inicial.' - 1 HOUR'));
+        //     $fecha_inicial = date('Y-m-d H:i', strtotime($fecha_inicial.' - 1 HOUR'));
 
-            $fecha_final = date('Y-m-d H:i', strtotime($fecha_fin.' + 1 HOUR'));
+        //     $fecha_final = date('Y-m-d H:i', strtotime($fecha_fin.' + 1 HOUR'));
 
-            print_r("Se actualizará la lista de compras. ".$fecha_actual.".\n");
+        //     print_r("Se actualizará la lista de compras. ".$fecha_actual.".\n");
 
-            // 2) Obtener todas las compras agregadas o actualizadas en el periodo de tiempo predeterminado en el portal de ARCE
+        //     // 2) Obtener todas las compras agregadas o actualizadas en el periodo de tiempo predeterminado en el portal de ARCE
     
-            $ordenar_compras_anio($fecha_inicial, $fecha_final);
+        //     $ordenar_compras_anio($fecha_inicial, $fecha_final);
 
-            foreach($this->database_anios as $anio_compras => $compras){
+        //     foreach($this->database_anios as $anio_compras => $compras){
 
-                foreach($this->database_anios[$anio_compras] as $compra){
+        //         foreach($this->database_anios[$anio_compras] as $compra){
               
-                    $query = '';
+        //             $query = '';
 
-                    if(isset($compra['compra'])){
+        //             if(isset($compra['compra'])){
 
-                        $id_compra = (string)$compra['compra']['atributos']['id_compra'];
+        //                 $id_compra = (string)$compra['compra']['atributos']['id_compra'];
 
-                        $claves = Array('id_compra' => $id_compra);
-                        $anio = (string)$compra['compra']['atributos']['anio_compra'];
-                        $update = Array( 'estado_compra' , 'fecha_hora_tope_entrega' , 'fecha_publicacion' , 'fecha_ult_mod_llamado' , 'fecha_sol_prorr' , 'fecha_sol_aclar' , 'fecha_hora_puja' , 'fecha_hora_tope_entrega' , 'fecha_pub_adj' , 'fecha_vigencia_adj' , 'fecha_compra' , 'arch_adj' , 'monto_adj' , 'id_moneda_monto_adj' , 'id_tipo_resol' , 'nro_resol' );
-                        $query .= $this->insert_update_registro_bd_anio( $compra['compra']['atributos'] , 'gestor_compras_estatales_'.$anio.'.compras' , $claves , $update , $anio );
+        //                 $claves = Array('id_compra' => $id_compra);
+        //                 $anio = (string)$compra['compra']['atributos']['anio_compra'];
+        //                 $update = Array( 'estado_compra' , 'fecha_hora_tope_entrega' , 'fecha_publicacion' , 'fecha_ult_mod_llamado' , 'fecha_sol_prorr' , 'fecha_sol_aclar' , 'fecha_hora_puja' , 'fecha_hora_tope_entrega' , 'fecha_pub_adj' , 'fecha_vigencia_adj' , 'fecha_compra' , 'arch_adj' , 'monto_adj' , 'id_moneda_monto_adj' , 'id_tipo_resol' , 'nro_resol' );
+        //                 $query .= $this->insert_update_registro_bd_anio( $compra['compra']['atributos'] , 'gestor_compras_estatales_'.$anio.'.compras' , $claves , $update , $anio );
                         
-                        if($compra['compra']['items_compra'] != NULL){
+        //                 if($compra['compra']['items_compra'] != NULL){
     
-                            foreach($compra['compra']['items_compra'] as $item){
+        //                     foreach($compra['compra']['items_compra'] as $item){
     
-                                $atributos = $item->attributes();
-                                $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'variante' => $item['variante']);
-                                $update = Array();
-                                $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.items_compra', $claves, $update, $anio);
+        //                         $atributos = $item->attributes();
+        //                         $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'variante' => $item['variante']);
+        //                         $update = Array();
+        //                         $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.items_compra', $claves, $update, $anio);
                                 
-                                $atributos_item = $item->children();
+        //                         $atributos_item = $item->children();
     
-                                if($atributos_item != NULL){
+        //                         if($atributos_item != NULL){
     
-                                    $nro_atributo_item = 1;
+        //                             $nro_atributo_item = 1;
     
-                                    foreach($atributos_item as $atributo_item){
+        //                             foreach($atributos_item as $atributo_item){
     
-                                        $atributos = $atributo_item->attributes();
-                                        $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'variante' => $item['variante'] , 'nro_atributo_item' => $nro_atributo_item );
-                                        $update = Array();
-                                        $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.atributos_items_compra', $claves, $update, $anio); 
+        //                                 $atributos = $atributo_item->attributes();
+        //                                 $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'variante' => $item['variante'] , 'nro_atributo_item' => $nro_atributo_item );
+        //                                 $update = Array();
+        //                                 $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.atributos_items_compra', $claves, $update, $anio); 
 
-                                        $valores_atributos_item = $atributo_item->children();
+        //                                 $valores_atributos_item = $atributo_item->children();
                                         
-                                        if($valores_atributos_item != NULL){
+        //                                 if($valores_atributos_item != NULL){
             
-                                            $nro_valor_atributo_item = 1;
+        //                                     $nro_valor_atributo_item = 1;
             
-                                            foreach($valores_atributos_item as $valor_atributo_item){
+        //                                     foreach($valores_atributos_item as $valor_atributo_item){
             
-                                                $atributos = $valor_atributo_item->attributes();
-                                                $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'nro_atributo_item' => $nro_atributo_item , 'nro_valor_atributo_item' => $nro_valor_atributo_item);
-                                                $update = Array();
-                                                $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.valores_atributos_items_compra', $claves, $update, $anio);
+        //                                         $atributos = $valor_atributo_item->attributes();
+        //                                         $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'nro_atributo_item' => $nro_atributo_item , 'nro_valor_atributo_item' => $nro_valor_atributo_item);
+        //                                         $update = Array();
+        //                                         $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.valores_atributos_items_compra', $claves, $update, $anio);
 
-                                                $nro_valor_atributo_item++;
-                                            }
-                                        }
+        //                                         $nro_valor_atributo_item++;
+        //                                     }
+        //                                 }
         
-                                        $nro_atributo_item++;
+        //                                 $nro_atributo_item++;
 
-                                    }
-                                }
-                            }
-                        }
+        //                             }
+        //                         }
+        //                     }
+        //                 }
 
-                        if($compra['compra']['modificaciones_compra'] != NULL){
+        //                 if($compra['compra']['modificaciones_compra'] != NULL){
     
-                            $query .= "DELETE FROM gestor_compras_estatales_".$anio.".historial_modificaciones_llamado WHERE id_compra = '".$id_compra."' ; ";
+        //                     $query .= "DELETE FROM gestor_compras_estatales_".$anio.".historial_modificaciones_llamado WHERE id_compra = '".$id_compra."' ; ";
     
-                            foreach($compra['compra']['modificaciones_compra'] as $modificaciones){
+        //                     foreach($compra['compra']['modificaciones_compra'] as $modificaciones){
     
-                                $atributos = $modificaciones->attributes(); 
-                                $update = Array();
-                                $claves = Array( 'id_compra' => $id_compra);
-                                $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.historial_modificaciones_llamado', $claves, $update, $anio);
+        //                         $atributos = $modificaciones->attributes(); 
+        //                         $update = Array();
+        //                         $claves = Array( 'id_compra' => $id_compra);
+        //                         $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.historial_modificaciones_llamado', $claves, $update, $anio);
  
-                            }
-                        }
+        //                     }
+        //                 }
 
 
-                        if($compra['compra']['aclaraciones_llamado'] != NULL){
+        //                 if($compra['compra']['aclaraciones_llamado'] != NULL){
     
-                            $query .= "DELETE FROM gestor_compras_estatales_".$anio.".aclaraciones_llamado WHERE id_compra = '".$id_compra."' ; ";
+        //                     $query .= "DELETE FROM gestor_compras_estatales_".$anio.".aclaraciones_llamado WHERE id_compra = '".$id_compra."' ; ";
                 
-                            foreach($compra['compra']['aclaraciones_llamado'] as $aclaraciones){
+        //                     foreach($compra['compra']['aclaraciones_llamado'] as $aclaraciones){
     
-                                $atributos = $aclaraciones->attributes(); 
-                                $update = Array();
-                                $claves = Array( 'id_compra' => $id_compra );
-                                $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.aclaraciones_llamado', $claves, $update, $anio);
-                            }
-                        }
+        //                         $atributos = $aclaraciones->attributes(); 
+        //                         $update = Array();
+        //                         $claves = Array( 'id_compra' => $id_compra );
+        //                         $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.aclaraciones_llamado', $claves, $update, $anio);
+        //                     }
+        //                 }
 
-                        $update = " ON DUPLICATE KEY UPDATE ";
+        //                 $update = " ON DUPLICATE KEY UPDATE ";
 
-                        $fecha_publicacion_query = '';
-                        $fecha_publicacion = '';
+        //                 $fecha_publicacion_query = '';
+        //                 $fecha_publicacion = '';
 
-                        $fecha_ult_mod_llamado_query = '';
-                        $fecha_ult_mod_ = '';
+        //                 $fecha_ult_mod_llamado_query = '';
+        //                 $fecha_ult_mod_ = '';
 
-                        $fecha_pub_adj_query = '';
-                        $fecha_pub_adj = '';
+        //                 $fecha_pub_adj_query = '';
+        //                 $fecha_pub_adj = '';
 
-                        $fecha_hora_tope_entrega = '';
-                        $fecha_hora_tope_entrega_query = '';
+        //                 $fecha_hora_tope_entrega = '';
+        //                 $fecha_hora_tope_entrega_query = '';
 
-                        if(isset($compra['compra']['atributos']['fecha_publicacion'])){
+        //                 if(isset($compra['compra']['atributos']['fecha_publicacion'])){
 
-                            $fecha_publicacion_query = ' fecha_publicacion ,';
-                            $fecha_publicacion = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_publicacion'])."' ,";
-                            $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
+        //                     $fecha_publicacion_query = ' fecha_publicacion ,';
+        //                     $fecha_publicacion = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_publicacion'])."' ,";
+        //                     $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
 
-                            if(isset($compra['compra']['atributos']['fecha_ult_mod_llamado'])){
-                                $fecha_ult_mod_arce = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_ult_mod_llamado'])."' ,";
-                            } else {
-                                $fecha_ult_mod_arce = $fecha_publicacion;
-                            }
+        //                     if(isset($compra['compra']['atributos']['fecha_ult_mod_llamado'])){
+        //                         $fecha_ult_mod_arce = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_ult_mod_llamado'])."' ,";
+        //                     } else {
+        //                         $fecha_ult_mod_arce = $fecha_publicacion;
+        //                     }
 
                             
-                            $update .= " fecha_publicacion = ".$fecha_publicacion." fecha_ult_mod_arce = ".$fecha_ult_mod_arce." ";
+        //                     $update .= " fecha_publicacion = ".$fecha_publicacion." fecha_ult_mod_arce = ".$fecha_ult_mod_arce." ";
 
-                            if(isset($compra['compra']['atributos']['fecha_hora_tope_entrega'])){
+        //                     if(isset($compra['compra']['atributos']['fecha_hora_tope_entrega'])){
 
-                                $fecha_hora_tope_entrega_query = ' fecha_hora_tope_entrega ,';
-                                $fecha_hora_tope_entrega = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_hora_tope_entrega'])."' ,";
-                                $update .= " fecha_hora_tope_entrega = ".$fecha_hora_tope_entrega." ";
+        //                         $fecha_hora_tope_entrega_query = ' fecha_hora_tope_entrega ,';
+        //                         $fecha_hora_tope_entrega = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_hora_tope_entrega'])."' ,";
+        //                         $update .= " fecha_hora_tope_entrega = ".$fecha_hora_tope_entrega." ";
 
-                            }
+        //                     }
 
-                        } else if (isset($compra['compra']['atributos']['fecha_pub_adj'])){
+        //                 } else if (isset($compra['compra']['atributos']['fecha_pub_adj'])){
 
-                            $fecha_pub_adj_query = ' fecha_publicacion ,';
-                            $fecha_pub_adj = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_pub_adj'])."' ,";
-                            $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
-                            $fecha_ult_mod_arce = $fecha_pub_adj;
-                            $update .= " fecha_pub_adj = ".$fecha_pub_adj." fecha_ult_mod_arce = ".$fecha_ult_mod_arce." ";
-                        }
+        //                     $fecha_pub_adj_query = ' fecha_publicacion ,';
+        //                     $fecha_pub_adj = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_pub_adj'])."' ,";
+        //                     $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
+        //                     $fecha_ult_mod_arce = $fecha_pub_adj;
+        //                     $update .= " fecha_pub_adj = ".$fecha_pub_adj." fecha_ult_mod_arce = ".$fecha_ult_mod_arce." ";
+        //                 }
 
-                        $update .= " estado_arce = ".$compra['compra']['atributos']['estado_compra']." ;";
+        //                 $update .= " estado_arce = ".$compra['compra']['atributos']['estado_compra']." ;";
 
-                        $sql = $this->sql_con();
+        //                 $sql = $this->sql_con();
 
-                        $gestion = "INSERT INTO gestion_bd.gestion_compras ( id_compra , anio_compra ,".$fecha_publicacion_query.$fecha_ult_mod_llamado_query.$fecha_pub_adj_query.$fecha_hora_tope_entrega_query." fecha_ult_mod_sgce , estado_arce ) VALUES ( '".$id_compra."' , '".$compra['compra']['atributos']['anio_compra']."' ,".$fecha_publicacion.$fecha_ult_mod_arce.$fecha_pub_adj.$fecha_hora_tope_entrega." '".date('Y-m-d H:i:s')."' , '".$compra['compra']['atributos']['estado_compra']."' )".$update;
+        //                 $gestion = "INSERT INTO gestion_bd.gestion_compras ( id_compra , anio_compra ,".$fecha_publicacion_query.$fecha_ult_mod_llamado_query.$fecha_pub_adj_query.$fecha_hora_tope_entrega_query." fecha_ult_mod_sgce , estado_arce ) VALUES ( '".$id_compra."' , '".$compra['compra']['atributos']['anio_compra']."' ,".$fecha_publicacion.$fecha_ult_mod_arce.$fecha_pub_adj.$fecha_hora_tope_entrega." '".date('Y-m-d H:i:s')."' , '".$compra['compra']['atributos']['estado_compra']."' )".$update;
                         
-                        $sql->query($gestion);
+        //                 $sql->query($gestion);
     
-                        mysqli_close($sql);
+        //                 mysqli_close($sql);
 
-                        $actualizacion = "INSERT INTO gestion_bd.actualizacion_estado_llamado ( id_compra , fecha_actualizacion ) VALUES ( '".$id_compra."' , '".date('Y-m-d H:i:s')."' ) ON DUPLICATE KEY UPDATE id_compra = '".$id_compra."'";
+        //                 $actualizacion = "INSERT INTO gestion_bd.actualizacion_estado_llamado ( id_compra , fecha_actualizacion ) VALUES ( '".$id_compra."' , '".date('Y-m-d H:i:s')."' ) ON DUPLICATE KEY UPDATE id_compra = '".$id_compra."'";
 
-                        $sql = $this->sql_con();
+        //                 $sql = $this->sql_con();
 
-                        $sql->query($actualizacion);
+        //                 $sql->query($actualizacion);
     
-                        mysqli_close($sql);
+        //                 mysqli_close($sql);
 
-                    }
+        //             }
 
-                    if(isset($compra['adjudicacion'])){
+        //             if(isset($compra['adjudicacion'])){
 
-                        $id_compra = (string)$compra['adjudicacion']['atributos']['id_compra'];
+        //                 $id_compra = (string)$compra['adjudicacion']['atributos']['id_compra'];
                         
-                        $claves = Array('id_compra' => $id_compra);
-                        $anio = (string)$compra['adjudicacion']['atributos']['anio_compra'];
-                        $update = Array( 'estado_compra' , 'fecha_hora_tope_entrega' , 'fecha_publicacion' , 'fecha_ult_mod_llamado' , 'fecha_sol_prorr' , 'fecha_sol_aclar' , 'fecha_hora_puja' , 'fecha_hora_tope_entrega' , 'fecha_pub_adj' , 'fecha_vigencia_adj' , 'fecha_compra' , 'arch_adj' , 'monto_adj' , 'id_moneda_monto_adj' , 'id_tipo_resol' , 'nro_resol' );
-                        $query .= $this->insert_update_registro_bd_anio( $compra['adjudicacion']['atributos'] , 'gestor_compras_estatales_'.$anio.'.compras' , $claves , $update , $anio );
+        //                 $claves = Array('id_compra' => $id_compra);
+        //                 $anio = (string)$compra['adjudicacion']['atributos']['anio_compra'];
+        //                 $update = Array( 'estado_compra' , 'fecha_hora_tope_entrega' , 'fecha_publicacion' , 'fecha_ult_mod_llamado' , 'fecha_sol_prorr' , 'fecha_sol_aclar' , 'fecha_hora_puja' , 'fecha_hora_tope_entrega' , 'fecha_pub_adj' , 'fecha_vigencia_adj' , 'fecha_compra' , 'arch_adj' , 'monto_adj' , 'id_moneda_monto_adj' , 'id_tipo_resol' , 'nro_resol' );
+        //                 $query .= $this->insert_update_registro_bd_anio( $compra['adjudicacion']['atributos'] , 'gestor_compras_estatales_'.$anio.'.compras' , $claves , $update , $anio );
     
 
-                        if($compra['adjudicacion']['items_adjudicacion'] != NULL){
+        //                 if($compra['adjudicacion']['items_adjudicacion'] != NULL){
 
-                            foreach($compra['adjudicacion']['items_adjudicacion'] as $item){
+        //                     foreach($compra['adjudicacion']['items_adjudicacion'] as $item){
     
-                                $atributos = $item->attributes();
-                                $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'variante' => $item['variante'], 'variacion' => $item['variacion'] , 'tipo_doc_prov' => $item['tipo_doc_prov'] , 'nro_doc_prov' => $item['nro_doc_prov']);
-                                $update = Array();
-                                $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.items_adjudicacion', $claves, $update, $anio);
-                                $atributos_item = $item->children();
+        //                         $atributos = $item->attributes();
+        //                         $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'variante' => $item['variante'], 'variacion' => $item['variacion'] , 'tipo_doc_prov' => $item['tipo_doc_prov'] , 'nro_doc_prov' => $item['nro_doc_prov']);
+        //                         $update = Array();
+        //                         $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.items_adjudicacion', $claves, $update, $anio);
+        //                         $atributos_item = $item->children();
     
-                                if($atributos_item != NULL){
+        //                         if($atributos_item != NULL){
     
-                                    $nro_atributo_item = 1;
+        //                             $nro_atributo_item = 1;
     
-                                    foreach($atributos_item as $atributo_item){
+        //                             foreach($atributos_item as $atributo_item){
     
-                                        $atributos = $atributo_item->attributes();
-                                        $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'nro_atributo_item' => $nro_atributo_item , 'variante' => $item['variante'] , 'tipo_doc_prov' => $item['tipo_doc_prov'] , 'nro_doc_prov' => $item['nro_doc_prov']);
-                                        $update = Array();
-                                        $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.atributos_items_adjudicacion', $claves, $update, $anio);
+        //                                 $atributos = $atributo_item->attributes();
+        //                                 $claves = Array( 'id_compra' => $id_compra , 'nro_item' => $item['nro_item'] , 'nro_atributo_item' => $nro_atributo_item , 'variante' => $item['variante'] , 'tipo_doc_prov' => $item['tipo_doc_prov'] , 'nro_doc_prov' => $item['nro_doc_prov']);
+        //                                 $update = Array();
+        //                                 $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.atributos_items_adjudicacion', $claves, $update, $anio);
 
-                                        $nro_atributo_item++;
-                                    }
+        //                                 $nro_atributo_item++;
+        //                             }
     
-                                }
+        //                         }
     
-                            }
+        //                     }
     
-                        }
+        //                 }
     
-                        if($compra['adjudicacion']['aclaraciones_adjudicacion'] != NULL){
+        //                 if($compra['adjudicacion']['aclaraciones_adjudicacion'] != NULL){
     
-                            $query .= "DELETE FROM gestor_compras_estatales_".$anio.".aclaraciones_adjudicacion WHERE id_compra = '".$id_compra."' ; ";
+        //                     $query .= "DELETE FROM gestor_compras_estatales_".$anio.".aclaraciones_adjudicacion WHERE id_compra = '".$id_compra."' ; ";
     
                             
-                            foreach($compra['adjudicacion']['aclaraciones_adjudicacion'] as $modificaciones){
+        //                     foreach($compra['adjudicacion']['aclaraciones_adjudicacion'] as $modificaciones){
     
-                                $atributos = $modificaciones->attributes(); 
-                                $update = Array();
-                                $claves = Array( 'id_compra' => $id_compra);
-                                $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.aclaraciones_adjudicacion', $claves, $update, $anio);
+        //                         $atributos = $modificaciones->attributes(); 
+        //                         $update = Array();
+        //                         $claves = Array( 'id_compra' => $id_compra);
+        //                         $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.aclaraciones_adjudicacion', $claves, $update, $anio);
                             
 
                             
-                            }
+        //                     }
     
-                        }
+        //                 }
     
-                        if($compra['adjudicacion']['oferentes'] != NULL){
+        //                 if($compra['adjudicacion']['oferentes'] != NULL){
     
-                            $query .= "DELETE FROM gestor_compras_estatales_".$anio.".oferentes WHERE id_compra = '".$id_compra."' ; ";
+        //                     $query .= "DELETE FROM gestor_compras_estatales_".$anio.".oferentes WHERE id_compra = '".$id_compra."' ; ";
     
                             
-                            foreach($compra['adjudicacion']['oferentes'] as $aclaraciones){
+        //                     foreach($compra['adjudicacion']['oferentes'] as $aclaraciones){
     
-                                $atributos = $aclaraciones->attributes(); 
-                                $update = Array();
-                                $claves = Array( 'id_compra' => $id_compra );
-                                $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.oferentes', $claves, $update, $anio);
+        //                         $atributos = $aclaraciones->attributes(); 
+        //                         $update = Array();
+        //                         $claves = Array( 'id_compra' => $id_compra );
+        //                         $query .= $this->insert_update_registro_bd_anio($atributos, 'gestor_compras_estatales_'.$anio.'.oferentes', $claves, $update, $anio);
                            
 
-                            }
-                        }
+        //                     }
+        //                 }
 
-                        $update = " ON DUPLICATE KEY UPDATE ";
+        //                 $update = " ON DUPLICATE KEY UPDATE ";
 
-                        $fecha_publicacion_query = '';
-                        $fecha_publicacion = '';
+        //                 $fecha_publicacion_query = '';
+        //                 $fecha_publicacion = '';
 
-                        $fecha_ult_mod_llamado_query = '';
-                        $fecha_ult_mod_ = '';
+        //                 $fecha_ult_mod_llamado_query = '';
+        //                 $fecha_ult_mod_ = '';
 
-                        $fecha_pub_adj_query = '';
-                        $fecha_pub_adj = '';
+        //                 $fecha_pub_adj_query = '';
+        //                 $fecha_pub_adj = '';
 
-                        if(isset($compra['adjudicacion']['atributos']['fecha_publicacion'])){
+        //                 if(isset($compra['adjudicacion']['atributos']['fecha_publicacion'])){
 
-                            $fecha_publicacion_query = ' fecha_publicacion ,';
-                            $fecha_publicacion = "'".formatear_fecha_hora($compra['adjudicacion']['atributos']['fecha_publicacion'])."' ,";
-                            $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
+        //                     $fecha_publicacion_query = ' fecha_publicacion ,';
+        //                     $fecha_publicacion = "'".formatear_fecha_hora($compra['adjudicacion']['atributos']['fecha_publicacion'])."' ,";
+        //                     $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
 
-                            if(isset($compra['adjudicacion']['atributos']['fecha_ult_mod_llamado'])){
-                                $fecha_ult_mod_arce = "'".formatear_fecha_hora($compra['adjudicacion']['atributos']['fecha_ult_mod_llamado'])."' ,";
-                            } else {
-                                $fecha_ult_mod_arce = $fecha_publicacion;
-                            }
+        //                     if(isset($compra['adjudicacion']['atributos']['fecha_ult_mod_llamado'])){
+        //                         $fecha_ult_mod_arce = "'".formatear_fecha_hora($compra['adjudicacion']['atributos']['fecha_ult_mod_llamado'])."' ,";
+        //                     } else {
+        //                         $fecha_ult_mod_arce = $fecha_publicacion;
+        //                     }
 
-                            $update .= " fecha_publicacion = ".$fecha_publicacion." fecha_ult_mod_arce = ".$fecha_ult_mod_arce." ";
+        //                     $update .= " fecha_publicacion = ".$fecha_publicacion." fecha_ult_mod_arce = ".$fecha_ult_mod_arce." ";
 
-                        } else if (isset($compra['adjudicacion']['atributos']['fecha_pub_adj'])){
+        //                 } else if (isset($compra['adjudicacion']['atributos']['fecha_pub_adj'])){
 
-                            $fecha_pub_adj_query = ' fecha_publicacion_adj ,';
-                            $fecha_pub_adj = "'".formatear_fecha_hora($compra['adjudicacion']['atributos']['fecha_pub_adj'])."' ,";
-                            $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
-                            $fecha_ult_mod_arce = $fecha_pub_adj;
-                            $update .= " fecha_publicacion_adj = ".$fecha_pub_adj." fecha_ult_mod_arce = ".$fecha_ult_mod_arce." ";
-                        }
+        //                     $fecha_pub_adj_query = ' fecha_publicacion_adj ,';
+        //                     $fecha_pub_adj = "'".formatear_fecha_hora($compra['adjudicacion']['atributos']['fecha_pub_adj'])."' ,";
+        //                     $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
+        //                     $fecha_ult_mod_arce = $fecha_pub_adj;
+        //                     $update .= " fecha_publicacion_adj = ".$fecha_pub_adj." fecha_ult_mod_arce = ".$fecha_ult_mod_arce." ";
+        //                 }
 
-                        $update .= " estado_arce = '".$compra['adjudicacion']['atributos']['estado_compra']."';";
+        //                 $update .= " estado_arce = '".$compra['adjudicacion']['atributos']['estado_compra']."';";
 
-                        $gestion = "INSERT INTO gestion_bd.gestion_compras ( id_compra , anio_compra ,".$fecha_publicacion_query.$fecha_ult_mod_llamado_query.$fecha_pub_adj_query." fecha_ult_mod_sgce , estado_arce ) VALUES ( '".$id_compra."' , '".$compra['adjudicacion']['atributos']['anio_compra']."' ,".$fecha_publicacion.$fecha_ult_mod_arce.$fecha_pub_adj." '".date('Y-m-d H:i:s')."' , '".$compra['adjudicacion']['atributos']['estado_compra']."' )".$update;
+        //                 $gestion = "INSERT INTO gestion_bd.gestion_compras ( id_compra , anio_compra ,".$fecha_publicacion_query.$fecha_ult_mod_llamado_query.$fecha_pub_adj_query." fecha_ult_mod_sgce , estado_arce ) VALUES ( '".$id_compra."' , '".$compra['adjudicacion']['atributos']['anio_compra']."' ,".$fecha_publicacion.$fecha_ult_mod_arce.$fecha_pub_adj." '".date('Y-m-d H:i:s')."' , '".$compra['adjudicacion']['atributos']['estado_compra']."' )".$update;
                     
-                        $sql = $this->sql_con();
+        //                 $sql = $this->sql_con();
                     
-                        $sql->query($gestion);
+        //                 $sql->query($gestion);
     
-                        mysqli_close($sql);
+        //                 mysqli_close($sql);
 
-                        $actualizacion = "INSERT INTO gestion_bd.actualizacion_estado_llamado ( id_compra , fecha_actualizacion ) VALUES ( '".$id_compra."' , '".date('Y-m-d H:i:s')."' ) ON DUPLICATE KEY UPDATE id_compra = '".$id_compra."'";
+        //                 $actualizacion = "INSERT INTO gestion_bd.actualizacion_estado_llamado ( id_compra , fecha_actualizacion ) VALUES ( '".$id_compra."' , '".date('Y-m-d H:i:s')."' ) ON DUPLICATE KEY UPDATE id_compra = '".$id_compra."'";
 
-                        $sql = $this->sql_con();
+        //                 $sql = $this->sql_con();
 
-                        $sql->query($actualizacion);
+        //                 $sql->query($actualizacion);
     
-                        mysqli_close($sql);
+        //                 mysqli_close($sql);
 
-                    } 
+        //             } 
 
-                    $sql = $this->sql_con();
+        //             $sql = $this->sql_con();
                     
-                    $sql->multi_query($query);
+        //             $sql->multi_query($query);
 
-                    mysqli_close($sql);
+        //             mysqli_close($sql);
 
-                }
-            }
+        //         }
+        //     }
 
-            foreach($this->database_anios as $a => $b){
+        //     foreach($this->database_anios as $a => $b){
 
-                $this->database_anios[$a] = Array();
+        //         $this->database_anios[$a] = Array();
 
-            }
+        //     }
 
-            $sql = $sql_con('gestion_bd');
+        //     $sql = $sql_con('gestion_bd');
 
-            $q = "INSERT INTO actualizaciones_bd ( fecha_ejecucion , fecha_desde, fecha_hasta ) VALUES ( '".$fecha_actual."' , '".$this->fecha_ult_act_bd."' , '".$fecha_fin."')";
+        //     $q = "INSERT INTO actualizaciones_bd ( fecha_ejecucion , fecha_desde, fecha_hasta ) VALUES ( '".$fecha_actual."' , '".$this->fecha_ult_act_bd."' , '".$fecha_fin."')";
 
-            $q = $sql->query($q);
+        //     $q = $sql->query($q);
 
-            mysqli_close($sql);    
+        //     mysqli_close($sql);    
 
-            print_r("Se actualizó la lista de compras. ".date('Y-m-d H:i:s').".\n");
-        }
+        //     print_r("Se actualizó la lista de compras. ".date('Y-m-d H:i:s').".\n");
+        // }
+
+        
 
 ?>
  

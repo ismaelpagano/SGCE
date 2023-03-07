@@ -70,11 +70,13 @@
 	</head>
 	<body onload="boton_estado_header('<?php echo estado_interno($compra->estado_interno)[0]; ?>')">
         <header id="header_detalle">
-            <div id="header_title">
-                <?php 
-                    echo $compra->titulo().'<br>'; 
-                    echo $compra->mostrar_ue().'<br>';
-                ?>
+            <div id="header_title_div">
+                <div id="header_title">
+                    <?php 
+                        echo $compra->titulo_detalle();
+                    ?>
+                </div>
+                <div><button id="cambiar_nombre_compra" onclick="cambiar_nombre_compra(<?php echo $compra->id_compra; ?>)"></button></div>
             </div>
             <div id="botones_header">
             </div> 
