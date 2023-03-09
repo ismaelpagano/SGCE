@@ -25,12 +25,12 @@
     echo 
         '<div>
             <p>¿Quieres cambiar la denominación del llamado "'.$nombre.'"?</p>
-            <form id="form_cambio_nombre_compra">
-                <input id="campo_nombre" type="text" placeholder="'.$nombre.'">
-                <input type="checkbox" name="checkbox_autoguardado"/>
+            <form id="form_cambio_nombre_compra" method="POST">
+                <input name="nombre" id="campo_nombre" type="text" placeholder="'.$nombre.'">
+                <input name="checkbox" type="checkbox" name="checkbox_autoguardado"/>
             </form>
             <button onclick="cambiar_nombre(\''.$objeto->hash.'\')">Cambiar</button>
-            <button>Cancelar</button>
+            <button onclick="mask_off()">Cancelar</button>
             <button onclick="nombre_predeterminado(\''.$objeto->hash.'\')">Predet.</button>
         </div>';
 

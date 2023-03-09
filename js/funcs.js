@@ -530,7 +530,7 @@ function nada(event){
 	event.stopPropagation();
 }
 
-function boton_estado_header(estado , id_compra){
+function boton_estado_header(estado){
 
 	estado_compra_actual = estado;
 	
@@ -914,15 +914,14 @@ function mask_off(){
 function cambiar_nombre(hash){
 
 	if(hash != ''){
-		var nombre = document.getElementById('campo_nombre').value;
 		var http = new XMLHttpRequest();
-		http.open('POST', 'cambiar_nombre_compra.php', true);
-		var params = new FormData();
-		params.append('nombre', nombre);
+		var params = new FormData(document.getElementsByTagName("form")[1]);
 		params.append('objeto', hash);
+		http.open('POST', 'cambiar_nombre_compra.php', true);
 		http.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200){
 				document.getElementById('header_title').innerHTML = this.responseText;
+				boton_estado_header('guardado');
 				mask_off();
 			}
 		}
@@ -946,5 +945,6 @@ function nombre_predeterminado(hash){
 	http.send(params);
 
 }
+
 
 
