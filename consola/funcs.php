@@ -124,7 +124,7 @@
 
                 $minutosfecha = substr(strchr($fecha, ':'), 1);
 
-                $fecha_formateada = date('Y-m-d H:i', strtotime($anioFecha.'-'.$mesFecha.'-'.$diaFecha.' '.$horaFecha.':'.$minutosfecha));
+                $fecha_formateada = date('Y-m-d H:i:s', strtotime($anioFecha.'-'.$mesFecha.'-'.$diaFecha.' '.$horaFecha.':'.$minutosfecha.':00'));
             } else {
                 $fecha_formateada = date('Y-m-d H:i', strtotime($anioFecha.'-'.$mesFecha.'-'.$diaFecha));
             }

@@ -198,7 +198,7 @@
 
             while(true){
 
-                echo chr(27).chr(91).'H'.chr(27).chr(91).'J';
+                //echo chr(27).chr(91).'H'.chr(27).chr(91).'J';
 
                 $this->launcher_actualizador();
         
@@ -281,7 +281,6 @@
                     if(isset($compra['compra'])){
 
                         $id_compra = (string)$compra['compra']['atributos']['id_compra'];
-
                         $claves = Array('id_compra' => $id_compra);
                         $anio = (string)$compra['compra']['atributos']['anio_compra'];
                         $update = Array( 'estado_compra' , 'fecha_hora_tope_entrega' , 'fecha_publicacion' , 'fecha_ult_mod_llamado' , 'fecha_sol_prorr' , 'fecha_sol_aclar' , 'fecha_hora_puja' , 'fecha_hora_tope_entrega' , 'fecha_pub_adj' , 'fecha_vigencia_adj' , 'fecha_compra' , 'arch_adj' , 'monto_adj' , 'id_moneda_monto_adj' , 'id_tipo_resol' , 'nro_resol' );
@@ -343,11 +342,11 @@
                         if(isset($compra['compra']['atributos']['fecha_publicacion'])){
 
                             $fecha_publicacion_query = ' fecha_publicacion ,';
-                            $fecha_publicacion = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_publicacion'])."' ,";
+                            $fecha_publicacion = "'".$compra['compra']['atributos']['fecha_publicacion']."' ,";
                             $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
 
                             if(isset($compra['compra']['atributos']['fecha_ult_mod_llamado'])){
-                                $fecha_ult_mod_arce = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_ult_mod_llamado'])."' ,";
+                                $fecha_ult_mod_arce = "'".$compra['compra']['atributos']['fecha_ult_mod_llamado']."' ,";
                             } else {
                                 $fecha_ult_mod_arce = $fecha_publicacion;
                             }
@@ -358,7 +357,7 @@
                             if(isset($compra['compra']['atributos']['fecha_hora_tope_entrega'])){
 
                                 $fecha_hora_tope_entrega_query = ' fecha_hora_tope_entrega ,';
-                                $fecha_hora_tope_entrega = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_hora_tope_entrega'])."' ,";
+                                $fecha_hora_tope_entrega = "'".$compra['compra']['atributos']['fecha_hora_tope_entrega']."' ,";
                                 $update .= " fecha_hora_tope_entrega = ".$fecha_hora_tope_entrega." ";
 
                             }
@@ -366,7 +365,7 @@
                         } else if (isset($compra['compra']['atributos']['fecha_pub_adj'])){
 
                             $fecha_pub_adj_query = ' fecha_publicacion ,';
-                            $fecha_pub_adj = "'".formatear_fecha_hora($compra['compra']['atributos']['fecha_pub_adj'])."' ,";
+                            $fecha_pub_adj = "'".$compra['compra']['atributos']['fecha_pub_adj']."' ,";
                             $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
                             $fecha_ult_mod_arce = $fecha_pub_adj;
                             $update .= " fecha_pub_adj = ".$fecha_pub_adj." fecha_ult_mod_arce = ".$fecha_ult_mod_arce." ";
@@ -492,11 +491,11 @@
                         if(isset($compra['adjudicacion']['atributos']['fecha_publicacion'])){
 
                             $fecha_publicacion_query = ' fecha_publicacion ,';
-                            $fecha_publicacion = "'".formatear_fecha_hora($compra['adjudicacion']['atributos']['fecha_publicacion'])."' ,";
+                            $fecha_publicacion = "'".$compra['adjudicacion']['atributos']['fecha_publicacion']."' ,";
                             $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
 
                             if(isset($compra['adjudicacion']['atributos']['fecha_ult_mod_llamado'])){
-                                $fecha_ult_mod_arce = "'".formatear_fecha_hora($compra['adjudicacion']['atributos']['fecha_ult_mod_llamado'])."' ,";
+                                $fecha_ult_mod_arce = "'".$compra['adjudicacion']['atributos']['fecha_ult_mod_llamado']."' ,";
                             } else {
                                 $fecha_ult_mod_arce = $fecha_publicacion;
                             }
@@ -506,7 +505,7 @@
                         } else if (isset($compra['adjudicacion']['atributos']['fecha_pub_adj'])){
 
                             $fecha_pub_adj_query = ' fecha_publicacion_adj ,';
-                            $fecha_pub_adj = "'".formatear_fecha_hora($compra['adjudicacion']['atributos']['fecha_pub_adj'])."' ,";
+                            $fecha_pub_adj = "'".$compra['adjudicacion']['atributos']['fecha_pub_adj']."' ,";
                             $fecha_ult_mod_llamado_query = ' fecha_ult_mod_arce ,';
                             $fecha_ult_mod_arce = $fecha_pub_adj;
                             $update .= " fecha_publicacion_adj = ".$fecha_pub_adj." fecha_ult_mod_arce = ".$fecha_ult_mod_arce." ";
@@ -674,9 +673,17 @@
             }
         }
 
-        public function insert_update_registro_bd_anio($objeto, $tabla, $claves, $update, $anio){
+        public function insert_update_registro_bd_anio($objeto, $tabla, $claves, $update, $anio){ 
     
             //$sql = sql_con("gestor_compras_estatales_".$objeto['atributos']->anio_compra);
+
+            foreach(FECHAHORA as $atributo){
+
+                if(isset($objeto[$atributo])){
+                    $objeto[$atributo] = formatear_fecha_hora($objeto[$atributo]);
+                }
+
+            } 
 
             $query = "INSERT INTO ".$tabla." ( ";
             $values = " ) VALUES ( ";
@@ -713,18 +720,13 @@
                 if(!array_key_exists($a, $claves)){
     
                     $query .= $a.' , ';
-                    if (in_array($a, FECHAHORA)){
-                        $b = formatear_fecha_hora($b);
-                        $values .= '"'.$b.'" , ';
-                    } else {
-                        if(strpos($b, '"') !== FALSE){
-                            if(strpos($b, "'") !== FALSE){
-                                $b = str_replace("'", " ", $b);
-                            }
-                            $values .= "'".$b."' , ";
-                        } else {
-                            $values .= '"'.$b.'" , ';
+                    if(strpos($b, '"') !== FALSE){
+                        if(strpos($b, "'") !== FALSE){
+                            $b = str_replace("'", " ", $b);
                         }
+                        $values .= "'".$b."' , ";
+                    } else {
+                        $values .= '"'.$b.'" , ';
                     }
                 }
 
