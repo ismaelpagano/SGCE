@@ -5,9 +5,9 @@
         echo "empieza el script";
 
         $archivos_bd = Array(
-            //"catalogo/ART_ATRIBUTO.sql",
-            //"catalogo/ART_COLOR.sql",
-            //"catalogo/ART_IMPUESTO.sql",
+            // "catalogo/ART_ATRIBUTO.sql",
+            // "catalogo/ART_COLOR.sql",
+            // "catalogo/ART_IMPUESTO.sql",
             // "catalogo/ART_SERV_OBRA.sql",
             // "catalogo/ART_UNIDAD_MED.sql",
             "catalogo/CLASE.sql",
