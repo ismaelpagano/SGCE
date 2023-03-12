@@ -212,7 +212,7 @@
 
             $fecha_actual = date('Y-m-d H:i:s');
     
-            // $fecha_ult_respaldo = $this->get_fecha_ultimo_respaldo();
+            $fecha_ult_respaldo = $this->get_fecha_ultimo_respaldo();
     
             if((int)date('H', strtotime($fecha_actual)) >= 7){
 
