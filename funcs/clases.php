@@ -971,8 +971,6 @@
            
             $div_botones = '';
             $div_rof = '';
-
-            echo $fecha_lim_rof;
     
             if ( ($estado_compra == 4 || $estado_compra == 5) && $fecha_lim_rof > time() ) {
                 $div_botones = 
