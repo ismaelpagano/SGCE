@@ -198,7 +198,7 @@
 
             while(true){
 
-                //echo chr(27).chr(91).'H'.chr(27).chr(91).'J';
+                echo chr(27).chr(91).'H'.chr(27).chr(91).'J';
 
                 $this->launcher_actualizador();
         
@@ -241,7 +241,7 @@
     
             } else if ((strtotime($fecha_actual)) - strtotime($fecha_ult_respaldo) > 172800) {
 
-                // Acá se haría el respaldo cuando la hora es menor a las 7 AM y la fecha actual tiene una diferencia de mas de 2 días con respecto al respaldo anterior
+                //Acá se haría el respaldo cuando la hora es menor a las 7 AM y la fecha actual tiene una diferencia de mas de 2 días con respecto al respaldo anterior
     
             }
         }
