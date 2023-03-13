@@ -2044,6 +2044,7 @@
         public function __construct($key){
             
             if($key == 'filtros'){
+                print_r($_SESSON['sistema']->seleccion_llamados);
                 $_SESSION['sistema']->vaciar_seleccion();
                 $this->get_busqueda();
                 $this->armar_query();
@@ -2421,7 +2422,11 @@
 
         public function __construct($key){
 
-            $_SESSION['sistema']->vaciar_seleccion();
+            if($key != 'seleccion'){
+
+                $_SESSION['sistema']->vaciar_seleccion();
+
+            }
             
             if($key == 'filtros'){
                 $this->get_busqueda();
@@ -2789,7 +2794,7 @@
                         while($row = $result->fetch_row()){
                             $objeto[] = $row;
                             $_SESSION['sistema']->seleccion_llamados[(string)$row[0]] = new Compras($row); 
-                            $_SESSION['sistema']->seleccion_claves[] = $row[0];
+                            $_SESSION['sistema']->seleccion_claves[] = (string)$row[0];
                         };
                         $result->free_result();
                     }

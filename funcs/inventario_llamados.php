@@ -3,6 +3,8 @@
     include 'funcs.php';
     include '../mods/visor_llamado.php';
 
+    $pagina_actual;
+
     if($_SESSION['sistema']->pagina_actual != NULL){
         $pagina_actual = $_SESSION['sistema']->pagina_actual;
     } else {
@@ -31,12 +33,12 @@
             echo '<button '.$clase.' onclick="nueva_busqueda(\''.$_SESSION['sistema']->clave_busqueda.'\', '.$i.')">'.($i+1).'</button>';
         }
     }
-
+    
     for ($i=($pagina_actual * $cant_pagina); ($i < $pagina_actual * $cant_pagina + $cant_pagina) && ($i < $total); $i++){
     
         // $_SESSION['sistema']->seleccion_llamados[$_SESSION['sistema']->seleccion_claves[$i]]->visor_llamado();
         
-        $_SESSION['sistema']->seleccion_llamados[$_SESSION['sistema']->seleccion_claves[$i]]->visor_llamado();
+        $_SESSION['sistema']->seleccion_llamados[(string)$_SESSION['sistema']->seleccion_claves[$i]]->visor_llamado();
 
     }
 
