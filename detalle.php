@@ -4,6 +4,9 @@
 
     $id_compra = '';
 
+    print_r($_POST['id_compra']);
+
+
     if(isset($_GET['id_compra'])){
         $id_compra = $_GET['id_compra'];
     } else {

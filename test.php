@@ -167,30 +167,30 @@
 
         // mysqli_close($sql);
 
-        function xml_request($tipo_publicacion, $fecha_inicio, $fecha_fin){
+        // function xml_request($tipo_publicacion, $fecha_inicio, $fecha_fin){
 
-            $fecha_inicio = date('Y-m-d H:i:s', strtotime($fecha_inicio.' - 1 HOUR'));
+        //     $fecha_inicio = date('Y-m-d H:i:s', strtotime($fecha_inicio.' - 1 HOUR'));
 
-            $fecha_fin = date('Y-m-d H:i:s', strtotime($fecha_fin.' + 1 HOUR'));
+        //     $fecha_fin = date('Y-m-d H:i:s', strtotime($fecha_fin.' + 1 HOUR'));
 
-            $tipo_publicacion = '&tipo_publicacion='.$tipo_publicacion;
+        //     $tipo_publicacion = '&tipo_publicacion='.$tipo_publicacion;
             
-            $tipo_compra = '&tipo_compra=';
+        //     $tipo_compra = '&tipo_compra=';
     
-            $rango_fecha = '&rango-fecha='.date('d' , strtotime($fecha_inicio)).'%2F'.date('m' , strtotime($fecha_inicio)).'%2F'.date('Y' , strtotime($fecha_inicio)).'+-+'.date('d' , strtotime($fecha_fin)).'%2F'.date('m' , strtotime($fecha_fin)).'%2F'.date('Y' , strtotime($fecha_fin)).'&';
+        //     $rango_fecha = '&rango-fecha='.date('d' , strtotime($fecha_inicio)).'%2F'.date('m' , strtotime($fecha_inicio)).'%2F'.date('Y' , strtotime($fecha_inicio)).'+-+'.date('d' , strtotime($fecha_fin)).'%2F'.date('m' , strtotime($fecha_fin)).'%2F'.date('Y' , strtotime($fecha_fin)).'&';
 
-            $hora_fin = date('G', strtotime($fecha_fin));
+        //     $hora_fin = date('G', strtotime($fecha_fin));
     
-            $url = URL_WS.$tipo_publicacion.$tipo_compra.$rango_fecha.'&dia_inicial='.date('j' , strtotime($fecha_inicio)).'&mes_inicial='.date('n' , strtotime($fecha_inicio)).'&anio_inicial='.date('Y' , strtotime($fecha_inicio)).'&hora_inicial='.date('G', strtotime($fecha_inicio)).'&dia_final='.date('j' , strtotime($fecha_fin)).'&mes_final='.date('n' , strtotime($fecha_fin)).'&anio_final='.date('Y' , strtotime($fecha_fin)).'&hora_final='.$hora_fin;
+        //     $url = URL_WS.$tipo_publicacion.$tipo_compra.$rango_fecha.'&dia_inicial='.date('j' , strtotime($fecha_inicio)).'&mes_inicial='.date('n' , strtotime($fecha_inicio)).'&anio_inicial='.date('Y' , strtotime($fecha_inicio)).'&hora_inicial='.date('G', strtotime($fecha_inicio)).'&dia_final='.date('j' , strtotime($fecha_fin)).'&mes_final='.date('n' , strtotime($fecha_fin)).'&anio_final='.date('Y' , strtotime($fecha_fin)).'&hora_final='.$hora_fin;
 
-            $xml = simplexml_load_file($url);
+        //     $xml = simplexml_load_file($url);
 
-            echo $url.'<br>';
+        //     echo $url.'<br>';
 
-            $return = $xml->reporte_dato->children();
+        //     $return = $xml->reporte_dato->children();
 
-            return $return;
-        }
+        //     return $return;
+        // }
 
         // $compras = xml_request('l' , '2023-02-27 00:00:00', '2023-03-04 23:59:00');
 
@@ -595,7 +595,15 @@
         //     print_r("Se actualizó la lista de compras. ".date('Y-m-d H:i:s').".\n");
         // }
 
-        
+        $compra = Array();
+
+        $compra[] = 'ismael';
+
+        $compra[] = 2023;
+
+        $compra = new Compras($compra);
+
+        $compra = "'".$compra->hash."'";
 
 ?>
  
@@ -606,10 +614,9 @@
             <title>Test</title>
             <script src="js/funcs.js"></script>
     </head>
-    <body>
+    <body onload="prueba()">
             <?php 
                     // $sistema->mostrar();
-
                     // echo $i;
             ?>
             <!-- <button onclick="buscarObjeto('<?php // echo $_SESSION['sistema']->objetos[$compra_actual->hash]->hash; ?>')">BOTON</button> -->

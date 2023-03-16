@@ -456,15 +456,15 @@ function detalle_llamado(id_compra){
 
 	var f = document.createElement('form');
 	document.body.appendChild(f);
-	f.name='ef-form';
-	f.action='detalle.php';
 	f.method='POST';
 	f.target='_blank';
+	f.action= 'detalle.php';
 	var params = new FormData(f);
 	params.append('id_compra', id_compra);
-	alert(id_compra);
-	f.submit();
-	document.body.removeChild(f);
+	var keys = params.keys();
+	console.log(keys);
+	f.submit()
+	//document.body.removeChild(f);
 }
 
 function detalle_oferta(id_oferta){
@@ -966,5 +966,29 @@ function set_req(){
 
 }
 
+function alerta(identificador){
+	var http = new XMLHttpRequest();
+	http.open('POST', 'puente_funciones.php', true);
+	var params = new FormData();
+	params.append('objeto', identificador);
+	http.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200){
+			console.log(this.responseText);
+		}
+	}
+	http.send(params);
+}
 
+function prueba(){
 
+	var f = document.createElement('form');
+	f.name= 'form';
+	f.action= 'detalle.php';
+	f.method='POST';
+	f.target='_blank';
+	document.body.appendChild(f);
+	var params = new FormData(f);
+	params.append('id_compra', '1000000');	
+	f.submit();
+	//document.body.removeChild(f);
+}

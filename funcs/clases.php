@@ -6,6 +6,8 @@
 
         //Identificacion de la compra
 
+        public $tipo = 'Compra';
+
         public $id_compra;
         public $num_compra;
         public $anio_compra;
@@ -120,6 +122,14 @@
         public function __construct($compra){
             $this->id_compra = $compra[0];
             $this->anio_compra = $compra[1];
+            
+            $this->hash = md5(date('Y-m-d H:i:s'));
+
+            $_SESSION['sistema']->seleccion['compras'][$this->id_compra] = $this;
+
+            $_SESSION['sistema']->identificadores[$this->hash] = &$_SESSION['sistema']->seleccion['compras'][$this->id_compra];
+
+            
         } 
 
         public function agregar_contacto_bd(){
@@ -992,7 +1002,7 @@
             $return = 
             '<div class="contCompra '.$estado_interno_txt[0].' '.estado_compra($estado_compra).'" id="'.$this->id_compra.'">
                 <div class="visor">
-                    <a id="nombre_asignado" href="detalle.php?id_compra='.$this->id_compra.'">
+                    <a id="nombre_asignado" href="detalle.php?id_compra='.$this->id_compra.'&">
                         '.$nombre.'
                     </a>
                         <div>'.$this->mostrar_ue().'</div>
@@ -1462,6 +1472,7 @@
 
         public $databases_anios = Array();
         public $variables = Array();
+        public $identificadores = Array();
 
         public function __construct(){
             $this->inicio_sesion = date('Y-m-d H:i:s');
@@ -2819,24 +2830,9 @@
         public $archivo_adjunto;
         public $id_compra;
 
-        public function __construct($id_compra, $requerimiento = NULL , $nro_requerimiento = NULL){
-
-                $this->funcionario_alta = $_SESSION['user']->id_usuario;
-                $this->fecha_alta = date('Y-m-d H:i:s');
-                $this->id_compra = $id_compra;
-           
-                if($requerimiento != NULL) {
-                $this->nro_requerimiento = $requerimiento->nro_requerimiento;
-                $this->fecha_alta = $requerimiento->fecha_alta;
-                $this->funcionario_alta = $requerimiento->funcionario_alta;
-                $this->obligatorio = $requerimiento->obligatorio;
-                $this->tipo = $requerimiento->tipo;
-                $this->estado = $requerimiento->estado;
-                $this->fecha_cumplido = $requerimiento->fecha_cumplido;
-                $this->funcionario_cumplido = $requerimiento->funcionario_cumplido;
-                $this->descripcion = $requerimiento->descripcion;
-                $this->archivo_adjunto = $requerimiento->archivo_adjunto;
-            }
+        public function __construct(){
+            
+            $this->form_requerimiento($_GET['id_compra']);
 
         }
 
