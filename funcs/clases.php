@@ -7,6 +7,7 @@
         //Identificacion de la compra
 
         public $tipo = 'Compra';
+        public string $identificador;
 
         public $id_compra;
         public $num_compra;
@@ -120,16 +121,14 @@
         public int $posicion_array;
 
         public function __construct($compra){
+
             $this->id_compra = $compra[0];
             $this->anio_compra = $compra[1];
-            
-            $this->hash = md5(date('Y-m-d H:i:s'));
 
             $_SESSION['sistema']->seleccion['compras'][$this->id_compra] = $this;
 
-            $_SESSION['sistema']->identificadores[$this->hash] = &$_SESSION['sistema']->seleccion['compras'][$this->id_compra];
+            new Objeto($_SESSION['sistema']->seleccion['compras'][$this->id_compra]);
 
-            
         } 
 
         public function agregar_contacto_bd(){
@@ -1436,8 +1435,6 @@
         private int $_llamados_oferta_vigente;
         private int $_llamados_desestimados;
 
-        public Array $objetos;
-
         //OFERTAS
 
         private int $_llamados_ofertados_total;
@@ -1472,7 +1469,7 @@
 
         public $databases_anios = Array();
         public $variables = Array();
-        public $identificadores = Array();
+        public $objetos = Array();
 
         public function __construct(){
             $this->inicio_sesion = date('Y-m-d H:i:s');

@@ -2,15 +2,33 @@
 
     include 'funcs/funcs.php';
 
+    class Objeto {
+
+        public string $identificador;
+        public string $tipo;
+        public $objeto;
+
+        public function __construct($objeto){
+
+            $this->tipo = $objeto->tipo;
+            $this->identificador = md5(date('Y-m-d H:i:s'));
+            $this->objeto = &$objeto;
+            $_SESSION['sistema']->objetos[$this->identificador] = $this;
+
+        }
+    }
+
     class Interprete {
 
+        public $objeto;
 
         public function __construct($identificador){
 
-            $this->objeto = $_SESSION['sistema']->identificadores[$identificador];
-            $this->identificador = $identificador;
+            $this->objeto = $_SESSION['sistema']->objetos[$identificador];
 
         }
+
+        // public function 
 
         public function tarea(){
 
@@ -24,17 +42,36 @@
 
     }
 
+    $_SESSION['sistema']->seleccion = Array();
 
-    if(isset($_POST['objeto'])){
+    $compra = Array();
 
-        $objeto = new Interprete($_POST['objeto']);
+    $id_compra = '1000000';
 
-        print_r($_SESSION['sistema']->identificadores[$objeto->identificador]->id_compra);
+    $compra[] = $id_compra;
 
-        $_SESSION['sistema']->identificadores[$objeto->identificador]->id_compra = 'Gabriel';
+    $compra[] = 2023;
 
-        print_r($_SESSION['sistema']->identificadores[$objeto->identificador]->id_compra);
+    $objeto = new Compras($compra);
 
-    }
+    print_r($_SESSION['sistema']->seleccion);
+
+    echo $_SESSION['sistema']->objetos[$objeto->identificador]->objeto->id_compra.'<br>';
+
+    $objeto->objeto->id_compra = '1000001';
+    
+    echo $_SESSION['sistema']->seleccion[$id_compra]->id_compra.'<br>';
+
+    // if(isset($_POST['objeto'])){
+
+    //     $objeto = new Interprete($_POST['objeto']);
+
+    //     print_r($_SESSION['sistema']->identificadores[$objeto->identificador]->id_compra);
+
+    //     $_SESSION['sistema']->identificadores[$objeto->identificador]->id_compra = 'Gabriel';
+
+    //     print_r($_SESSION['sistema']->identificadores[$objeto->identificador]->id_compra);
+
+    // }
 
 ?>

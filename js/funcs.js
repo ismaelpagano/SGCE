@@ -986,9 +986,9 @@ function prueba(){
 	f.action= 'detalle.php';
 	f.method='POST';
 	f.target='_blank';
-	document.body.appendChild(f);
 	var params = new FormData(f);
 	params.append('id_compra', '1000000');	
+	document.body.appendChild(f);
 	f.submit();
 	//document.body.removeChild(f);
 }
