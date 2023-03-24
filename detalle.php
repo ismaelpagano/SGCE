@@ -36,7 +36,9 @@
 
     }
 
-    $nuevo_requerimiento = new Requerimiento();
+    $nuevo_requerimiento = new Requerimiento($id_compra);
+
+    $ref_compra = json_encode($nuevo_requerimiento);
 
     $sql = sql_con('gestor_compras_estatales_'.$compra->anio_compra);
 
@@ -121,7 +123,7 @@
                     </div>
                     <div id="cont_requerimientos">
                         <?php  //echo $div_requerimientos; ?>
-                        <?php  //echo $nuevo_requerimiento->form_requerimiento(); ?>
+                        <?php  echo $nuevo_requerimiento->form_requerimiento($ref_compra); ?>
                     </div>
                     <div id="contenedor_comentarios"><?php include 'comentarios.php'; ?></div>
                 </div>

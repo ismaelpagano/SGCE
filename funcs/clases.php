@@ -2817,13 +2817,15 @@
         public $funcionario_cumplido;
         public $descripcion;
         public $archivo_adjunto;
+        public $id_compra;
 
-        public function __construct($requerimiento = NULL , $nro_requerimiento = NULL){
+        public function __construct($id_compra, $requerimiento = NULL , $nro_requerimiento = NULL){
 
-            if($requerimiento == NULL){
                 $this->funcionario_alta = $_SESSION['user']->id_usuario;
                 $this->fecha_alta = date('Y-m-d H:i:s');
-            } else {
+                $this->id_compra = $id_compra;
+           
+                if($requerimiento != NULL) {
                 $this->nro_requerimiento = $requerimiento->nro_requerimiento;
                 $this->fecha_alta = $requerimiento->fecha_alta;
                 $this->funcionario_alta = $requerimiento->funcionario_alta;
@@ -2881,7 +2883,7 @@
             };
         }
 
-        public function form_requerimiento(){
+        public function form_requerimiento($ref_compra){
 
             $form = 
                 "<form id='form_requerimiento' method='POST' action='javascript:void(0)'>
@@ -2891,23 +2893,22 @@
 
             foreach($_SESSION['sistema']->tipos_requerimiento as $tipo){
 
-                $form .= "<option value='".$tipo['id']."'>".$tipo['descripcion']."</option>";
+                $form .= "<option value='".$tipo['id']."' data-ref=".$ref_compra.">".$tipo['descripcion']."</option>";
 
             }
                     
             $form .=
                     "</select>
-                    <label></label>
                 </form>";
 
             return $form;
         }
 
-        public function alta_requerimiento( $id_compra , $tipo , $descripcion , $obligatorio ){
+        public function alta_requerimiento( $tipo , $descripcion , $obligatorio ){
 
             $sql = sql_con(DATABASE_GESTION);
 
-            $q = "INSERT INTO requerimientos_compra ( id_compra , nro_requerimiento , fecha_alta , funcionario_alta , tipo , descripcion , obligatorio ) VALUES ( '".$id_compra."' , ".$this->nro_requerimiento." , '".date('Y-m-d H:i:s')."' , ".$_SESSION['user']->id_usuario." , ".$tipo." , '".$descripcion."' , ".$obligatorio." )";
+            $q = "INSERT INTO requerimientos_compra ( id_compra , nro_requerimiento , fecha_alta , funcionario_alta , tipo , descripcion , obligatorio ) VALUES ( '".$this->id_compra."' , ".$this->nro_requerimiento." , '".date('Y-m-d H:i:s')."' , ".$_SESSION['user']->id_usuario." , ".$tipo." , '".$descripcion."' , ".$obligatorio." )";
 
             $q = $sql->query($q);
 

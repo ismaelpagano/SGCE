@@ -567,7 +567,7 @@ function busqueda_filtros(){
 
 function nueva_busqueda(clave, pagina){
 	poner_mascara();
-	document.getElementById('escena').scroll(0, document.getElementById('escena').scrollTop * -1);
+	document.getElementById('scrolleable_cont').scroll(0, document.getElementById('scrolleable_cont').scrollTop * -1);
 	var xmlhttp = new XMLHttpRequest();
 	var params = new FormData(document.getElementsByTagName('form')[0]);
 	params.append('key', clave);
@@ -744,13 +744,19 @@ function cargar_comentarios(id_contexto){
 	http.send(params);
 }
 
-function form_req(tipo){
+function form_req(){
+
+	var tipo = document.getElementById('tipo_req').value;
+
+	var ref = document.getElementById('tipo_req');
+
+	ref = ref.getAttribute('data-ref');
+
+	alert(ref);
 
 	var nodo = document.getElementById('form_requerimiento').lastElementChild;
 	
 	document.getElementById('form_requerimiento').removeChild(nodo);
-
-	var valor = document.getElementById('tipo_req').value;
 
 	var nodo_aux = document.createElement('div');
 	nodo_aux.id = 'nodo_aux';
@@ -761,7 +767,8 @@ function form_req(tipo){
 	http.open('POST', url, true);
 
 	var params = new FormData();
-	params.append('tipo', valor);
+	params.append('tipo', tipo);
+	params.append('ref', ref);
 
 	http.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200){
@@ -941,6 +948,19 @@ function nombre_predeterminado(hash){
 		if (this.readyState == 4 && this.status == 200){
 			document.getElementById('header_title').innerHTML = this.responseText;
 			mask_off();
+		}
+	}
+	http.send(params);
+
+}
+
+function set_req(){
+
+	var http = new XMLHttpRequest();
+	http.open('POST', 'alta_requerimiento.php', true);
+	var params = new FormData(document.getElementById('form_requerimiento'));
+	http.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200){
 		}
 	}
 	http.send(params);
