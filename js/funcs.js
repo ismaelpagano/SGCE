@@ -601,6 +601,7 @@ function nueva_busqueda(clave, pagina){
 
 function copiar_portapapeles(){
 	var objeto = document.getElementById("objeto").innerHTML;
+
 	navigator.clipboard.writeText(objeto);
 }
 

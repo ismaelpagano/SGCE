@@ -1,4 +1,5 @@
-SELECT compras.id_compra , compras.anio_compra 
+SELECT 
+    compras.id_compra , compras.anio_compra 
 FROM ( 
     gestor_compras_estatales_2023.compras as compras 
 INNER JOIN 

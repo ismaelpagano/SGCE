@@ -76,7 +76,7 @@
                         echo $compra->titulo_detalle();
                     ?>
                 </div>
-                <div><img src="img/arrow_change.png" id="cambiar_nombre_compra" onclick="cambiar_nombre_compra(<?php echo $compra->id_compra; ?>)"></div>
+                <div><img src="img/arrow_change.png" id="cambiar_nombre_compra" onclick="cambiar_nombre_compra('<?php echo $compra->id_compra; ?>')"></div>
             </div>
             <div id="botones_header">
             </div> 

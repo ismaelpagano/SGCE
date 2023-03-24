@@ -412,3 +412,18 @@
     background-color: grey;
 }
 
+@media print {
+
+    #contenedor_comentarios {
+        display: none;
+    }
+
+    #boton_arce {
+        display: none;
+    }
+
+    #apertura_electronica {
+        display: none;
+    }
+
+}
