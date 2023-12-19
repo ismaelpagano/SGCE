@@ -16,7 +16,7 @@
         }
 
         public function sql_con($db = ''){
-            $sql = new mysqli('localhost', 'root', '', $db);
+            $sql = new mysql('localhost', 'root', '', $db);
             $sql->set_charset('utf8');
         
             return $sql;
